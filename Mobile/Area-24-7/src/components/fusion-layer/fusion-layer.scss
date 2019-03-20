@@ -1,0 +1,9 @@
+fusion-layer {
+    .encendida {
+        filter: grayscale(0%);
+    }
+    .apagada {
+        filter: grayscale(100%);
+    }
+
+}

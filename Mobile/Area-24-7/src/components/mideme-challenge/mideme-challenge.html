@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-navbar [ngStyle]="{'background': color}">
+      <ion-title>RETOS</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="center">
+    <span class="subtitulos">Lista de retos</span>
+    <p class="grayText">Según tu último calculo de consumos, tenemos estos retos para ti. Puedes cancelar el reto actual y seguir con el siguiente en la lista. Para generar nuevos retos debes hacer un nuevo Cálculo de consumo</p>
+  </div>
+  <div class="colu">
+      <ion-list class="retos">
+          <ion-item>
+            <h1 (click)="goToCurrentChallenge()"><i class="fas fa-circle select"  [ngStyle]="{'color': color}"></i> Personal</h1>
+            <span class="lista" [ngStyle]="{'color': color}">Ponte una meta y cumplela los 21 días.</span>
+          </ion-item>
+          <ion-item>
+              <h1 (click)="goToCurrentChallenge()"><i class="fas fa-circle"></i> Baño</h1>
+              <span class="lista">Reducir tiempo de ducha.</span><br/>
+              <span class="lista">Cerrar la llave mientras usas jabón o shampoo.</span><br/>
+              <span class="lista">Cerrar la llave mientras te enjabonas las manos.</span>          
+          </ion-item>
+          <ion-item>
+              <h1 (click)="goToCurrentChallenge()"><i class="fas fa-circle"></i> Cocina</h1>
+              <span class="lista" >Cerral la llave cuando laves los platos.</span>        
+          </ion-item>
+          <ion-item>
+              <h1 (click)="goToCurrentChallenge()"><i class="fas fa-circle"></i> Lavado de pisos</h1>
+              <span class="lista" >Usar agua lluvia.</span>        
+          </ion-item>
+          <ion-item>
+              <h1 (click)="goToCurrentChallenge()"><i class="fas fa-circle"></i> Lavado de ropa</h1>
+              <span class="lista" >Reducir el número de veces que lavas en un mes.</span>        
+          </ion-item>
+          <ion-item>
+              <h1 (click)="goToCurrentChallenge()"><i class="fas fa-circle"></i> Lavado de auto</h1>
+              <span class="lista" >Reducir el número de veces que lavas en un mes.</span>        
+          </ion-item>
+        </ion-list>     
+    </div>
+</ion-content>

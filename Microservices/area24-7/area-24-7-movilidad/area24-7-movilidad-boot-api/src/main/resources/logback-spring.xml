@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<configuration>
+    <property name="LOGS_LOCATION" value="/tmp"/>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss} [%thread] [%-5level] %logger{36} - %msg %exception{full} %n
+            </Pattern>
+        </layout>
+    </appender>
+
+    <appender name="file_info" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS_LOCATION}/info-api.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%date{yyyy-MM-dd HH:mm:ss} [%thread] [%level] %logger{36} - %msg %n</Pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS_LOCATION}/bck/Area247-api-info.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="file_error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS_LOCATION}/error-api.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%date{yyyy-MM-dd HH:mm:ss} [%thread] [%level] %logger{36} - %msg %exception{full} %n</Pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS_LOCATION}/bck/Area247-api-error.%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <logger name="org.springframework" level="info" additivity="false">
+        <appender-ref ref="console"/>
+    </logger>
+
+    <logger name="co.codehunters.emplealo" level="info" additivity="false">
+        <appender-ref ref="console"/>
+        <appender-ref ref="file_info"/>
+    </logger>
+
+    <root level="error">
+        <appender-ref ref="console"/>
+        <appender-ref ref="file_error"/>
+    </root>
+</configuration>

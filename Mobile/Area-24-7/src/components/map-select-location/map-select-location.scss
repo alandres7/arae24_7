@@ -1,0 +1,113 @@
+map-select-location {
+    // button {
+        // position: fixed !important;
+        // bottom: 16px;
+        // right:16px;
+    // }
+
+    .item.item.list-header {
+        border-bottom: 1px solid #CCCCCC;
+        background-color: whitesmoke;
+        border-radius: 5px 5px 0 0;
+    }
+    .toolbar-background {
+        background: inherit;
+    }
+    .toolbar-title {
+        color: map-get($colors, light);
+    }
+    .bar-button {
+        color: map-get($colors, light);
+    }
+    .avistamiento-title {
+        width:100vw;
+        background:map-get($colors, Asómbrate);
+        z-index:1;
+        color:#fff;
+        margin:0;
+        text-align:center;
+    }
+    .vigia-title {
+        width:100vw;
+        background:map-get($colors, vigias);
+        z-index:1;
+        color:#fff;
+        margin:0;
+        text-align:center;
+    }
+    .instruction {
+        width:100vw;
+        background:#ffffff;
+        position: absolute;
+        top:0rem;
+        z-index:1;
+        margin:0;
+        padding:1.3rem;
+        text-align:center;
+        border:.4px solid #ccc;
+    }
+    .direction {
+        width:100vw;
+        background:#ffffff;
+        position: absolute;
+        top:6.6rem;
+        z-index:1;
+        margin:0;
+        padding:0px;
+        text-align:center;
+        border:.4px solid #ccc;
+    }
+
+    .search{
+        background: red;
+        position: absolute;
+        top:6.6rem;
+        z-index:1;
+        margin:0;
+        padding:0px;
+    }
+
+    .direction-list {
+        width:100vw;
+        background:#ffffff;
+        position: absolute;
+        top:11.6rem;
+        z-index:1;
+        margin:0;
+        padding:0px;
+        text-align:center;
+        border:.4px solid #ccc;
+    }
+    #map-selection {
+        width:100vw;
+        height:100vh;
+    }
+    .avistamiento-button {
+        background-color: map-get($colors, Asómbrate);
+        position: fixed !important;
+        bottom: 6px;
+        right:5px;
+    }
+    .vigia-button {
+        background-color: map-get($colors, vigias);
+        position: fixed !important;
+        bottom: 6px;
+        right:5px;
+    }
+
+
+    my-location .fab[mini] {
+        bottom: 15px;
+        right: 0;
+    }
+
+    // ion-select {
+    //     display: -webkit-box;
+    //     display: -webkit-flex;
+    //     display: -ms-flexbox;
+    //     display: flex;
+    //     /* overflow: hidden; */
+    //     /* max-width: 45%; */
+    //   }
+    
+}

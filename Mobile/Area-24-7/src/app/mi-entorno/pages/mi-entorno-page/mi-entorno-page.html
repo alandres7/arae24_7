@@ -1,0 +1,41 @@
+<!--
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Como Está Mi Entorno</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+<div id="map" style="height: 100%; width: 100%;"></div>
+</ion-content>
+-->
+<!-- <ion-fab  left bottom #fabMovilidad>
+    <button ion-fab [ngStyle]="{'background-color':app.color}">
+        <img src="{{app.urlIcon}}"/>
+    </button>
+
+    <ion-fab-list side="top" id="submenu-amva">
+        <button ion-fab style="border-radius:0; transform: scale(1); visibility: visible; opacity: 1" 
+                [ngStyle]="{'background-color':app.color}" 
+                (click)="menuAnterior()">
+
+            <ion-icon name="ios-arrow-back" color="light"></ion-icon>
+        </button>
+        
+        <div *ngFor="let layer of app.children; let i=index;">
+            <button ion-fab style="border-radius:0; transform: scale(1); visibility: visible; opacity: 1" 
+                    [ngStyle]="{'background-color':app.color}" 
+                    (click)="mostrarDetalle()"
+                    *ngIf="isActiveLayer(layer.id)">
+            
+                <img [src]="layer.urlIcon">
+            </button>
+        </div>
+    </ion-fab-list>
+</ion-fab> -->
+
+<layer-manager [app]="app"></layer-manager>

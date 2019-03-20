@@ -1,0 +1,13 @@
+<ion-header>
+    <barra-navegabilidad [titulo]="titulo"></barra-navegabilidad>
+</ion-header>
+
+<ion-content mapa>
+    <div contenido-mapa>
+        <autocompletado-lineas-rutas (onResponseAutocompletado)="onResponseAutocompletado($event)" [criterioBusqueda]="criterioBusqueda"></autocompletado-lineas-rutas>
+    </div>
+    
+    <ion-footer>
+        <menu-opciones [activeLayer]="3" [app]="app"></menu-opciones>
+    </ion-footer>
+</ion-content>

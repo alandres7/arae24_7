@@ -1,0 +1,898 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title th:text="'' + ${title}"></title>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+       
+    <div th:replace="fragments/frameMaps :: header-contend"></div>       
+</head>
+
+
+    <style>    
+        .modal {
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+    </style>
+
+
+<body>
+	<div th:replace="fragments/frameMaps :: sideBar-Left-App"></div>
+
+	<section id="main-content" >
+
+		<div class="row margin-reset" th:style="'padding-left:2.5%'"> 
+			<div class="col-xs-12 col-sm-12 col-md-6 quarters" 
+			 th:style="'padding: 0px; font-size: 1.2vh; font-size: 1.2vw; border-color: ' + ${colorApp} + ';'">
+				<a href="#" onclick="openModal();currentSlide(1)"> 
+				    <span class="glyphicon glyphicon-resize-full" style="float: right;right;font-size: 1.3vh; font-size: 1.3vw"></span>
+				</a>
+				<div th:replace="area247/adminVigias/pantallasVigias :: quarter-section1-view"></div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-6 quarters" 
+			 th:style="'padding: 0px; font-size: 1.3vw; font-size: 1.3vh; border-color: ' + ${colorApp} + ';'">
+				<a href="#" onclick="openModal();currentSlide(2)"> 
+				    <span class="glyphicon glyphicon-resize-full" style="float: right;right;font-size: 1.3vh; font-size: 1.3vw"></span>
+				</a>
+				<div th:replace="area247/adminVigias/pantallasVigias :: quarter-section2"></div>
+			</div>
+		</div>
+
+		<div class="row margin-reset" th:style="'padding-left:2.5%'">
+			<div class="col-xs-12 col-sm-12 col-md-6 quarters"  
+			 th:style="'padding: 0px; font-size: 1,6vh; font-size: 1,6vw; border-color: ' + ${colorApp} + ';'">
+				<a href="#" onclick="openModal();currentSlide(3)"> 
+				    <span class="glyphicon glyphicon-resize-full" style="float: right;right;font-size: 1.3vh; font-size: 1.3vw"></span>
+				</a>
+				<div th:replace="area247/adminVigias/pantallasVigias :: quarter-section3-view"></div>
+				<div id="chart_div_user1">
+				    <div id="chart_div_graph1" ></div><br/>
+				    <div id="btn-pag1" align="center"  style="display: none;">
+				    	<button class="btn" id="prev1" style="background-color: #9FC418; color:white;">Anterior</button>
+				        <button class="btn" id="next1" style="background-color: #9FC418; color:white;">Siguiente</button>
+				    </div>
+				</div>
+                <div id="chart_div_muni1"></div>
+                <h2 th:style="'text-align:center; color: #' + ${numColorApp} + '; margin-left:1em;  font-size: 4vw; font-size: 4vh;'">Total reportes de vigía:
+                    <span id="totalVigiasEst1" th:text="${totalVigias}" style="color:#777575;">0</span>
+                </h2> 
+			</div>
+
+			<div class="col-xs-12 col-sm-12 col-md-6 quarters" th:style="'padding: 0px;  border-color: ' + ${colorApp} + ';'">
+				<div class="">
+					<div class="ribbon-quarter-tittle" align="center" th:style="'width:50%; position: relative; background-color: #' + ${numColorApp} + ';float: left;'">
+						<a href="#"> <span style="color: #FFFFFF; font-size: 1.7vh; font-size: 1.7vw">Mapa</span></a>
+					</div>
+					<a href="#" onclick="openModal();currentSlide(4)"> <span class="glyphicon glyphicon-resize-full" style="float: right;font-size: 1.3vh; font-size: 1.3vw"></span></a>
+				</div>
+				<div id="mapa1" style="width: 100%; padding: 200px; height: 100%;"></div>
+			</div>
+		</div>
+		  						       
+	</section>
+	
+	<div th:replace="fragments/frameMaps :: ribbon-List-MensajePush"></div>
+	
+	<div th:replace="fragments/enviarMensajePush :: mensajes-push-chat"></div>
+	<div th:replace="fragments/enviarMensajePush :: modalNotificaHisto"></div>
+
+	<div th:replace="fragments/frameMaps :: header-degra"></div>
+
+	<div id="modalFourViews" class="modal">
+		<div class="modal-content center" style="width: 90%; left: 5%; top: 5%;">
+			<div class="row margin-reset">
+				<div class="col-xs-12 col-sm-12 col-md-9"
+				 th:style="'padding: 0px; border: 2px solid; height: 100%; border-color: ' + ${colorApp} + ';'">
+
+					<a href="#" onclick="closeModal()"> <span
+						class="glyphicon glyphicon-remove" style="float: right;"></span>
+					</a>
+
+					<div class="mySlides">
+						<div th:replace="area247/adminVigias/pantallasVigias :: quarter-section1-modal" style="width: 100%"></div>
+					</div>
+
+					<div class="mySlides">
+						<div th:replace="area247/adminVigias/pantallasVigias :: quarter-section2" style="width: 100%"></div>
+					</div>
+
+					<div class="mySlides">
+						<div th:replace="area247/adminVigias/pantallasVigias :: quarter-section3-modal" style="width: 100%"></div>
+						<div id="chart_div_user2">
+				            <div id="chart_div_graph2"></div><br/>
+				            <div id="btn-pag2" align="center" style="display: none;">
+				            	<button class="btn" id="prev2" style="background-color: #9FC418; color:white;">Anterior</button>
+				                <button class="btn" id="next2" style="background-color: #9FC418; color:white;">Siguiente</button>
+				            </div>
+				        </div>
+                        <div id="chart_div_muni2"></div>
+                        <h2 th:style="'text-align:center; color: #' + ${numColorApp} + '; margin-left:1em; font-size: 5vw; font-size: 5vh;'">Total reportes de vigía:
+                            <span id="totalVigiasEst2" th:text="${totalVigias}" style="color:#777575;">0</span>
+                        </h2>
+					</div>
+
+					<div class="mySlides" style="height: 100%;">
+						<div class="ribbon-quarter-tittle" align="center"
+							th:style="'width:50%; position: relative; background-color: #' + ${numColorApp} + ';'">
+							<a href="#"> <span style="color: #FFFFFF; font-size: 1.7vh; font-size: 1.7vw">Mapa</span>
+							</a>
+						</div>
+						<div id="mapa2" style="width: 100%; padding: 300px; height: 100%;"></div>												
+					</div>
+
+				</div>
+
+				<div class="col-xs-12 col-sm-12 col-md-3" style="padding: 0px;">
+                                                   
+					<div id="demoSmall1" class="row margin-reset" onclick="currentSlide(1)" th:style="'border: 2px solid; font-size: 0.8vw; font-size: 0.8vh; border-color: ' + ${colorApp} + ';'">
+						<div class="demo cursor" th:replace="area247/adminVigias/pantallasVigias :: quarter-section1-mini"></div>
+					</div>
+
+					<div id="demoSmall2" class="row margin-reset" onclick="currentSlide(2)" th:style="'border: 2px solid; font-size: 0.8vw; font-size: 0.8vh; border-color: ' + ${colorApp} + ';'">
+						<div class="demo cursor" th:replace="area247/adminVigias/pantallasVigias :: quarter-section2-mini"></div>
+					</div>
+
+					<div id="demoSmall3" class="row margin-reset" onclick="currentSlide(3)" th:style="'border: 2px solid; font-size: 0.8vw; font-size: 0.8vh; border-color: ' + ${colorApp} + ';'">
+						<div class="demo cursor" th:replace="area247/adminVigias/pantallasVigias :: quarter-section3-mini"></div>
+					</div>
+
+					<div id="demoSmall4" class="row margin-reset" onclick="currentSlide(4)" th:style="'border: 2px solid; border-color: ' + ${colorApp} + ';'">
+						<div class="ribbon-quarter-tittle" align="center"
+							th:style="'width:50%; position: relative; background-color: #' + ${numColorApp} + ';'">
+							<a href="#"> <span style="color: #FFFFFF; font-size: 1.7vh; font-size: 1.7vw">Mapa</span>
+							</a>
+						</div>
+						<!--<div id="mapa3" style="width: 100%; padding: 100px; height: 100%;"></div>-->
+						<img src="assets/imagesAdminVigias/adminVigias_vistaMapa.jpg" style="width: 100%;"></img>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+		
+ 
+    <div th:replace="area247/adminVigias/pantallasVigias :: modalComenVigias"></div>  
+    
+       
+    <div th:replace="area247/adminVigias/pantallasVigias :: modalEditVigias"></div>     
+        
+      
+    <div th:replace="area247/adminVigias/pantallasVigias :: modalAproVigias"></div>      
+
+    
+    
+	<script th:inline="javascript">  
+        /*<![CDATA[*/
+        function openModal() {
+            document.getElementById('modalFourViews').style.display = "block";
+        }
+        
+        function closeModal() {
+            document.getElementById('modalFourViews').style.display = "none";
+        }
+        
+        $(document).ready(function() {
+            $('#tableComenVigias').dataTable({
+                "language": {"url": "/assets/json/spanishTable.json"},
+                "order": [[ 0, "desc" ]]
+            });
+        });
+        
+        
+       
+        var slideIndex = 1;
+        showSlides(slideIndex);
+        
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+        
+        function currentSlide(n) {
+		    if(n==3){
+			    var idGrafico = "usuario";
+			    if(document.getElementById('chart_div_user2').style.display == "none"){
+				    idGrafico = "municipio";
+				}				
+                var fechaIni = $('#fechaIniEst2').val(); 
+                var fechaFin = $('#fechaFinEst2').val();
+                var colorApp = [[${colorApp}]];
+                var filtroCapa = [[${filtroCapasEspadis}]];
+                var filtroCateg = [[${filtroCategEspadis}]];
+                drawGraficoEstadistico(fechaIni,fechaFin,idGrafico,colorApp,filtroCapa,filtroCateg,true);      
+        	}
+            showSlides(slideIndex = n);
+        }
+        
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("demo");
+                                          
+            var captionText = document.getElementById("caption");
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}               
+            
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            } 
+
+            for (i = 1; i <= 4; i++) {
+                if(i==slideIndex){
+                    document.getElementById('demoSmall'+i).style.display = "none";
+                }else{
+                	document.getElementById('demoSmall'+i).style.display = "block";
+                }
+            } 
+                                               
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace("active", "");
+            }
+                                        
+            slides[slideIndex-1].style.display = "block"; 
+            
+            /*if(slideIndex!=4){
+        		initMapSinMarkers('mapa3'); 
+        	}*/
+       
+        }
+        /*]]>*/
+    </script>
+    
+    
+    
+      
+    <script th:inline="javascript"> 
+    
+        function initMap(paqueteImpresion,mapa){ 
+        	        	        	
+        	var mapa = new google.maps.Map(document.getElementById(''+mapa), {
+                zoom: 10,
+                center: {lat: 6.21394, lng: -75.55897},
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                disableDefaultUI: false
+            });
+            
+            var layerMapa = new google.maps.KmlLayer({
+                url: [[${kmlBorder}]],
+                map: mapa,
+                suppressInfoWindows: true,
+                preserveViewport: true
+            });     
+            
+            /*<![CDATA[*/                   
+    	        var marcadorList = paqueteImpresion.listaMarcadores;                
+    	        for(j = 0; j < marcadorList.length; j++){    	        	
+    	        	var nombreMark = marcadorList[j].nombre;
+    	        	if(nombreMark == null){
+    	        		nombreMark = "Sin nombre";	
+    	        	}
+    	        	
+    	        	var descripcionMark = marcadorList[j].descripcion;
+    	        	if(descripcionMark == null){
+    	        		descripcionMark = "Sin descripción";	
+    	        	}
+    	        	
+    	        	var nombreCien = marcadorList[j].nombreCientifico;
+    	        	if(nombreCien == null){
+    	        		nombreCien = "-";	
+    	        	}
+    	        	                    
+	        	    var contentString = ''+
+                    '<div style = "text-align: center;font-family: \'Roboto\', sans-serif; overflow: auto;">' +	
+	    	            '<div class="img">' +   		    	               
+	    	                '<img src = "' + marcadorList[j].urlImagen + '" style ="padding-top:5px;max-width:150px;max-heigth:220px;"></img>' +    		    	               
+	    	                '<span>' +
+	    	    		        '<p align="center" style="color:#569837;font-size:12px"><strong>' + nombreMark + ' |</strong> ' + nombreCien + '</p>' +
+	    	    	        '</span>' +
+	    	            '</div>' +	
+	    	            '<p align="left" style="color:#569837;font-size:12px;width:220px;"><strong>Descripción: </strong>' +	
+	    	                '<span style="color:#696b69;font-size:11px">' + descripcionMark + '</span>' +
+	    	            '</p>' +    		    	               
+	                '</div>';
+			    	              
+    		       	var image = {
+    		    	    url: marcadorList[j].rutaWebIcono,
+    		    	    size: new google.maps.Size(135,135),
+    		    	    scaledSize: new google.maps.Size(35,35),
+    		        	origin: new google.maps.Point(0,0),			    	    
+    		        	anchor: new google.maps.Point(16,16)
+    		    	};      		   		
+    		            		    		   		
+    		       	if(!marcadorList[j].point != null){
+    		       	    var marker = new google.maps.Marker({
+	    	    	        position: {lat: marcadorList[j].point.lat, lng: marcadorList[j].point.lng},
+	    	    	        map: mapa,
+	    	    	        icon: image
+	    	    	    }); 
+	    	    	    addInfoWindow(marker,mapa,contentString);				    			
+    		       	}
+    		    }
+                
+    		    function addInfoWindow(marker,mapa,message){
+                    var infoWindow = new google.maps.InfoWindow({
+                    	pixelOffset: new google.maps.Size(-52,20),
+                        content: message	                
+                    });
+                    google.maps.event.addListener(marker, 'click', function (){	            	
+                        infoWindow.open(mapa,marker);
+                    });
+                } 
+    		/*]]>*/	            
+        }
+        
+        
+        /*function initMapSinMarkers(idmapa){        	
+            var map = new google.maps.Map(document.getElementById(''+idmapa), {
+                zoom: 11,
+                center: {lat: 6.21394, lng: -75.55897},
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                disableDefaultUI: false
+            });
+            var ctaLayer1 = new google.maps.KmlLayer({
+                url: [[${kmlBorder}]],
+                map: map,
+                suppressInfoWindows: true
+            });           
+        }*/
+    </script>
+      
+     
+      
+    <style>        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }   
+        .contenido {
+            position: relative;           
+            margin: auto;
+            top: 10%;
+            width: 70%;
+        }
+        .quarters{
+	        -webkit-box-shadow: 2px 3px 31px 6px rgba(153,153,153,0.57);
+			-moz-box-shadow: 2px 3px 31px 6px rgba(153,153,153,0.57);
+			box-shadow: 2px 3px 31px 6px rgba(153,153,153,0.57);}	        
+	</style> 
+	
+	
+	
+	
+	
+	
+	<script th:inline="javascript"> 
+	
+	    $(document).ready(function() {
+	        var fechaIni = [[${fechaIni}]]; 
+        	var fechaFin = [[${fechaFin}]]; 
+    	    var idCapa = [[${idCapaSel}]];
+    	    var idApp = [[${idApp}]];
+    	    
+    	    var filtroCapa = [[${filtroCapasEspadis}]];
+            var filtroCateg = [[${filtroCategEspadis}]];
+    	    drawGraficoUsuarios(fechaIni,fechaFin,filtroCapa,filtroCateg,false);
+    	    
+        	var tabla = $('#tableVigias');
+        	imprimirTablaPorPagina(tabla,fechaIni,fechaFin,idApp,idCapa,"0","'PENDIENTE','APROBADO','RECHAZADO'",false);
+        	
+        	var tablaModal = $('#modalFourViews').find('#tableVigias');
+        	imprimirTablaPorPagina(tablaModal,fechaIni,fechaFin,idApp,idCapa,"0","'PENDIENTE','APROBADO','RECHAZADO'",false);
+        	
+        	dataTable().fnSetFilteringEnterPress();
+        	       	
+        }); 
+	    
+	    
+	    function imprimirTablaPorPagina(tabla,fechaIni,fechaFin,idApp,idCapa,idCategoria,estadosList,comenPen) {
+        	tabla.DataTable({
+        		"language": {"url": "/assets/json/spanishTable.json"},
+                "processing": true,
+                "serverSide": true,
+                "pageLength": 5,    
+                "order":[[0, "desc"]],
+                "info": false,
+                "lengthMenu": [5, 10, 20],
+                "pagingType": "numbers",
+                "ajax": {
+                    "url": "/getVigiasPaginated/" + fechaIni + "/" + fechaFin + "/" + idApp + "/" + idCapa + "/" + 
+                                                           idCategoria + "/" + estadosList + "/" + comenPen,
+        	        "dataSrc": function (json) {                                                  
+                        initMap(json.markerPrintPackage,"mapa1");
+                        initMap(json.markerPrintPackage,"mapa2");
+                        return json.data;
+        	        }
+                },
+                "columns": [
+                	{ "data": "id", "title" : "ID"},
+                    { "data": "descripcion", "title" : "Descripcion"},
+                    { "data": "fechaReporte", "title" : "Fecha Creación"},
+                    { "data": "nombreEstado", "title" : "Estado"}, 
+                    { "data": "botonVisualizar", "title" : "Visualizar", "bSortable": false} 
+                ]
+        	});
+        	
+        }
+               
+        function visualizarVigia(id,numColorApp){ 
+        	$.ajax({
+                url: "/getVigiaVista/" + id + "/" + numColorApp,
+                method: "GET",
+                beforeSend: function() {
+                	$('vigiaDetalle').remove();
+                },
+                success: function(html) { 
+                	$('#vigiaDetalle').replaceWith(html);
+                	$('#modalFourViews').find('#vigiaDetalle').replaceWith(html);
+                	
+                	                    	
+                	$.ajax({
+                        url: "/getVigiaVistaMini/" + id + "/" + numColorApp,
+                        method: "GET",
+                        beforeSend: function() {
+                        	$('vigiaDetalle-mini').remove();
+                        },
+                        success: function(html) { 
+                        	$('#vigiasDetalle-mini').replaceWith(html);
+                        	                    	
+                        	$.ajax({
+                                url: "/getMarcadorVigia/" + id,
+                                method: "GET",
+                            }).success(function(paquete) {
+                            	/*<![CDATA[*/                            
+                                    initMap(paquete,"mapa1");
+                                    initMap(paquete,"mapa2");
+            		            /*]]>*/	                   	
+                            });                 	                	
+                        }
+                    });                	                	
+                }
+            }); 
+        };
+        
+        
+        function borrarVigiaVista(numColorApp){            
+        	$.ajax({
+                url: "/borrarVigiaVista/" + numColorApp,
+                method: "GET",
+                beforeSend: function() {
+                	$('vigiaDetalle').remove();
+                },
+                success: function(html) { 
+                	$('#vigiaDetalle').replaceWith(html);
+                	$('#modalFourViews').find('#vigiaDetalle').replaceWith(html);                	                	
+                }
+            }); 
+        };        
+        
+
+        function rechazarVigia(id,numColorApp){ 
+            $.ajax({
+                url: "/rechazarVigia/" + id + "/" + numColorApp + "",                
+                method: "GET",
+                beforeSend: function() {
+                	$('vigiaDetalle').remove();
+                },
+                success: function(html) { 
+                	$('#vigiaDetalle').replaceWith(html);
+                	$('#modalFourViews').find('#vigiaDetalle').replaceWith(html);                	
+                	$('#estadoVigia_' + id).text("Rechazado"); 
+                    $('#estadoVigia_' + id).css('color',"#B22D2C");                	
+                	$('#modalFourViews').find('#estadoVigia_'+id).text("Rechazado");
+                	$('#modalFourViews').find('#estadoVigia_'+id).css('color',"#B22D2C"); 
+                	
+                	$.ajax({
+                        url: "/getMarcadorVigia/" + id,
+                        method: "GET",
+                    }).success(function(paquete) {
+                    	/*<![CDATA[*/                            
+                            initMap(paquete,"mapa1");
+                            initMap(paquete,"mapa2");
+    		            /*]]>*/	                   	
+                    }); 
+                }                                
+            });                                  
+        };     
+        
+
+		
+		function visualizarComentariosVigia(id){            
+        	$.ajax({
+                url: "/getComentariosByVigia/" + id,
+                method: "GET",
+                beforeSend: function() {
+                	$('modalComenVigia').remove();
+                },
+                success: function(html) { 
+                	$('#modalComenVigia').replaceWith(html);
+                	
+                	$('#tableComenVigia').dataTable({
+                        "language": {"url": "/assets/json/spanishTable.json"},
+	                	"columnDefs": [
+						    { "orderable": false, "targets": [1,2] }
+						  ]
+                    });
+                }
+            }); 
+        };
+        
+		function visualizarEditarVigia(id,numColorApp){ 
+        	$.ajax({
+                url: "/visualizarEditarVigia/" + id + "/" + numColorApp,
+                method: "GET",
+                beforeSend: function() {
+                	$('modalEditVigia').remove();
+                },
+                success: function(html) { 
+                	$('#modalEditVigia').replaceWith(html);
+                }
+            }); 
+        };
+        
+		function visualizarAprobarVigia(id,numColorApp){ 
+        	$.ajax({
+                url: "/visualizarAprobarVigia/" + id + "/" + numColorApp,
+                method: "GET",
+                beforeSend: function() {
+                	$('modalAproVigia').remove();
+                },
+                success: function(html) { 
+                	$('#modalAproVigia').replaceWith(html);
+                }
+            }); 
+        };
+        
+        function ponerCantidadesVigias(fechaIni,fechaFin,capa,categoria,soloComHis,conComenDeHis){   
+        	$.ajax({
+                url: "/getCantidadesEstadosbyFechaCapa/" + fechaIni + "/" + fechaFin + "/" + capa + 
+                                                     "/" + categoria + "/" + soloComHis + "/" + conComenDeHis,                                                   
+                method: "GET",
+                success: function(response) { 
+				    $('#fechaIni1').val(fechaIni);
+                	$('#fechaFin1').val(fechaFin);
+                	$('#numApr1').text(response.cantidadAprobados);
+                	$('#numPen1').text(response.cantidadPendientes);
+                	$('#numRec1').text(response.cantidadRechazados);
+					
+					$('#fechaIni2').val(fechaIni);
+                	$('#fechaFin2').val(fechaFin);
+                	$('#numApr2').text(response.cantidadAprobados);
+                	$('#numPen2').text(response.cantidadPendientes);
+                	$('#numRec2').text(response.cantidadRechazados);
+                	                	
+                }
+            }); 
+        };
+        
+        function crearStringEstadosVigia(checkApr,checkPen,checkRec){ 
+        	var estadosList = "";
+        	if(checkApr){
+        		estadosList = estadosList + "1";
+        	}
+        	if(checkPen){
+        		if(estadosList!=""){
+        			estadosList = estadosList + ",2";
+        		}else{
+        			estadosList = estadosList + "2";
+        		}        		
+        	}
+        	if(checkRec){
+        		if(estadosList!=""){
+        			estadosList = estadosList + ",0";
+        		}else{
+        			estadosList = estadosList + "0";
+        		}       		
+        	}        	
+        	if(estadosList==""){
+        		estadosList = "1,2,0"
+        	}
+        	return estadosList; 
+        };
+        
+ 
+
+
+        function drawGraficoEstadistico(fechaIni,fechaFin,id,colorApp,filtroCapa,filtroCateg,soloGraficoModal){ 
+            $.ajax({
+                url: "/compararFechas/" + fechaIni + "/" + fechaFin + "",
+                method: "GET",
+            }).success(function(response) {
+                if(response){
+                	document.getElementById('validacionFechasEst').innerHTML = ""; 
+                	
+                	$('#fechaIniEst1').val(fechaIni);
+                	$('#fechaFinEst1').val(fechaFin);
+                	$('#fechaIniEst2').val(fechaIni);
+                	$('#fechaFinEst2').val(fechaFin);
+                	
+                	$('.menuNaveVigiaEst1').css("background-color","#9FC418");
+					$('.menuNaveVigiaEst2').css("background-color","#9FC418");
+					$('.menuNaveVigiaEst3').css("background-color","#9FC418");
+					
+                	$('#'+id).css("background-color",colorApp);  
+                	$('#modalFourViews').find('#'+id).css("background-color",colorApp);
+                	
+                	if(id=="usuario"){ 
+                		drawGraficoUsuarios(fechaIni,fechaFin,filtroCapa,filtroCateg,soloGraficoModal);
+                	}else{
+                		if(id=="municipio"){ 
+                    		drawGraficoMunicipios(fechaIni,fechaFin,filtroCapa,filtroCateg,soloGraficoModal);
+                		}                                		
+                	}
+                	
+                	if(!soloGraficoModal){
+                	    $.ajax({
+                            url: "/getCantidadTotalVigias/" + fechaIni + "/" + fechaFin + 
+                                                               "/" + filtroCapa + "/" + filtroCateg + "",
+                            method: "GET",
+                	    }).success(function(response) { 
+                		    document.getElementById('totalVigiaEst1').innerHTML = response
+                		    document.getElementById('totalVigiaEst2').innerHTML = response
+                		    document.getElementById('totalVigiaEst3').innerHTML = response
+                        });
+                	}
+                }else{
+                	document.getElementById('validacionFechasEst').innerHTML = "La fecha final es menor que la inicial";
+                }                                                                                                  
+            });    
+        } 
+
+ 
+	
+              	    	
+        function drawGraficoUsuarios(fechaIni,fechaFin,filtroCapa,filtroCateg,soloGraficoModal){ 
+        	$.ajax({
+                url: "/getMatrizDatosPantalla/" + fechaIni + "/" + fechaFin + 
+                                            "/" + filtroCapa + "/" + filtroCateg + "/usuario",
+                method: "GET",
+        	}).success(function(datosUsuario) {        		
+        		/*<![CDATA[*/ 
+        		var userEstadisticos = [['Usuario', 'Aprobado', 'Pendiente', 'Rechazado']];
+                var cantidadDatos = datosUsuario.length;
+                
+                var cantRegPorPag = 4;
+                if(cantidadDatos < cantRegPorPag){
+                    if(cantidadDatos == 0){
+                    	cantRegPorPag = 1;
+                    }else{
+                	    cantRegPorPag = cantidadDatos;
+                    }
+                }
+                
+                if(!soloGraficoModal){
+        		    document.getElementById('chart_div_muni1').style.display = "none";
+        		    document.getElementById('chart_div_user1').style.display = "block";   
+        		    pintarGraficoPaginado("1",0,datosUsuario,cantRegPorPag,cantidadDatos,userEstadisticos);
+        		
+        		    document.getElementById('chart_div_muni3').style.display = "none";
+        		    document.getElementById('chart_div_user3').style.display = "block"; 
+                }
+        		document.getElementById('chart_div_muni2').style.display = "none";
+        		document.getElementById('chart_div_user2').style.display = "block";   
+        		pintarGraficoPaginado("2",0,datosUsuario,cantRegPorPag,cantidadDatos,userEstadisticos);        		       		
+        		/*]]>*/
+            });  	
+        }
+		
+    
+        function drawGraficoMunicipios(fechaIni,fechaFin,filtroCapa,filtroCateg,soloGraficoModal){ 
+        	$.ajax({
+                url: "/getMatrizDatosPantalla/" + fechaIni + "/" + fechaFin + 
+                                            "/" + filtroCapa + "/" + filtroCateg + "/municipio",
+                method: "GET",
+        	}).success(function(datosMunicipio) {         		
+        		/*<![CDATA[*/ 
+        		google.charts.load('current', {packages: ['corechart', 'bar']});
+                google.charts.setOnLoadCallback(drawMultSeries);
+                
+                function drawMultSeries() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string','Municipio del AMVA');
+                    data.addColumn('number','Aprobado');
+                    data.addColumn('number','Pendiente');
+                    data.addColumn('number','Rechazado');
+                    
+                    data.addRows(datosMunicipio);
+                
+                    var options = {
+                        title: 'Cantidad de reportes de vigia por estado en los municipios del AMVA',
+                        hAxis: {
+                            title: 'Municipios',
+                        },
+                        vAxis: {
+                            title: 'Cantidad',
+                        },
+                        //width: $("#chart_div_muni1").width()*0.9,
+                        //height: $("#chart_div_muni1").height()*0.9,
+                		colors: ['#559839','#B2B2B2','#B22D2C']
+                    };
+                
+                    if(!soloGraficoModal){
+                        document.getElementById('chart_div_user1').style.display = "none";
+        			    document.getElementById('chart_div_muni1').style.display = "block";
+                        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div_muni1'));
+                        chart.draw(data, options);
+                    
+                        document.getElementById('chart_div_user3').style.display = "none";
+        			    document.getElementById('chart_div_muni3').style.display = "block";
+                    }
+                    
+                    document.getElementById('chart_div_user2').style.display = "none";
+        			document.getElementById('chart_div_muni2').style.display = "block";
+                    var chart = new google.visualization.ColumnChart(document.getElementById('chart_div_muni2'));
+                    chart.draw(data, options);
+                   
+                }
+                /*]]>*/	
+            }); 		                        	
+        }    
+        
+        
+        function pintarGraficoPaginado(idDiv,nPage,statesUsers,pageSize,totalEstadisticos,userEstadisticos){
+        	/*<![CDATA[*/ 
+    	    var pageTotal = Math.trunc(statesUsers.length/pageSize);
+    	    if((pageTotal*pageSize < totalEstadisticos)){
+    	    	pageTotal++;
+    	    }
+    	    var limInf = 1;
+    	    var limSup = pageTotal;
+    	    var prevDisabled = true;
+    	    var nextDisabled = true;
+    	    console.log(pageTotal);
+    	    google.charts.load('current', {'packages':['bar']});
+            google.charts.setOnLoadCallback(drawChart);
+    	    	
+            function drawChart() {
+    	        var nombreIndex = 0;
+    	    	for(i=nPage;i<(nPage+pageSize);i++){
+    	    		userEstadisticos[i+1] = new Array(4);
+    	    		for(j=nombreIndex;j<statesUsers[i].length;j++){
+    	    			userEstadisticos[i+1][j] = statesUsers[i][j];
+    	    		}
+    	    	}
+                var data = google.visualization.arrayToDataTable(userEstadisticos);
+            
+                var options = {
+                    chart: {
+                        title: 'Reportes de vigia por Estado de los Usuarios',
+                        subtitle: 'Aprobados, Pendientes y Rechazados',
+                    },
+                    bars: 'horizontal', // Required for Material Bar Charts.
+                    hAxis: {
+                        title: 'Cantidad de reportes de vigia',
+                    },
+                    //width: $("#chart_div_graph1").width(),
+                    height: 300,
+                    colors: ['#559839','#B2B2B2','#B22D2C']
+                        
+                };           
+                var chart = new google.charts.Bar(document.getElementById('chart_div_graph'+idDiv));
+                chart.draw(data, google.charts.Bar.convertOptions(options));
+
+                if(totalEstadisticos<=4){
+                	$('#btn-pag'+idDiv).css("display","none");
+                }else{  
+                	$('#btn-pag'+idDiv).css("display","block");             	
+					
+        	    	$('#prev'+idDiv).prop( "disabled", true );
+                    var btns = document.getElementById('btn-pag'+idDiv);
+        	    	btns.onclick = function (e) {			
+                        if (e.target.tagName === 'BUTTON') {
+        	    			userEstadisticos = [['Usuario', 'Aprobado', 'Pendiente', 'Rechazado']];
+        	    		    if(e.target.id === 'prev'+idDiv){
+        	    			    if(nPage>=0){
+        	    			        var limInfPage = nPage*pageSize;
+        	    			        var limSupPage = ((nPage+1)*pageSize)>totalEstadisticos?(totalEstadisticos-1):(((nPage+1)*pageSize)-1);
+        	    			        for(i=limInfPage;i<=limSupPage;i++){
+        	    				        userEstadisticos[i-limInfPage+1] = new Array(4);
+        	    			            for(j=nombreIndex;j<statesUsers[i].length;j++){
+        	    				            userEstadisticos[i-limInfPage+1][j] = statesUsers[i][j];
+        	    			            }
+        	    			        }
+        	    			        if(nPage===0){
+        	    				        prevDisabled = true;
+        	    				        $('#prev'+idDiv).prop( "disabled", true );
+        	    			        }else{
+        	    			            nPage--;
+        	    			        }
+        	    		        }
+        	    			    if(nextDisabled){
+        	    			        if(nPage < pageTotal-1){
+        	    				        nextDisabled = false;	
+        	    				        $('#next'+idDiv).prop( "disabled", false );
+        	    			        }
+        	    			    }
+        	    		    }else if(e.target.id === 'next'+idDiv){
+        	    		        if(nPage<=pageTotal-1){
+        	    			        var limInfPage = nPage*pageSize;
+        	    			        var limSupPage = ((nPage+1)*pageSize)>totalEstadisticos?(totalEstadisticos-1):(((nPage+1)*pageSize)-1);
+        	    			        for(i=limInfPage;i<=limSupPage;i++){
+        	    				        userEstadisticos[i-limInfPage+1] = new Array(4);
+        	    			            for(j=nombreIndex;j<statesUsers[i].length;j++){
+        	    				            userEstadisticos[i-limInfPage+1][j] = statesUsers[i][j];
+        	    			            }
+        	    		            }
+        	    		            if(nPage===pageTotal-1){
+        	    		            	nextDisabled = true;
+        	    		            	$('#next'+idDiv).prop( "disabled", true );
+        	    		            }else{
+        	    		                nPage++;
+        	    		            }
+        	    		            if(prevDisabled){
+        	    		                if(nPage > 0){
+        	    		            	    prevDisabled = false;
+        	    		            	    $('#prev'+idDiv).prop( "disabled", false );
+        	    		                }
+        	    		            }
+        	    		        }
+        	    		    }
+        	    		        	    		   
+        	    		    data = google.visualization.arrayToDataTable(userEstadisticos);
+                            chart.draw(data, google.charts.Bar.convertOptions(options));
+                        }
+                    }	
+                }
+            }
+            /*]]>*/	
+    	}	
+
+
+
+        function pintarTablaVigias(idComplete,idCapa,idCategoria,fechaIni,fechaFin,
+        		          estadosList,soloComHis,conComenDeHis,idApp,colorApp,numColorApp){
+        	/*<![CDATA[*/ 
+            $.ajax({
+                url: "/compararFechas/" + fechaIni + "/" + fechaFin + "",
+                method: "GET",
+            }).success(function(response) {
+                if(response){
+                	document.getElementById('validacionFechas').innerHTML = "";                                 	
+                	$.ajax({
+                        url: "/refrescarTablaVigias/" + numColorApp,
+                        method: "GET",
+                        beforeSend: function() {
+                        	$('tableVigiaFragmento').remove();
+                        },
+                        success: function(html) {
+                        	$('.menuNaveVigia1').css("background-color","#9FC418");
+							$('.menuNaveVigia2').css("background-color","#9FC418");
+							$('.menuNaveVigia3').css("background-color","#9FC418");
+							
+                        	$('#'+idComplete).css("background-color",colorApp); 
+                        	$('#modalFourViews').find('#'+idComplete).css("background-color",colorApp); 
+                        	
+                        	$('#tableVigiaFragmento').replaceWith(html); 
+                        	$('#modalFourViews').find('#tableVigiaFragmento').replaceWith(html);
+                            
+                            var tabla = $('#tableVigias');
+                        	imprimirTablaPorPagina(tabla,fechaIni,fechaFin,idApp,idCapa,idCategoria,estadosList,soloComHis,conComenDeHis);
+                        	
+                        	var tablaModal = $('#modalFourViews').find('#tableVigias');
+                        	imprimirTablaPorPagina(tablaModal,fechaIni,fechaFin,idApp,idCapa,idCategoria,estadosList,soloComHis,conComenDeHis);
+                        	                                         	
+                        	borrarVigiaVista(numColorApp);
+                        	ponerCantidadesVigias(fechaIni,fechaFin,idCapa,idCategoria,soloComHis,conComenDeHis);
+                        }
+                    }); 
+                }else{
+                	document.getElementById('validacionFechas').innerHTML = "La fecha final es menor que la inicial";
+                }                          	
+            });  
+            /*]]>*/	
+    	}			
+    </script> 
+    
+
+</body>
+</html>

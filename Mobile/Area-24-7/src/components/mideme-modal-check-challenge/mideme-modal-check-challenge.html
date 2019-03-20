@@ -1,0 +1,45 @@
+<ion-header >
+    <ion-toolbar  [ngStyle]="{'background-color': color}">
+        <ion-title >
+            <i class="fas fa-trophy"></i>
+            <ion-label text-wrap>
+                <span>Personal</span>
+            </ion-label>
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button  icon-only  end (click)="closeModal()">
+                <ion-icon name="close"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content padding >
+    <div>
+      <h1>Texto relacionado al reto</h1>
+    </div>
+    <br>
+
+    <div class="progreso">
+        
+        <div class="progress">
+            <div class="lr" [ngStyle]="{'background': color}"></div>
+            <div class="progress-bar" [ngStyle]="{'width': ancho}"></div>
+            <i class="fas fa-trophy">
+                <p>{{ dias }}</p>
+            </i>
+            <div class="lr" [ngStyle]="{'background': color}"></div>
+        </div>
+        <div class="pBar" [ngStyle]="{'color': color}">
+            <span style="float:left">0</span><span style="float:right">21</span>
+        </div>
+    </div>
+
+    <div>
+      <p>¡Confiamos en Ti!<br/>Has cumplido con el reto de hoy?</p>
+    </div>
+
+    <div class="botones">
+        <button ion-button (click)="closeModal()">Sí</button>
+        <button ion-button (click)="closeModal()">No</button>
+    </div>
+</ion-content>

@@ -1,0 +1,911 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head lang="en">	
+    <title th:text="'' + ${title}"></title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+       
+	<div th:replace="fragments/frameMaps :: header-contend"></div> 
+	 		
+</head>
+	
+	
+	<style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }   
+        .contenido {
+            position: relative;           
+            margin: auto;
+            top: 10%;
+            width: 70%;
+        }	
+	</style>
+	    
+
+<body >
+   	<div th:replace="fragments/frameMaps :: header-degra"></div> 
+   	
+   	<div th:replace="fragments/frameMaps :: sideBar-Left-App"></div> 
+
+ 	
+
+	<section id="main-content" >
+
+		<div id="mapa" style="height: 100%"></div>
+
+		<div th:replace="fragments/frameMaps :: ribbon-List"></div>
+
+		<div th:replace="fragments/frameMaps :: notification-List"></div>
+
+		<div th:replace="fragments/enviarMensajePush :: mensajes-push-chat"></div>
+		<div th:replace="fragments/enviarMensajePush :: modalNotificaHisto"></div>
+		
+		
+
+		<div id="modalCategorias" class="modal" th:style="'display: ' + ${despliegeModalCateg}">    
+	        <div class="contenido">	
+	        	
+	            <button onclick="closeModalCategorias()" class="btn btn-default" style="background-color: #FB0101; float: right;">
+                    <span class="glyphicon glyphicon-remove" style="float: right; color: #FFFFFF;"></span> 
+                </button>
+				
+	            <h1 style="background-color: #9FC418; color:#FFFFFF; width:460px;">Configuración de Categorías</h1>
+	        	
+	        	<div style="border: 25px solid; border-color: transparent; background-color: rgba(0,0,0,0.8);">
+	        	    
+                    <form id="editCategoriaForm" th:action="@{/createUpdateCategoria}" th:method="post" onsubmit="return realizarValidacionesEdicion()" 
+                     style="width:100%; background-color: #E8E8E8; float: center; font-size: 0.9vw; display: block;" enctype="multipart/form-data">  	         							  			
+                       
+					    <div class="row margin-reset"> 
+                            <ul class="nav nav-tabs">
+                                
+                                <li data-toggle="tooltip" title="Agregar nueva categoría">
+                                    <div id="showFormNewCategoria" class="btn btn-default" style="background-color: #9FC418;"
+                                     th:if="${puedeAdicionar}">
+                                        <span style="color: #FFFFFF;" class="glyphicon glyphicon-plus-sign"></span>
+                                    </div>
+                                </li>
+                                                                                               
+                                <li data-toggle="tooltip" title="Guardar Cambios">
+                                    <button id="botonEdicion" class="btn btn-default" 
+                                     style="background-color: #00BFFF; display:none;" type="submit">
+                                        <span style="color: #FFFFFF;" class="glyphicon glyphicon-floppy-disk"></span>
+                                    </button>
+                                </li> 	
+                                																					
+								<li data-toggle="tooltip" title="Retornar a Capas">
+								    <a id="returnCapas" class="btn btn-default" style="height:32px; border: 1px solid; 
+								     border-color: #D0D0D0; border-radius: 3px; background-color: #9FC418;" 
+								     th:href="'/getCapasByIdAplicacion/' + ${idAplicacionDeCapa}">
+								         <span style="color: #FFFFFF;" class="glyphicon glyphicon-arrow-left"></span>
+								     </a>
+								</li> 
+																
+                            </ul> 						
+					    </div>
+					    
+					    <br/>
+						
+						<div class="row margin-reset">  
+						    <div class="col-xs-12 col-sm-9 col-md-9">
+					   
+					            <div class="row margin-reset"> 
+								    <div class="col-xs-12 col-sm-1 col-md-1">
+									    <p style="color:#9FC418;">ID</p>
+					                </div>
+									<div class="col-xs-12 col-sm-2 col-md-2">
+									     <input type="text" id="id" name="id" class="form-control" style="border-radius: 0px;" 
+									      readonly="true"></input>
+					                </div>
+									<div class="col-xs-12 col-sm-2 col-md-2">
+									    <p style="color:#9FC418;">Nombre</p>
+					                </div>
+									<div class="col-xs-12 col-sm-7 col-md-7">
+									    <input type="text" id="nombre" name="nombre" style="border-radius: 0px;" 
+									     class="form-control editField" readonly="true"></input>
+					                </div>					                					                															                					                
+					            </div>
+					            
+					            <br/>								
+								<div class="row margin-reset"> 
+									<div class="col-xs-12 col-sm-2 col-md-2">
+									    <p style="color:#9FC418;">Descripción</p>
+					                </div>								  
+									<div class="col-xs-12 col-sm-10 col-md-10">
+									    <input type="text" id="descripcion" name="descripcion" style="border-radius: 0px;"
+									     class="form-control editField" readonly="true"></input>
+					                </div>									
+					            </div>	
+                                
+                                <div class="row margin-reset"> 
+								    <div th:style="'display: ' + ${despliegueUrl} + ';'">
+								        <br/>
+									    <div class="col-xs-12 col-sm-2 col-md-2">
+									        <p style="color:#9FC418;">URL Recurso</p>
+					                    </div>								  
+									    <div class="col-xs-12 col-sm-7 col-md-7">
+									        <input type="text" id="urlRecurso" name="urlRecurso" style="border-radius: 0px;"
+									         class="form-control editField" readonly="true"></input>
+					                    </div>
+                                    </div>										
+					                <div class="col-xs-12 col-sm-3 col-md-3">					                
+					                    <div id="programButtons" style="display:none;">     
+                                            <a class="btn btn-default programTaskCateg" style="height:32px; background-color: #00BFFF; 
+                                               border: 1px solid; border-color: #D0D0D0; border-radius: 3px;"
+                                               data-toggle="tooltip" title="Programar tarea"> 								     
+								                <span style="color: #FFFFFF;" class="glyphicon glyphicon-dashboard"></span>
+								            </a>								            
+									        <a id="runTaskButton" class="btn btn-default" style="height:32px; 
+									           background-color: #9FC418; border: 1px solid; border-color: #D0D0D0; 
+									           border-radius: 3px;" data-toggle="tooltip" title="Correr manualmente"> 								     
+								                <span style="color: #FFFFFF;" class="glyphicon glyphicon-play"></span>
+								            </a>											        								        									        
+									    </div>  
+									    <div id="stopTaskButtons" style="display:none;">  								            
+								            <a id="stopTaskButton" class="btn btn-default stopTask" style="height:32px; background-color: #FB0101; 
+                                               border: 1px solid; border-color: #D0D0D0; border-radius: 3px;"
+                                               data-toggle="tooltip" title="Detener tarea"> 								     
+								                <span style="color: #FFFFFF;" class="glyphicon glyphicon-pause"></span>
+								            </a>											        								        									        
+									    </div>   
+					                </div>									
+					            </div>	
+
+                                
+                                <div class="row margin-reset" th:style="'display: ' + ${ordenamiento} + ';'"> 
+								    <br/>
+									<div class="col-xs-12 col-sm-2 col-md-2">
+									    <p style="color:#9FC418;">Alias Nombre</p>
+					                </div>								  
+									<div class="col-xs-12 col-sm-4 col-md-4">
+									    <input type="text" id="aliasNombre" name="aliasNombre" style="border-radius: 0px;"
+									     class="form-control editField" readonly="true"></input>
+					                </div>	
+									<div class="col-xs-12 col-sm-2 col-md-2">
+									    <p style="color:#9FC418;">Alias Municipio</p>
+					                </div>								  
+									<div class="col-xs-12 col-sm-4 col-md-4">
+									    <input type="text" id="aliasMunicipio" name="aliasMunicipio" style="border-radius: 0px;"
+									     class="form-control editField" readonly="true"></input>
+					                </div>										
+					            </div>
+																					            					            
+                                <div class="row margin-reset" th:style="'display: ' + ${ordenamiento} + ';'"> 
+                                    <br/>								
+									<div class="col-xs-12 col-sm-3 col-md-3">
+									    <p style="color:#9FC418;">Alias Descripción</p>
+					                </div>								  
+									<div class="col-xs-12 col-sm-4 col-md-4">
+									    <input type="text" id="aliasDescripcion" name="aliasDescripcion" style="border-radius: 0px;"
+									     class="form-control editField" readonly="true"></input>
+					                </div>	
+                                    <div class="col-xs-12 col-sm-3 col-md-3">
+									    <p style="color:#9FC418;">Mensaje Ordenamiento</p>									
+					                </div>	
+									<div class="col-xs-12 col-sm-2 col-md-2">
+									    <select id="msgOrdenamiento" name="msgOrdenamiento">
+									        <option value="false">No</option>
+                                            <option value="true">Si</option>                                            
+                                        </select> 
+					                </div>										
+					            </div>
+																																				            
+                                <div class="row margin-reset"> 		
+                                    <br/>								
+									<div class="col-xs-12 col-sm-2 col-md-2">
+									    <p style="color: #9FC418;">Tipo</p>
+								    </div>
+								    <div class="col-xs-12 col-sm-4 col-md-4">									
+									    <select id="tipo" th:name="tipo">
+                                            <option th:each="tipo : ${tipoCapaList}" th:value="${tipo.id}" th:text="${tipo.nombre}"></option>
+                                        </select>										
+								    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-6"></div>										
+					            </div>								
+								                                
+                                <div class="row margin-reset"> 
+								    <div th:style="'display: ' + ${ordenamiento} + ';'">
+									    <br/>
+									    <div class="col-xs-12 col-sm-2 col-md-2">
+									        <p style="color:#9FC418;">Polígono</p>									
+					                    </div>	
+									    <div class="col-xs-12 col-sm-1 col-md-1">
+									        <select id="poligono" name="poligono">
+                                                <option value="false">No</option>
+                                                <option value="true">Si</option>                                            
+                                            </select> 
+					                    </div>					                					                						                
+                                        <div class="col-xs-12 col-sm-2 col-md-2">
+									        <p style="color:#9FC418;">Ficha Caracterizacion</p>									
+					                    </div>	
+									    <div class="col-xs-12 col-sm-1 col-md-1">
+									        <select id="fichaCaracterizacion" name="fichaCaracterizacion">
+									            <option value="false">No</option>
+                                                <option value="true">Si</option>                                           
+                                            </select> 
+					                    </div>	
+                                        <div class="col-xs-12 col-sm-2 col-md-2">
+									        <p style="color:#9FC418;">Respuesta Ficha</p>
+					                    </div>								  
+									    <div class="col-xs-12 col-sm-4 col-md-4">
+									        <select id="respuestaFichaCarac" name="respuestaFichaCarac">
+                                                <option value=""></option>
+                                                <option value="SI/NO">SI/NO</option>                                            
+                                                <option value="NOMBRE">NOMBRE</option>
+                                                <option value="NOMBRE-DESCRIPCION">NOMBRE-DESCRIPCION</option>
+                                            </select> 
+					                    </div>	
+									</div>									
+									<div th:style="'display: ' + ${avistamiento} + ';'">
+									    <br/>
+                                        <div class="col-xs-12 col-sm-2 col-md-2">
+									        <p style="color:#9FC418;">Tiene Historia</p>									
+					                    </div>	
+									    <div class="col-xs-12 col-sm-2 col-md-2">
+									        <select id="tieneHistoria" name="tieneHistoria">
+									            <option value="false">No</option>
+                                                <option value="true">Si</option>                                            
+                                            </select> 
+					                    </div>
+										<div class="col-xs-12 col-sm-8 col-md-8"></div>	
+                                    </div>																		
+					            </div>		
+
+                            </div>
+							<div class="col-xs-12 col-sm-3 col-md-3" style="font-size: 0.8vw;">
+							    <div class="row margin-reset"> 
+								    <div class="col-xs-12 col-sm-4 col-md-4">
+									    <p style="color:#9FC418;">Icono</p>									
+					                </div>
+									<div class="col-xs-12 col-sm-8 col-md-8">
+									    <label for="icono">Seleccionar Imagen</label>
+                                        <div class="file-loading">
+                                            <input id="icono" name="icono" type="file" class="iconoUpload"></input>                                           
+                                        </div> 	
+					                </div>								
+							    </div>
+                                <div class="row margin-reset" th:style="'display: ' + ${noavistamiento} + ';'"> 
+								    <div class="col-xs-12 col-sm-4 col-md-4">
+									    <p style="color:#9FC418;">Icono Marcador</p>									
+					                </div>
+									<div class="col-xs-12 col-sm-8 col-md-8">
+									    <label for="iconoMar">Seleccionar Imagen</label>
+                                        <div class="file-loading">
+                                            <input id="iconoMar" name="iconoMar" type="file" class="iconoUpload"></input>                                           
+                                        </div> 	
+					                </div>								
+							    </div>	
+                            </div>
+					    </div>
+					    
+					    <div class="row margin-reset" th:style="'display: ' + ${avistamiento} + ';'">	
+					        <br/>			      
+						    <div class="col-xs-12 col-sm-3 col-md-3">						    						    
+						        <div class="row margin-reset"> 
+								    <p style="color:#9FC418;">Icono Aprobado</p>																
+							    </div>							    							    
+							    <div class="row margin-reset"> 
+								    <label for="iconoApr">Seleccionar Imagen</label>
+                                    <div class="file-loading">
+                                        <input id="iconoApr" name="iconoApr" type="file" class="iconoUpload"></input>                                            
+                                    </div> 								
+							    </div>							    							    
+						    </div>							    
+						    <div class="col-xs-12 col-sm-3 col-md-3">						    						    
+						        <div class="row margin-reset"> 
+								    <p style="color:#9FC418;">Icono Pendiente</p>																
+							    </div>							    							    
+							    <div class="row margin-reset"> 
+								    <label for="iconoPen">Seleccionar Imagen</label>
+                                    <div class="file-loading">
+                                        <input id="iconoPen" name="iconoPen" type="file" class="iconoUpload"></input>                                            
+                                    </div> 								
+							    </div>							    							    
+						    </div>						    
+						    <div class="col-xs-12 col-sm-3 col-md-3">						    						    
+						        <div class="row margin-reset"> 
+								    <p style="color:#9FC418;">Icono Rechazado</p>																
+							    </div>							    							    
+							    <div class="row margin-reset"> 
+								    <label for="iconoRec">Seleccionar Imagen</label>
+                                    <div class="file-loading">
+                                        <input id="iconoRec" name="iconoRec" type="file" class="iconoUpload"></input>                                            
+                                    </div> 								
+							    </div>							    							    
+						    </div>					    
+					    </div>
+					    					    
+					    <br/>
+					    <p id="validacionEdicion" style="text-align:center; color: #FB0101"></p>
+					    <p id="mensajeForm3" th:text="'' + ${mensajeFormulario3}" style="text-align:center"></p>
+                        <input type="hidden" id="idAplicacionDeCapa" name="idAplicacionDeCapa" th:value="${idAplicacionDeCapa}"></input>
+                        <input type="hidden" id="idCapaDeCategoria" name="idCapaDeCategoria" th:value="${idCapaDeCategoria}"></input>
+                        <input type="hidden" id="nombreSelectOmitFromValidation" th:name="nombreSelectOmitFromValidation"></input>						
+                    </form> 
+					
+
+                    <form id="createCategoriaForm" th:action="@{/createUpdateCategoria}" th:method="post" onsubmit="return realizarValidacionesCreacion()" 
+                     style="width:100%; background-color: #E8E8E8; float: center; font-size: 0.9vw; display: none;" enctype="multipart/form-data">  	         							  			
+                       
+					    <div class="row margin-reset"> 
+                            <ul class="nav nav-tabs">
+                                
+                                <li data-toggle="tooltip" title="Guardar nueva categoría">
+                                    <button id="addNewCategoria" class="btn btn-default" style="background-color: #00BFFF;" type="submit">
+                                        <span style="color: #FFFFFF;" class="glyphicon glyphicon-floppy-disk"></span>
+                                    </button>
+                                </li> 
+                                
+                                <li data-toggle="tooltip" title="Cancelar">
+                                    <button id="cancelNewCategoria" class="btn btn-default" style="background-color: #FB0101;">
+                                        <span style="color: #FFFFFF;" class="glyphicon glyphicon-remove-sign"></span>
+                                    </button>
+                                </li>
+                                 
+                            </ul> 						
+					    </div>
+					    
+					    <br/>
+						
+						<div class="row margin-reset">  
+						    <div class="col-xs-12 col-sm-9 col-md-9">
+					   
+					            <div class="row margin-reset"> 
+									<div class="col-xs-12 col-sm-2 col-md-2">
+									    <p style="color:#9FC418;">Nombre</p>
+					                </div>
+									<div class="col-xs-12 col-sm-10 col-md-10">
+									    <input type="text" id="nombreNew" name="nombre" class="form-control" style="border-radius: 0px;"></input>
+					                </div>					                					                														                					                
+					            </div>
+					            
+					            <br/>								
+								<div class="row margin-reset"> 
+									<div class="col-xs-12 col-sm-2 col-md-2">
+									    <p style="color:#9FC418;">Descripción</p>
+					                </div>								  
+									<div class="col-xs-12 col-sm-10 col-md-10">
+									    <input type="text" id="descripcionNew" name="descripcion" class="form-control" style="border-radius: 0px;"></input>
+					                </div>									
+					            </div>
+                               
+                                <div class="row margin-reset"> 
+								    <div th:style="'display: ' + ${despliegueUrl} + ';'">
+									    <br/>
+									    <div class="col-xs-12 col-sm-2 col-md-2">
+									        <p style="color:#9FC418;">URL Recurso</p>
+					                    </div>								  
+									    <div class="col-xs-12 col-sm-10 col-md-10">
+									        <input type="text" id="urlRecursoNew" name="urlRecurso" class="form-control" style="border-radius: 0px;"></input>
+					                    </div>
+                                    </div>										
+					            </div>	
+                                
+                                <div class="row margin-reset" th:style="'display: ' + ${ordenamiento} + ';'"> 
+								    <br/>
+									<div class="col-xs-12 col-sm-2 col-md-2">
+									    <p style="color:#9FC418;">Alias Nombre</p>
+					                </div>								  
+									<div class="col-xs-12 col-sm-4 col-md-4">
+									    <input type="text" id="aliasNombreNew" name="aliasNombre" class="form-control" 
+									     style="border-radius: 0px;"></input>
+					                </div>	
+									<div class="col-xs-12 col-sm-2 col-md-2">
+									    <p style="color:#9FC418;">Alias Municipio</p>
+					                </div>								  
+									<div class="col-xs-12 col-sm-4 col-md-4">
+									    <input type="text" id="aliasMunicipioNew" name="aliasMunicipio" class="form-control" 
+									     style="border-radius: 0px;"></input>
+					                </div>										
+					            </div>
+					            
+                                <div class="row margin-reset" th:style="'display: ' + ${ordenamiento} + ';'"> 
+                                    <br/>								
+									<div class="col-xs-12 col-sm-3 col-md-3">
+									    <p style="color:#9FC418;">Alias Descripción</p>
+					                </div>								  
+									<div class="col-xs-12 col-sm-4 col-md-4">
+									    <input type="text" id="aliasDescripcionNew" name="aliasDescripcion" 
+									     style="border-radius: 0px;" class="form-control"></input>
+					                </div>	
+                                    <div class="col-xs-12 col-sm-3 col-md-3">
+									    <p style="color:#9FC418;">Mensaje Ordenamiento</p>									
+					                </div>	
+									<div class="col-xs-12 col-sm-2 col-md-2">
+									    <select id="msgOrdenamientoNew" name="msgOrdenamiento">
+									        <option value="false">No</option>
+                                            <option value="true">Si</option>                                            
+                                        </select> 
+					                </div>										
+					            </div>
+																																				            
+                                <div class="row margin-reset"> 		
+                                    <br/>								
+									<div class="col-xs-12 col-sm-2 col-md-2">
+									    <p style="color: #9FC418;">Tipo</p>
+								    </div>
+								    <div class="col-xs-12 col-sm-4 col-md-4">									
+									    <select id="tipoNew" th:name="tipo">
+                                            <option th:each="tipo : ${tipoCapaList}" th:value="${tipo.id}" th:text="${tipo.nombre}"></option>
+                                        </select>										
+								    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-6"></div>										
+					            </div>								
+								                                
+                                <div class="row margin-reset"> 
+								    <div th:style="'display: ' + ${ordenamiento} + ';'">
+									    <br/>
+									    <div class="col-xs-12 col-sm-2 col-md-2">
+									        <p style="color:#9FC418;">Polígono</p>									
+					                    </div>	
+									    <div class="col-xs-12 col-sm-1 col-md-1">
+									        <select id="poligonoNew" name="poligono">
+                                                <option value="false">No</option>
+                                                <option value="true">Si</option>                                            
+                                            </select> 
+					                    </div>					                					                						                
+                                        <div class="col-xs-12 col-sm-2 col-md-2">
+									        <p style="color:#9FC418;">Ficha Caracterizacion</p>									
+					                    </div>	
+									    <div class="col-xs-12 col-sm-1 col-md-1">
+									        <select id="fichaCaracterizacionNew" name="fichaCaracterizacion">
+									            <option value="false">No</option>
+                                                <option value="true">Si</option>                                           
+                                            </select> 
+					                    </div>	
+                                        <div class="col-xs-12 col-sm-2 col-md-2">
+									        <p style="color:#9FC418;">Respuesta Ficha</p>
+					                    </div>								  
+									    <div class="col-xs-12 col-sm-4 col-md-4">
+									        <select id="respuestaFichaCaracNew" name="respuestaFichaCarac">
+                                                <option value=""></option>
+                                                <option value="SI/NO">SI/NO</option>                                            
+                                                <option value="NOMBRE">NOMBRE</option>
+                                                <option value="NOMBRE-DESCRIPCION">NOMBRE-DESCRIPCION</option>
+                                            </select> 
+					                    </div>	
+									</div>									
+									<div th:style="'display: ' + ${avistamiento} + ';'">
+									    <br/>
+                                        <div class="col-xs-12 col-sm-2 col-md-2">
+									        <p style="color:#9FC418;">Tiene Historia</p>									
+					                    </div>	
+									    <div class="col-xs-12 col-sm-2 col-md-2">
+									        <select id="tieneHistoriaNew" name="tieneHistoria">
+									            <option value="false">No</option>
+                                                <option value="true">Si</option>                                            
+                                            </select> 
+					                    </div>
+										<div class="col-xs-12 col-sm-8 col-md-8"></div>	
+                                    </div>																		
+					            </div>											
+					   
+                            </div>
+							<div class="col-xs-12 col-sm-3 col-md-3" style="font-size: 0.8vw;">
+							    <div class="row margin-reset"> 
+								    <div class="col-xs-12 col-sm-4 col-md-4">
+									    <p style="color:#9FC418;">Icono</p>									
+					                </div>
+									<div class="col-xs-12 col-sm-8 col-md-8">
+									    <label for="iconoNew">Seleccionar Imagen</label>
+                                        <div class="file-loading">
+                                            <input id="iconoNew" name="icono" type="file" class="iconoUpload"></input>                                           
+                                        </div> 	
+					                </div>								
+							    </div>
+                                <div class="row margin-reset" th:style="'display: ' + ${noavistamiento} + ';'"> 
+								    <div class="col-xs-12 col-sm-4 col-md-4">
+									    <p style="color:#9FC418;">Icono Marcador</p>									
+					                </div>
+									<div class="col-xs-12 col-sm-8 col-md-8">
+									    <label for="iconoMarNew">Seleccionar Imagen</label>
+                                        <div class="file-loading">
+                                            <input id="iconoMarNew" name="iconoMar" type="file" class="iconoUpload"></input>                                           
+                                        </div> 	
+					                </div>								
+							    </div>
+                            </div>
+					    </div>
+					    
+					    <div class="row margin-reset" th:style="'display: ' + ${avistamiento} + ';'">	
+					        <br/>			      
+						    <div class="col-xs-12 col-sm-3 col-md-3">						    						    
+						        <div class="row margin-reset"> 
+								    <p style="color:#9FC418;">Icono Aprobado</p>																
+							    </div>							    							    
+							    <div class="row margin-reset"> 
+								    <label for="iconoAprNew">Seleccionar Imagen</label>
+                                    <div class="file-loading">
+                                        <input id="iconoAprNew" name="iconoApr" type="file" class="iconoUpload"></input>                                            
+                                    </div> 								
+							    </div>							    							    
+						    </div>							    
+						    <div class="col-xs-12 col-sm-3 col-md-3">						    						    
+						        <div class="row margin-reset"> 
+								    <p style="color:#9FC418;">Icono Pendiente</p>																
+							    </div>							    							    
+							    <div class="row margin-reset"> 
+								    <label for="iconoPenNew">Seleccionar Imagen</label>
+                                    <div class="file-loading">
+                                        <input id="iconoPenNew" name="iconoPen" type="file" class="iconoUpload"></input>                                            
+                                    </div> 								
+							    </div>							    							    
+						    </div>						    
+						    <div class="col-xs-12 col-sm-3 col-md-3">						    						    
+						        <div class="row margin-reset"> 
+								    <p style="color:#9FC418;">Icono Rechazado</p>																
+							    </div>							    							    
+							    <div class="row margin-reset"> 
+								    <label for="iconoRecNew">Seleccionar Imagen</label>
+                                    <div class="file-loading">
+                                        <input id="iconoRecNew" name="iconoRec" type="file" class="iconoUpload"></input>                                            
+                                    </div> 								
+							    </div>							    							    
+						    </div>					    
+					    </div>
+					    					    
+					    <br/>
+					    <p id="validacionCreacion" style="text-align:center; color: #FB0101"></p>
+                        <input type="hidden" id="idAplicacionDeCapa" name="idAplicacionDeCapa" th:value="${idAplicacionDeCapa}"></input>
+                        <input type="hidden" id="idCapaDeCategoria" name="idCapaDeCategoria" th:value="${idCapaDeCategoria}"></input>						
+                    </form> 
+                    
+                    <h4 style="background-color: #9FC418; color:#FFFFFF;" th:text="${rutaMostrada}"></h4> 
+					
+                    <br/>
+                          
+                    <h2 style="text-align:left; color: #FFFFFF;">Categorías</h2>
+      	        	 
+      	        	<div style="overflow-x:auto;"> 
+               	    <table id="tableCategorias" class="table table-striped table-bordered" cellspacing="0" 
+               	           style="width: 100%; background-color: #E8E8E8; font-size: 0.9vw;">
+               	        <thead>
+               	            <tr>                                   
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Tipo Categoría</th>
+                                <th style="text-align: center;">Icono</th> 
+                                <th style="text-align: center;">Icono Marcador</th> 
+                                <th th:style="'display: ' + ${avistamiento} + ';text-align: center;'">Especies</th>
+                                <th style="text-align: center;">Eliminar</th>
+                                <th style="text-align: center;">Editar</th>                                               
+                            </tr>
+                        </thead>
+                          
+                        <tbody>                   
+                            <tr th:each="categoria : ${categoriaList}">
+                                <td th:text="${categoria.id}"></td>
+                                <td th:text="${categoria.nombre}"></td>
+                                <td th:text="${categoria.descripcion}"></td>
+                                <td th:text="${categoria.tipoCategoria.nombre}"></td>
+                                <td align="center">
+                                  <img th:src="${categoria.icono.rutaLogo}" style="width: 40px; top: -9px;"/>
+                                </td>    
+                                <td align="center">
+                                    <img th:src="${categoria.iconoMarcador.rutaLogo}" 
+                                     th:style="'display: ' + ${noavistamiento} + '; width: 40px; top: -9px;'"/>
+                                    
+                                    <table th:style="'display: ' + ${avistamiento} + '; font-size: 0.6vw;'"
+                                           th:if="(${categoria.tipoCategoria.id} == 2) OR (${categoria.tipoCategoria.id} == 5) OR
+									              (${categoria.tipoCategoria.id} == 8)">
+								        <thead>
+               	                            <tr>                                   
+                                               <th>Aprobado</th>
+                                               <th>Pendiente</th>
+                                               <th>Rechazado</th>							
+                                            </tr>
+                                        </thead>
+                                        <tbody>                   
+                                            <tr>
+                                                <td><img th:src="${categoria.rutaIconoAprobado}" style="width: 40px; top: -9px;"/></td>
+                                                <td><img th:src="${categoria.rutaIconoPendiente}" style="width: 40px; top: -9px;"/></td>
+                                                <td><img th:src="${categoria.rutaIconoRechazado}" style="width: 40px; top: -9px;"/></td>
+                                            </tr>
+                                        </tbody>  
+								    </table> 
+                                </td>                                  
+                                <td>
+									<a class="btn btn-default"
+									 th:style="'display: ' + ${avistamiento} + '; height:32px; background-color: #9FC418; 
+									 border: 1px solid; border-color: #D0D0D0; border-radius: 3px; font-size: 0.9vw;'"
+									 th:if="(${categoria.tipoCategoria.id} == 2) OR (${categoria.tipoCategoria.id} == 5) OR
+									        (${categoria.tipoCategoria.id} == 8)" 									
+								     th:href="'/getEspeciesByIdCategoria/' + ${idAplicacionDeCapa} + '/'
+								                                           + ${idCapaDeCategoria} + '/' + ${categoria.id}">
+								         <span style="color: #FFFFFF;">Especies</span>
+								    </a>
+								</td>                                
+                                <td align="center">
+									<a th:id="${categoria.id}" class="btn btn-default deleteButton" th:if="${puedeBorrar}" 
+									 style="height:32px; background-color: #FB0101; border: 1px solid; border-color: #D0D0D0; border-radius: 3px;"> 								     
+								        <span style="color: #FFFFFF;" class="glyphicon glyphicon-trash"></span> 
+								    </a>
+								</td>                        
+                                <td align="center">
+                                    <button th:id="${categoria.id}" style="background-color: #9FC418;" 
+                                     th:if="${puedeEditar}" class="btn btn-default editButton">
+									    <span style="color: #FFFFFF;" class="glyphicon glyphicon-pencil"></span>
+									</button>
+                                </td>                           
+                            </tr>                                                                                                     
+                        </tbody>
+                    </table>
+                    </div>  
+						
+                </div>
+               
+            </div>       
+        </div>  
+                         				
+    </section>
+    
+    <div th:replace="fragments/printMap :: printMap"></div>        	
+	
+    <script th:inline="javascript"> 
+        $(document).ready(function() {
+            $('#tableCategorias').dataTable({
+                "language": {"url": "/assets/json/spanishTable.json"}
+            });
+        });    
+    
+        function openModalCategorias() {
+            document.getElementById('modalCategorias').style.display = "block";
+        }  
+    
+        function closeModalCategorias() {
+            document.getElementById('modalCategorias').style.display = "none";
+        }
+        
+        $('.editButton').on('click', function() {
+            var id = $(this).attr('id');           
+            $.ajax({
+                url: "/getCategoria/" + id,
+                method: "GET",
+            }).success(function(response) {            	
+            	$('#validacionEdicion').text("  ");   
+            	$('#validacionCreacion').text("  ");            	
+            	$('#mensajeForm3').text("  ");
+            	
+                $('#editCategoriaForm')
+                    .find('[name="id"]').val(response.id).end()
+                    .find('[name="nombre"]').val(response.nombre).end()
+                    .find('[name="nombreSelectOmitFromValidation"]').val(""+response.nombre).end() 
+                    .find('[name="descripcion"]').val(response.descripcion).end() 
+                    .find('[name="tipo"]').val(""+response.tipoCategoria.id).end()
+                    .find('[name="urlRecurso"]').val(response.urlRecurso).end()
+                    .find('[name="aliasNombre"]').val(response.aliasNombre).end()                       
+                    .find('[name="aliasMunicipio"]').val(response.aliasMunicipio).end()
+                    .find('[name="aliasDescripcion"]').val(response.aliasDescripcion).end()               
+                    .find('[name="fichaCaracterizacion"]').val(""+response.fichaCaracterizacion).end()
+                    .find('[name="respuestaFichaCarac"]').val(""+response.respuestaFichaCarac).end()
+                    .find('[name="poligono"]').val(""+response.poligono).end()
+                    .find('[name="tieneHistoria"]').val(""+response.tieneHistoria).end()
+                    .find('[name="msgOrdenamiento"]').val(""+response.msgOrdenamiento).end();
+                
+                $('.editField').attr("readonly",false);
+                $('#botonEdicion').css("display","block");
+				
+				var despliegueUrl = "" + [[${despliegueUrl}]] + "";
+				
+				if(despliegueUrl=="block"){                  
+                    $('#modalProgramCateg').find('#programTaskCategForm').find('[name="id"]').val(response.id);
+                    $('#modalProgramCateg').find('#programTaskCategForm').find('[name="nombre"]').val(response.nombre);
+                    $('#modalProgramCateg').find('#programTaskCategForm').find('[name="urlRecurso"]').val(response.urlRecurso);
+                    
+                    var linkRun = "/runTaskCateg/" + [[${idAplicacionDeCapa}]] + "/" + [[${idCapaDeCategoria}]] + "/" + id
+            	    $('#runTaskButton').attr("href",linkRun);
+                    
+                    var linkStop = "/stopTaskCateg/" + [[${idAplicacionDeCapa}]] + "/" + [[${idCapaDeCategoria}]] + "/" + id
+            	    $('#stopTaskButton').attr("href",linkStop);
+                    
+                    $.ajax({
+                        url: "/mostrarBotonesURL/CATEGORIA/" + id,
+                        method: "GET",
+                    }).success(function(response) {                	
+                    	if(response=="ninguno"){
+                    		$('#stopTaskButtons').hide();
+                    		$('#programButtons').hide();
+                    	} 
+                    	if(response=="ejecutar"){
+                    		$('#stopTaskButtons').hide();
+                    		$('#programButtons').show();
+                    	} 
+                    	if(response=="detener"){
+                    		$('#stopTaskButtons').show();
+                    		$('#programButtons').hide();
+                    	}
+                    }); 
+                }								
+            });                               
+        });  
+    
+        $('#showFormNewCategoria').on('click', function() {
+        	document.getElementById("editCategoriaForm").reset();
+            $('#editCategoriaForm').hide();              
+            $('#createCategoriaForm').show(); 
+            $('#validacionCreacion').text("  ");
+            $('#mensajeForm3').text("  ");
+        }); 
+    
+        $('#cancelNewCategoria').on('click', function() {
+            $('#editCategoriaForm').show(); 
+            document.getElementById("createCategoriaForm").reset();
+            $('.editField').attr("readonly",true);
+            $('#botonEdicion').css("display","none");
+            $('#createCategoriaForm').hide();             
+            $('#validacionEdicion').text("  ");
+            $('#mensajeForm3').text("  "); 
+        });          
+    
+        $(document).on('ready', function() {
+            $(".iconoUpload").fileinput({
+                browseClass: "btn-sm btn-primary btn-block",
+                showCaption: false,
+                showRemove: false,
+                showUpload: false,
+                allowedFileExtensions: ["jpg","png","svg"]
+            });
+        });
+    </script> 
+    
+
+    <script th:inline="javascript">
+        $('.deleteButton').on('click', function() {
+        	var id = $(this).attr('id'); 
+        	var linkDelete = "/deleteCategoria/" + [[${idAplicacionDeCapa}]] + "/" + [[${idCapaDeCategoria}]] + "/" + id
+        	$('#confirmDelete').attr("href",linkDelete);        	
+        	$('#modalConfirmDelete').show();        	
+        	$('#modalConfirmDelete').find('#cancelDelete').on('click', function() {
+                $('#modalConfirmDelete').hide();
+            });        	
+        	$('#modalConfirmDelete').find('#confirmDelete').on('click', function() {
+                $('#modalConfirmDelete').hide();
+            });
+        });  
+    </script>
+    
+    <div th:replace="fragments/dialog :: modalConfirmDelete"></div> 
+
+    
+    
+    <script th:inline="javascript">
+        $('.programTaskCateg').on('click', function() {        	
+        	$('#modalProgramCateg').show();        	
+        	$('#modalProgramCateg').find('#cancelarProgram').on('click', function() {
+                $('#modalProgramCateg').hide();
+            });        	
+        	$('#modalProgramCateg').find('#programTask').on('click', function() {
+                $('#modalProgramCateg').hide();
+            });
+        });  
+    </script>
+    
+    <div th:replace="fragments/dialog :: modalProgramCateg"></div> 
+
+
+
+    <script type="text/javascript" th:inline="javascript" >	
+        /*<![CDATA[*/
+        function realizarValidacionesEdicion(){ 
+        	
+        	var descripcion = $("#descripcion").val();             
+            if(descripcion != null){ 	
+        	    if(descripcion == ""){ 
+        	        document.getElementById('validacionEdicion').innerHTML = "La Descripción está vacía";
+                    return false;
+        	    }else{
+        	    	if(descripcion.length > 60){
+                		document.getElementById('validacionEdicion').innerHTML = "La descripción no puede tener más de 60 caracteres";
+                        return false;
+                	}
+        	    }
+        	}	
+            
+            var nombre = $("#nombre").val(); 
+            var nombreSelectOmitFromValidation = $("#nombreSelectOmitFromValidation").val(); 
+            if(nombre != null){
+                if(nombre == ""){ 
+                	document.getElementById('validacionEdicion').innerHTML = "El Nombre está vacío";
+                    return false;
+                }else{
+                	if(nombre.length > 30){
+                		document.getElementById('validacionEdicion').innerHTML = "El nombre no puede tener más de 30 caracteres";
+                        return false;
+                	}
+                	
+                    var nombresList = [[${nombresList}]];
+                	for(i = 0; i < nombresList.length; i++){
+                		if(nombresList[i]!=nombreSelectOmitFromValidation){
+                			if(nombresList[i]==nombre){
+                			    document.getElementById('validacionEdicion').innerHTML = "Este Nombre ya está en uso";
+                        	    return false; 	
+                			}
+                		}
+                	}   	
+                } 
+            }	
+        };
+               
+        function realizarValidacionesCreacion(){ 
+        	
+        	var descripcion = $("#descripcionNew").val();             
+            if(descripcion != null){ 	
+        	    if(descripcion == ""){ 
+        	    	document.getElementById('validacionCreacion').innerHTML = "La Descripción está vacía";
+                    return false;
+        	    }else{
+        	    	if(nombre.length > 60){
+                		document.getElementById('validacionCreacion').innerHTML = "La descripción no puede tener más de 60 caracteres";
+                        return false;
+                	}
+        	    }
+        	}	
+        	
+            var nombre = $("#nombreNew").val(); 
+            if(nombre != null){
+                if(nombre == ""){ 
+                	document.getElementById('validacionCreacion').innerHTML = "El Nombre está vacío";
+                    return false;
+                }else{  
+                	if(nombre.length > 30){
+                		document.getElementById('validacionCreacion').innerHTML = "El nombre no puede tener más de 30 caracteres";
+                        return false;
+                	}
+                	
+                    var nombresList = [[${nombresList}]];
+                	for(i = 0; i < nombresList.length; i++){
+                	    if(nombresList[i]==nombre){
+                		    document.getElementById('validacionCreacion').innerHTML = "Este Nombre ya está en uso";
+                        	return false; 	
+                		}        			
+                	}
+                } 
+            }
+            
+            var icono = $("#iconoNew").val();     
+            if(icono != null){ 
+            	if(icono == ""){ 
+        	        document.getElementById('validacionCreacion').innerHTML = "Debe cargar un icono";
+                    return false;
+            	}
+        	}
+            
+            var idTipo = $("#tipoNew").val();      
+            if((idTipo == 5) || (idTipo == 8)){
+            	var iconoApr = $("#iconoAprNew").val(); 
+            	if(iconoApr == ""){ 
+        	        document.getElementById('validacionCreacion').innerHTML = "Debe cargar un icono para el estado Aprobado";
+                    return false;
+            	}else{
+            		var iconoPen = $("#iconoPenNew").val(); 
+            		if(iconoPen == ""){ 
+            	        document.getElementById('validacionCreacion').innerHTML = "Debe cargar un icono para el estado Pendiente";
+                        return false;
+                	}else{
+                		var iconoRec = $("#iconoRecNew").val(); 
+                		if(iconoRec == ""){ 
+                	        document.getElementById('validacionCreacion').innerHTML = "Debe cargar un icono para el estado Rechazado";
+                            return false;
+                    	}
+                	}
+            	}        	    
+            }
+            
+        };
+        /*]]>*/
+    </script> 
+   	                 	  
+</body>
+
+    
+</html>

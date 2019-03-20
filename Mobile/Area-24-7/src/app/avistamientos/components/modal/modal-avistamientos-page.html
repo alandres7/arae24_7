@@ -1,0 +1,165 @@
+<div class="containerAvistamiento">
+    <div *ngIf="data.id == 4" style="height: 100%;">
+        <div id="bar-modal" class="barAvistamiento" [class.backgroundColor]="'green'">
+            <ion-buttons end>
+                <button color="clear" ion-button button-toogle end (click)="closeModal()"><ion-icon name="close"></ion-icon></button>
+            </ion-buttons>
+        </div>
+        <img id="img-modal" class="img" src="assets/avistamiento/camara.png">
+        <div *ngIf="slide" [style.color]="height" style="margin-top:-35px;height: 220px;width: 100%;" >
+            <img class="imagePrincipal" src="{{data.imagenPrincipal}}" />
+        </div>
+
+
+        <ion-slides pager="true" (ionSlideDidChange)="slideChanged()">
+            <ion-slide>
+                <div>
+                    <h4 class="titulo">Especie</h4>
+                </div>
+                <div class="padre">
+                    <div (mouseenter)="cambiarColorIcono($event)" (click)="seleccionEspecie(29)" id="center"><img class="imgEspecie" src="assets/avistamiento/reptil.png"></div>
+                    <div (mouseenter)="cambiarColorIcono($event) " (click)="seleccionEspecie(27)" id="izquierda"> <img class="imgEspecie" src="assets/avistamiento/pajaro.png"></div>
+                    <div (mouseenter)="cambiarColorIcono($event) " (click)="seleccionEspecie(28)" id="derecha"> <img class="imgEspecie" src="assets/avistamiento/mamifero.png"></div>
+                </div>
+
+
+            </ion-slide>
+            <ion-slide>
+                <div>
+                    <h4 class="titulo">Especie</h4>
+                </div>
+                <div style="text-align:center;">
+                    <ion-list>
+                        <ion-item>
+                           
+                            <ion-select [(ngModel)]="modelSubcategoria">
+                                <ion-option *ngFor="let subcategoria of subcategorias" [value]="subcategoria.nombreComun">{{subcategoria.nombreComun}}</ion-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-list>
+                </div>
+                <div>
+                    <h4 class="titulo">Descripción</h4>
+                </div>
+                <div>
+                    <ion-textarea  [(ngModel)]="descripcion" name="description"></ion-textarea>
+                </div>
+
+
+            </ion-slide>
+            <ion-slide>
+                <div>
+                    <h4 class="titulo">¿No conoces la especie?</h4>
+                </div>
+                <div>
+                    <ion-item style="padding-left: 40%;">
+                        <ion-avatar>
+                            <img style="width: 50%;height: 50%;border: 1.2px solid #bcb1b1;border-radius: 50%;background-color:#f4f4f4" src="assets/avistamiento/buscar.png">
+                        </ion-avatar>
+                    </ion-item>
+                </div>
+                <div class="padre">
+                    <div id="derecha"><button (click)="registrar()" ion-button style="background-color:#009A37">Aceptar</button></div>
+                    <div id="izquierda"><button (click)="closeModal()"  ion-button color="light" style="color:#009A37">Cancelar</button></div>
+                </div>
+
+            </ion-slide>
+
+        </ion-slides>
+
+
+    </div> 
+
+   <!-- <div *ngIf="data.id == 4" style="height: 100%;">
+        <div id="bar-modal" class="barAvistamiento" [class.backgroundColor]="'green'">
+            <ion-buttons end>
+                <button color="clear" ion-button button-toogle end (click)="closeModal()"><ion-icon name="close"></ion-icon></button>
+            </ion-buttons>
+        </div>
+        <img id="img-modal" class="img" src="assets/avistamiento/camara.png">
+        <div *ngIf="slide" [style.color]="height" style="margin-top:-35px;height: 180px;width: 100%;">
+            <img class="imagePrincipal" src="{{data.imagenPrincipal}}" />
+        </div>
+        <button *ngIf="navegacion" (click)="regresarArbolSeleccion()" ion-button clear item-end>Regresar</button>
+
+        <ion-scroll style="width:100%;height:50%" scrollX="true">
+            <ion-list>
+                <ion-row>
+                    <ion-col col-8 style="width: 100%;max-width: 100%;" *ngFor="let ArbolDesicion of listaArbolDesicionFiltrada">
+                        <ion-item (click)="seleccionOpcionArbol(ArbolDesicion)">
+                            <ion-thumbnail style="padding-left: 35%;" *ngIf="ArbolDesicion.multimedia.ruta">
+                                <img src="{{ArbolDesicion.multimedia.ruta}}">
+                            </ion-thumbnail>
+                            <h2 style="text-align: center;">{{ArbolDesicion.texto}}</h2>
+                            <h3>{{ArbolDesicion.textoAlternativo}}</h3>
+
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </ion-list>
+        </ion-scroll>
+
+        <ion-scroll scrollX="true" style="width:100%; height:100%">
+            <ion-row nowrap class="headerChip" style="width: 100%">
+                <div style="width: 100%; max-width: 100%;" *ngFor="let ArbolDesicion of listaArbolDesicionFiltrada">
+                    <ion-item (click)="seleccionOpcionArbol(ArbolDesicion)">
+                        <ion-thumbnail style="padding-left: 25%;" *ngIf="ArbolDesicion.multimedia">
+                            <img src="{{ArbolDesicion.multimedia.ruta}}">
+                        </ion-thumbnail>
+                        <h2 style="text-align: center;">{{ArbolDesicion.nombre}}</h2>
+                        <h3 style="width:90%;">{{ArbolDesicion.descripcion}}</h3>
+                    </ion-item>
+                </div>
+            </ion-row>
+        </ion-scroll>
+
+     <div *ngIf="menuDinamico == true">
+            <ion-buttons end>
+                <button color="clear" ion-button button-toogle end (click)="construirMenuDinamico()"><ion-icon name="close"></ion-icon></button>
+            </ion-buttons>
+            <div id="dinamicoFormulario"></div>
+        </div> 
+
+
+
+
+
+    </div>-->
+
+    <div *ngIf="data.id == 1" style="height: 100%;">
+        <div id="bar-modal" class="barAvistamiento" [class.backgroundColor]="'green'">
+            <ion-buttons end>
+                <button color="clear" ion-button button-toogle end (click)="closeModal()"><ion-icon name="close"></ion-icon></button>
+            </ion-buttons>
+        </div>
+        <img id="img-modal" class="img" src="assets/avistamiento/pajaroWhite.png">
+        <div [style.color]="height" style="margin-top:-30px">
+            <img class="imagePrincipal" src="{{imagen}}" />
+        </div>
+
+        <div>
+            <div>
+                <h4 class="titulo">Comentarios</h4>
+            </div>
+            <ion-scroll style="width:100%;height:130px" scrollY="true">
+                <ion-list scroll="true">
+                    <ion-item *ngFor="let comentario of comentarios">
+                        <h3 class="titulo" style="text-align: left;">{{comentario.descripcion}} - "20/06/2017"</h3>
+                        <p>{{comentario.publicacion}}</p>
+                        <h4 class="titulo" style="text-align: left;">Denunciar</h4>
+                    </ion-item>
+                </ion-list>
+            </ion-scroll>
+            <div>
+                <button ion-button style="background-color:#009A37">Comentar</button>
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+
+
+</div>

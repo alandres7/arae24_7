@@ -1,0 +1,313 @@
+﻿import { Component, OnInit, OnDestroy, ElementRef, ViewChild} from '@angular/core';
+import { NavController, NavParams, MenuController, ModalController, Events, Platform } from 'ionic-angular';
+import { ModalPage } from './../../../core/modal-page/modal-page';
+import { menuDinamico } from './../../../menu/provider/menu';
+import { GoogleMaps } from "../../../shared/utilidades/googleMaps";
+import { Common } from "../../../shared/utilidades/common";
+import { Geolocation, GeolocationOptions } from '@ionic-native/geolocation';
+import { AppDiagnostic } from "../../../shared/utilidades/diagnostic";
+
+import { Subscription } from 'rxjs/Subscription';
+import { safeGet } from '@firebase/util/dist/esm/src/obj';
+
+declare var google;
+
+@Component({
+    selector: 'inicio-page',
+    templateUrl: 'inicio-page.html'
+
+})
+
+export class InicioPage implements OnInit, OnDestroy {
+      
+    private positionSubscription: Subscription;
+
+    static readonly MIN_ZOOM = 6;
+    static readonly MAX_ZOOM = 20;
+
+    zoomIn(): void {
+        if (this.zoom < InicioPage.MAX_ZOOM) {
+            ++this.zoom;
+            this.googleMaps.cambiarZoom({'lat': this.lat,'long': this.lng, 'zoom': this.zoom});
+        }
+        console.log("zoommmm");
+    }
+
+    zoomOut(): void { 
+        if (this.zoom > InicioPage.MIN_ZOOM) {
+            --this.zoom;
+            this.googleMaps.cambiarZoom({'lat': this.lat,'long': this.lng, 'zoom': this.zoom});
+        }            
+        console.log("zoommmm");
+    }
+
+    ngOnDestroy(): void {
+        this.watch = undefined;
+        this.googleMaps.removerMapa();
+
+        //this.navCtrl.pop();
+    }
+
+    ngOnInit(): void {
+        this.load();
+        this.utilidad.checKNetwork();
+        this.cagarMenu();
+    }
+
+    lat: any;
+    lng: any;
+    latInicial: any;
+    lngInicial: any;
+    miMarker: any;
+    ctaLayer: any;
+    ctaLayer2: any;
+    iconoMiPunto: string;
+    range: any;
+    zoom: number = 6;
+    watch: any;
+    drawerOptions: any;
+
+    /*@ViewChild(MapaComponent)
+    private mapaComponent: MapaComponent;*/
+
+    constructor(
+        public navCtrl: NavController,
+        private modalCtrl: ModalController,
+        public navParams: NavParams,
+        public menu: MenuController,
+        private geolocation: Geolocation,
+        private platform: Platform,
+        public googleMaps: GoogleMaps,
+        public utilidad: Common,
+        private prueba: AppDiagnostic,
+        public pmenuService: menuDinamico,
+        private events: Events,
+        private utilidades: Common) {
+        this.menu.enable(true);
+
+        this.events.subscribe('obtenerPosicion', () => {
+            return { 'lat': this.lat, 'lng': this.lng };
+        });
+
+        this.events.subscribe('calcularDistancia', (lat, lng) => {
+            if (!this.latInicial) {
+                this.latInicial = lat;
+            }
+            if (!this.lngInicial) {
+                this.lngInicial = lng;
+            }
+            let distancia: Number = this.obtenerDistancia(this.latInicial, this.lngInicial, lat, lng);
+            if (distancia >= ((this.googleMaps.pRadioAccion - (this.googleMaps.pRadioAccion / 5)))) {
+                this.latInicial = lat;
+                this.lngInicial = lng;
+                console.log("supero radio de accion || distancia " + distancia);
+                console.log("radio de accion || " + this.googleMaps.pRadioAccion);
+                this.events.publish('busquedAutomatica');
+            } else {
+                console.log("No supero radio de accion || distancia --> " + distancia);
+            }
+        });
+
+        this.drawerOptions = {
+            handleHeight: 20,
+            thresholdFromBottom: 200,
+            thresholdFromTop: 200,
+            bounceBack: true
+        };
+
+    }
+    ngAfterViewInit() {
+
+    }
+
+    ionViewDidLoad() {
+        this.subscribeToZoomChanges();
+
+        //this.getPosition();
+       
+        //this.subscribeToPositionChanges();
+
+        this.geolocation.getCurrentPosition().then((resp) => {
+            this.lat = resp.coords.latitude;
+            this.lng = resp.coords.longitude;
+            this.utilidades.validarMunicipioUbicacion(this.lat, this.lng).then(respuesta =>{
+                console.log("posicionamiento usuario didLoad" + JSON.stringify(respuesta));
+            });
+
+        }).catch((error) => {
+            //this.utilidad.generalAlert('Alerta 2', JSON.stringify(error));
+            console.log('posicionamiento usuario didLoad error' + JSON.stringify(error));
+        });
+    }
+
+    subscribeToZoomChanges(): void {
+        this.googleMaps.zoomChanged$.subscribe(
+            (zoom: number) => {
+                this.zoom = zoom;
+                console.log('zoom: ' + zoom);
+            }
+        );
+    }
+
+    getPosition(): void {
+        this.platform.ready()
+            .then(() => {
+                this.geolocation.getCurrentPosition()
+                    .then((value) => { console.log('getCurrentPosition ' + JSON.stringify(value)); })
+                    .catch(error => { console.log('getCurrentPosition ' + JSON.stringify(error));});
+            })
+            .catch(error => console.log('ready error' + JSON.stringify(error)));
+    }
+
+    subscribeToPositionChanges(): void {
+        this.platform.ready()
+            .then(() => {
+                this.positionSubscription = this.geolocation.watchPosition()
+                    .filter((p) => p.coords != undefined)
+                    .subscribe(
+                        (position) => { console.log('subscribeToPositionChanges ' + JSON.stringify(position)); },
+                        (error) => { console.log('subscribeToPositionChanges error' + JSON.stringify(error)); }
+                );
+            })
+            .catch(error => console.log('ready error' + JSON.stringify(error)));
+    }
+
+    getGeolocationOptions(): GeolocationOptions {
+        let options: GeolocationOptions = {
+        };
+        return options;
+    }
+
+    load() {
+        //this.prueba.checkLocation(); IMPORTANTE : HABILITAR
+        //this.prueba.checkLocation2().subscribe();
+
+        this.geolocation.getCurrentPosition().then((resp) => {
+            this.lat = resp.coords.latitude;
+            this.lng = resp.coords.longitude;
+            this.latInicial = resp.coords.latitude;
+            this.lngInicial = resp.coords.longitude;
+            this.googleMaps.posicionLat = this.lat;
+            this.googleMaps.posicionLon = this.lng;
+            console.log("posicion load" + JSON.stringify(resp));
+            console.log('position lat: ' + resp.coords.latitude + ', lng: ' + resp.coords.longitude);
+            //this.googleMaps.initMap(this.lat, this.lng, document.getElementById('map'));
+            //this.googleMaps.posicionLatLon = { 'lat': this.lat, 'lon': this.lng };
+            this.googleMaps.initMap({ 'lat': this.lat, 'lng': this.lng });
+            this.googleMaps.kmlPrincipal();
+           // this.utilidades.validarMunicipioUbicacion(this.lat, this.lng);
+
+        }).catch((error) => {
+            console.log('posicion load error' + JSON.stringify(error));
+            console.log(error);
+        });
+
+        this.watch = this.geolocation.watchPosition();
+        this.watch
+            .filter((p) => p.coords !== undefined)
+            .subscribe((data) => {
+                console.log('watch ' + JSON.stringify(data));
+                console.log('watch lat: ' + data.coords.latitude + ', lng: ' + data.coords.longitude);
+                this.lat = data.coords.latitude;
+                this.lng = data.coords.longitude;
+                this.googleMaps.posicionLat = this.lat;
+                this.googleMaps.posicionLon = this.lng;
+                this.googleMaps.miPunto({ 'lat': this.lat, 'lng': this.lng, 'icono': 'assets/mapa/ubicacion.png' });
+
+                let distancia: Number = this.obtenerDistancia(this.latInicial, this.lngInicial, this.lat, this.lng);
+                if (distancia >= ((this.googleMaps.pRadioAccion - (this.googleMaps.pRadioAccion / 5)))) {
+                    this.latInicial = this.lat;
+                    this.lngInicial = this.lng;
+                    console.log("supero radio de accion || distancia " + distancia);
+                    console.log("radio de accion || " + this.googleMaps.pRadioAccion);
+                    this.events.publish('busquedAutomatica', this.lat, this.lng);
+                } else {
+                    console.log("No supero radio de accion || distancia --> " + distancia);
+                }
+                //console.log("location error || " + JSON.stringify(this.miMarker));
+                //this.googleMaps.crearInfoWindow({ 'marker': this.miMarker, 'contenido': '<h3> Mi posicion </h3>' });
+            },
+            (error) => {
+                console.log('watch error ' + JSON.stringify(error));
+            });
+
+    }
+
+
+
+
+    // menu aplicacion alterno
+
+    swtAplicacion(key) {
+        switch (key) {
+            case 3:
+                this.utilidad.submenu.sAvistamientos = true;
+                break;
+
+            case 4:
+                this.utilidad.submenu.sOrdenamiento = true;
+                break;
+
+            case 6:
+                this.utilidad.submenu.sHuellas = true;
+                break;
+
+            case 2:
+                this.utilidad.submenu.sVigias = true;
+                break;
+
+            case 1:
+                this.utilidad.submenu.sMovilidad = true;
+                break;
+
+            case 5:
+                this.utilidad.submenu.sEntorno = true;
+                break;
+
+            /* default:
+                 break; */
+        }
+    }
+
+    mensajeAplicacion(dato) {
+        if (dato.recomendaciones && dato.recomendaciones.length > 0) {
+            //codigoColor
+            var datos = { texto: String, color: String, imagen: String, nombre: String, tipo: String };
+            datos.color = dato.codigoColor;
+            datos.imagen = dato.rutaIcono;
+            datos.texto = dato.recomendaciones[0].descripcion;
+            datos.nombre = dato.recomendaciones[0].nombre;
+            datos.tipo = null;
+            const modal = this.modalCtrl.create(ModalPage, datos);
+            modal.present();
+        }
+    }
+
+    private cagarMenu() {
+        /*var pusuario: any = JSON.parse(localStorage.getItem("usuario"));
+        if (pusuario !== null && pusuario !== undefined) {
+            var objPreferencias = JSON.parse(pusuario.preferencias)
+            var pArreglo: Array<any> = <Array<any>>objPreferencias.preferencias;
+            this.pmenuService.compararOpcionesMenu(this.pmenuService.listaMenu, pArreglo);
+            console.log("Lista Preferencias"+JSON.stringify(this.pmenuService.listaMenu));
+        }*/
+    }
+
+    private rad(x) {
+        return x * Math.PI / 180;
+    };
+
+    private obtenerDistancia(lat1, lng1, lat2, lng2) {
+        var R = 6378137; // Earth’s mean radius in meter
+        var dLat = this.rad(lat2 - lat1);
+        var dLong = this.rad(lng2 - lng1);
+        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(this.rad(lat1)) * Math.cos(this.rad(lat2)) *
+            Math.sin(dLong / 2) * Math.sin(dLong / 2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var d = R * c;
+        return d; // returns the distance in meter
+    };
+
+
+}

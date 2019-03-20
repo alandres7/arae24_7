@@ -1,0 +1,104 @@
+<ion-header>
+  <barra-navegabilidad></barra-navegabilidad>
+</ion-header>
+
+<ion-content mapa>
+  <div contenido-mapa>
+      <div class="divMenu" *ngIf="rutasCercanas" style="width: 100%">
+
+            <ion-grid style="width: 80%; margin-left: auto; margin-right: auto">
+              <ion-row>
+
+                <ion-col col-3 style="margin-left: 12px">
+                  <div (click)="onClickRutas()"  >
+                    <ion-row >
+                    <img src="assets/movilidad/iconos/rutas.png" style="width: 50%;  height: 60%; margin-left: 14px"  >
+                    </ion-row>
+
+                    <ion-row><span class="labelsMenu" style="margin-left:14px" >{{txtRutas}}</span></ion-row>
+                  </div>
+
+              </ion-col>
+                <ion-col col-1>
+                   <img src="assets/movilidad/iconos/separador.png" style="width: 65%;
+            height: 84%;" >
+               </ion-col>
+
+                <ion-col  col-3>
+                  <div (click)="onClickLineas()">
+                    <ion-row><img src="assets/movilidad/iconos/lineas.png" style="width: 50%;  height: 60%;     margin-left: 12px;" > </ion-row>
+                    <ion-row><span class="labelsMenu" style="margin-left: 10px;">{{txtLineas}}</span></ion-row>
+                  </div>
+                </ion-col>
+                  <ion-col col-1>
+                    <img src="assets/movilidad/iconos/separador.png" style="width: 65%;
+            height: 84%;" >
+               </ion-col>
+                <ion-col col-3>
+                  <div (click)="onClickCiclovias()" style="text-align: center">
+                    <ion-row><img src="assets/movilidad/iconos/ciclorutas.png" style="width: 50%;  height: 60%;     margin-left: 9px;"  > </ion-row>
+                    <ion-row><span class="labelsMenu">{{txtCiclovias}}</span></ion-row>
+                  </div>
+                </ion-col>
+
+              </ion-row>
+            </ion-grid>
+
+        </div>
+
+        <buscar-ubicacion [ubicacion]="ubicacion" [showSeleccionarEnMapa]="false" [editable]="false"></buscar-ubicacion>
+
+        <ion-card *ngIf="showDetalle" class="cardDetalle">
+          <ion-card-header class="headerDetalle">
+            <ion-grid>
+              <ion-row class="rowBorder">
+                <ion-col col-auto><img src="{{imgDetalle}}" style="height: 20px; width: auto;" /></ion-col>
+                <ion-col col-6 wider><div class="labelHeader">{{txtDetalle}}</div></ion-col>
+
+              </ion-row>
+            </ion-grid>
+          </ion-card-header>
+          <!-- <ion-list> -->
+            <!-- <ion-item *ngFor="let item of items"> -->
+              <ion-grid  *ngFor="let item of items">
+                <ion-row style="margin-bottom: 5px">
+
+                  <ion-col col-1 >
+                      <ion-checkbox [(ngModel)]="item.checked" color="dark" (ionChange)="checkMostrarRuta($event,item)"   ></ion-checkbox>
+                    </ion-col>
+                    <ion-col col-1>
+                        <img src="{{imgDetalle}}" style="height: 20px; width: auto;" />
+                    </ion-col>
+                    <ion-col col-10>
+
+                        <span class="labelsDetalle">{{ item.codigoRuta }}</span>
+                    </ion-col>
+
+                </ion-row>
+                <ion-row *ngIf="item.horaInicioOperacion">
+                  <span class="labelsDetalle" >Horario:</span>
+                  <span class="labelsDes">N/A</span>
+                </ion-row>
+                <!-- <ion-row *ngIf="item.descripcion">
+                    <span class="labelsDes">N/A</span>
+                  </ion-row> -->
+                <ion-row >
+                <span class="labelsDetalle" >Frecuencia: </span>
+                  <span class="labelsDes">N/A</span>
+                </ion-row>
+                <ion-row>
+                 <span class="labelsDetalle" >Tarifa: </span>
+                  <span class="labelsDes">N/A</span>
+                </ion-row>
+                <ion-row>
+                  <span class="labelsDetalle" >Empresa: </span>
+                   <span class="labelsDes">N/A</span>
+                 </ion-row>
+              </ion-grid>
+
+
+            <!-- </ion-item> -->
+          <!-- </ion-list> -->
+        </ion-card>
+  </div>
+</ion-content>

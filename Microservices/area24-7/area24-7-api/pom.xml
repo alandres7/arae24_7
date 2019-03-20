@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>co.gov.metropol.area247</groupId>
+	<artifactId>area24-7-api</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>area24-7-api</name>
+	<description>Proyecto de microservicios para la gestión de datos de seguridad de las aplicaciones Área 24-7</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.4.7.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<!-- Unit Testing -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- Base de datos en memoria para testing -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.firebase</groupId>
+			<artifactId>firebase-admin</artifactId>
+			<version>5.2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gms</groupId>
+			<artifactId>google-services</artifactId>
+			<version>3.1.1</version>
+			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc7</artifactId>
+			<version>12.1.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>co.gov.metropol.area247</groupId>
+			<artifactId>area24-7-contenedora</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>co.gov.metropol.area247</groupId>
+			<artifactId>area24-7-entorno</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>co.gov.metropol.area247</groupId>
+			<artifactId>area24-7-centro-control</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>co.gov.metropol.area247</groupId>
+			<artifactId>area24-7-vigias</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>co.gov.metropol.area247</groupId>
+			<artifactId>area24-7-movilidad-boot-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>co.gov.metropol.area247</groupId>
+			<artifactId>area24-7-huellas</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-mock</artifactId>
+			<version>2.0.8</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.7.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.7.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-spatial -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-spatial</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>co.gov.metropol.area247</groupId>
+			<artifactId>area24-7-avistamiento</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+	<repositories>
+		<repository>
+			<id>OSGEO GeoTools repo</id>
+			<url>http://download.osgeo.org/webdav/geotools</url>
+		</repository>
+		<repository>
+			<id>Hibernate Spatial repo</id>
+			<url>http://www.hibernatespatial.org/repository</url>
+		</repository>
+	</repositories>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<!-- <configuration> <executable>true</executable> </configuration> -->
+			</plugin>
+		</plugins>
+	</build>
+</project>

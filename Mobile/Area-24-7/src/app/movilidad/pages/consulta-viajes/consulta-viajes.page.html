@@ -1,0 +1,60 @@
+<ion-header>
+    <barra-navegabilidad [titulo]="titulo"></barra-navegabilidad>
+</ion-header>
+
+    <ion-content mapa>
+        <div contenido-mapa>
+                <ion-grid>
+                    <ion-row>
+                        <ion-col col-1>
+                            <img class="iconsearch" src="assets/movilidad/iconos/salida.png">
+                        </ion-col>
+                        <ion-col col-10>
+                                <ion-input class="inputBtn" [(ngModel)]="origen.descripcion" [placeholder]="origen.txtPlaceholder" disabled (click)="mostrarModal(origen)"></ion-input>
+                                <div class="btn-position"></div>
+                        </ion-col>
+                    </ion-row>
+            
+                    <ion-row>
+                        <ion-col col-1>
+                        </ion-col>
+                        <ion-col col-9>
+                        </ion-col>
+                        <ion-col (click)="cambiarOrigenDestino()" col-2>
+                            <img class="iconsearch3" src="{{origenDestinoIcono}}">
+                        </ion-col>
+                    </ion-row>
+            
+                    <ion-row>
+                        <ion-col col-1>
+                            <img class="iconsearch" src="assets/movilidad/iconos/llegada.png">
+                        </ion-col>
+            
+                        <ion-col col-10 id="destinoContainer"> 
+                            <ion-input class="inputBtn" [(ngModel)]="destino.descripcion" [placeholder]="destino.txtPlaceholder" disabled (click)="mostrarModal(destino)"></ion-input>
+                            <div class="btn-search" (click)="actualizarVista()" ></div>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            
+                <div *ngIf="cardMinViajesSugeridos">
+                    <ion-card (click)="toogleViajesSugeridos()">
+                        <ion-card-header class="headerViaSug" style="padding: 0; font-weight:bold;">
+                            <div style="margin-top: -4px;">Viajes sugeridos</div>
+                        </ion-card-header>
+                    </ion-card>
+                </div>
+            </div>
+
+             <!-- Boton -->
+            <div class="btn-buscar" (click)="obtenerUbicacionActual()">
+                <button ion-fab mini right>
+                    <ion-icon name="locate"></ion-icon>
+                </button>
+            </div>
+
+            <ion-footer>
+                <menu-opciones [activeLayer]="1"></menu-opciones>
+            </ion-footer>
+        </ion-content>
+        

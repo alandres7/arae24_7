@@ -1,0 +1,33 @@
+lista-objetos-mapa {
+    div{
+        background-color: rgba(255, 255, 255, .7);
+        max-height: 25vh;
+        transition-delay: 8s;
+        padding: 15px;
+        margin: 10px; 
+        margin-top: 5px;
+        overflow-y: auto;
+    }
+    
+    div label {
+        background-color: transparent;
+        // border-style: solid;
+        // border-color: red;
+        color: gray;
+        display: block;
+        padding: 3px;
+    }
+
+    hr.style14 { 
+        border: 0; 
+        height: 0.6px; 
+        background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+        background-image: -moz-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+        background-image: -ms-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+        background-image: -o-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0); 
+      }
+
+    // style="border-style: solid;
+    // border-color: transparent; border-bottom: .7px #d4d4d4;   
+    // color:gray; display: block; padding: 3px;"
+}

@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-navbar [ngStyle]="{'background': color}">
+      <ion-title>RESULTADOS</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="center">
+  <div class="colu">
+    <span class="subtitulo">Hemos calculado tu consumo hídrico</span>
+    <p class="grayText">Encontrarás un listado donde puedes seleccionar un reto, cada uno dura <span class="bold">21 días</span> donde el objetivo es reducir el consumo y crear buenos hábitos.</p>
+  </div>
+  <div class="colu">
+    <h1 class="">Tu resultado:</h1>
+    <div [ngClass]="clase" class="resp">
+      <i class="fas"></i>
+      <p>¡{{nivel}} nivel<br/>de consumo!<br/><span class="bold">{{valor}} litros/mes</span></p>
+    </div>
+  </div>
+
+  <div class="colu">
+    <span class="subtitulo">Lista de retos</span>
+    <ion-list class="retos">
+        <ion-item>
+          <h1 (click)="openChallenges()"><i class="fas fa-circle select"  [ngStyle]="{'color': color}"></i> Personal</h1>
+          <span class="lista" [ngStyle]="{'color': color}">Ponte una meta y cumplela los 21 días.</span>
+        </ion-item>
+        <ion-item>
+            <h1 (click)="openChallenges()"><i class="fas fa-circle"></i> Baño</h1>
+            <span class="lista">Reducir tiempo de ducha.</span><br/>
+            <span class="lista">Cerrar la llave mientras usas jabón o shampoo.</span><br/>
+            <span class="lista">Cerrar la llave mientras te enjabonas las manos.</span>          
+        </ion-item>
+        <ion-item>
+            <h1 (click)="openChallenges()"><i class="fas fa-circle"></i> Cocina</h1>
+            <span class="lista" >Cerral la llave cuando laves los platos.</span>        
+        </ion-item>
+      </ion-list>     
+  </div>
+  
+  <div class="botones">
+    <button ion-button (click)="goToAcceptChallenge()">Aceptar un reto</button>
+    <button ion-button [ngStyle]="{'background': color}" (click)="goToDeclineChallenge()">Finalizar sin retos</button>
+  </div>
+</ion-content>

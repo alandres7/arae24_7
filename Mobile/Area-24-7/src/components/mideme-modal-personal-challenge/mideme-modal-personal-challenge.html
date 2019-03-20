@@ -1,0 +1,20 @@
+<ion-content padding>
+    <ion-buttons end>
+        <button class="close" ion-button  icon-only  end (click)="closeModal()">
+            <ion-icon name="close"></ion-icon>
+        </button>
+    </ion-buttons>
+  <div>
+    <h1 [ngStyle]="{'color': color}">Cuentanos que hábito quieres cambiar en 21 días.</h1>
+  </div>
+  <br>
+
+  <div>
+      <ion-textarea placeholder="Descripción"></ion-textarea>
+  </div>
+
+  <div class="botones">
+    <button ion-button (click)="challengeAccepted()">Iniciar reto</button>
+  </div>
+</ion-content>
+  

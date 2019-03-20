@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" >
+	<head lang="en">	
+	    <title>Area 24/7</title>
+	    <meta charset="utf-8"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <div th:fragment="header-contend">
+            <link th:href="@{/css/bootstrap-theme.css}" rel="stylesheet"/>
+  	    	<link th:href="@{/css/style.css}" rel="stylesheet"/>
+  	    	<script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js}"></script>
+    		<script th:src="@{https://secure.aadcdn.microsoftonline-p.com/lib/1.0.16/js/adal.min.js}"></script>
+   			<script th:src="@{https://microsoft.github.io/PowerBI-JavaScript/demo/node_modules/powerbi-client/dist/powerbi.js}"></script> 
+  	    	<script th:src="@{/js/powerbi_auth/site.js}"></script>
+        </div>  
+	</head>
+
+	<body>	
+	
+	<div th:fragment="main-powerbi">
+			 <div class="report" th:data-report-id="${reportId}" th:data-group-id="${groupId}"></div>
+	</div>
+			
+	
+    </body>
+</html>
+
+
+    

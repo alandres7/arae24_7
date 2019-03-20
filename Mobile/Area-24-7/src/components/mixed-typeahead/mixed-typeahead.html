@@ -1,0 +1,35 @@
+<div id="search" class="search-input-keyword">
+    <ion-searchbar class="ion-searchtext" 
+                   id="ion-searchtext" 
+                   animated="true" 
+                   type="search" 
+                   (ionInput)="onInputSearchChange($event)" 
+                   [(ngModel)]="inputValue" 
+                   (ionBlur)="onBlurInputSearch()" 
+                   (ionFocus)="onFocusInputSearch()" 
+                   (keyup.enter)="onEnter()"
+                   placeholder="Búsqueda" 
+                   debounce="250"></ion-searchbar>
+</div>
+
+<div class="search-input-keyword search-list">
+    <ion-list>
+        <button ion-item 
+                *ngFor="let suggestion of suggestions" 
+                (mousedown)="onMouseDownApiSuggestion(suggestion.id)">
+            
+            <img width="20" height="20" [src]="suggestion.urlIcon">
+            
+            <label>{{suggestion.description}}</label>
+        </button>
+
+        <button ion-item 
+                *ngFor="let suggestion of googlePlacesSuggestions" 
+                (mousedown)="onMouseDownGooglePlacesSuggestion(suggestion.id)">
+            
+            <img width="20" height="20" src="assets/login/google-plus.svg" [style.background-color]="color">
+            
+            <label>{{suggestion.description}}</label>
+        </button>
+    </ion-list>
+</div>

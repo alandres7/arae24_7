@@ -1,0 +1,96 @@
+<ion-header>
+    <menu-modal [titulo]="titulo" [viewCtrl]="viewCtrl"></menu-modal>
+</ion-header>
+
+<ion-content mapa>
+    <div contenido-mapa>
+        <buscar-ubicacion [ubicacion]="ubicacion" [dismissComponent]="true" [root]="root" [animate]="animate" (clickSeleccionarUbicacionMapa)="clickSeleccionarUbicacionMapa($event)" (clickSeleccionarPrediccion)="clickSeleccionarPrediccion($event)">
+        </buscar-ubicacion>
+
+        <ion-card *ngIf="ubicacion.descripcion=='' || !ubicacion.descripcion">
+                <ion-item class="itemFav">
+
+                    <ion-grid>
+
+                        <ion-row>
+                            <ion-col col-2>
+                                <img src="assets/movilidad/iconos/favoritos.png" style="width:28px; float:left;position: relative;
+      top: -5px; left: -6px;">
+                            </ion-col>
+                            <ion-col col-8>
+                                <div class="titlefav">Favoritas</div>
+                            </ion-col>
+                            <ion-col col-2>
+                                <button ion-button class="ion-button   addbtn" (click)="nuevaUbicacionFavorita()">
+                                    Agregar
+                                </button>
+                            </ion-col>
+                        </ion-row>
+
+                    </ion-grid>
+                </ion-item>
+
+            <ion-list>
+
+                <ion-item *ngFor="let itemUbicacionFavorita of ubicacionesFavoritas" class="itemFavo">
+                    <ion-grid class="gridFavo">
+                        <ion-row>
+                            <ion-col col-auto>
+                                <div *ngIf="itemUbicacionFavorita.nombreCategoria=='Otro'" style="width: 2rem;">
+                                    <!-- <ion-icon><img src="assets/movilidad/iconos/otras.png" class="iconLisFav"></ion-icon> -->
+                                </div>
+
+                                <div *ngIf="itemUbicacionFavorita.nombreCategoria=='Frecuente'">
+                                    <ion-icon><img src="assets/movilidad/iconos/frecuente.png" class="iconLisFav"></ion-icon>
+                                </div>
+
+                                <div *ngIf="itemUbicacionFavorita.nombreCategoria=='Casa'">
+                                    <ion-icon><img src="assets/movilidad/iconos/home.png" class="iconLisFav"></ion-icon>
+                                </div>
+
+                                <div *ngIf="itemUbicacionFavorita.nombreCategoria=='Trabajo'">
+                                    <ion-icon><img src="assets/movilidad/iconos/trabajo.png" class="iconLisFav"></ion-icon>
+                                </div>
+                            </ion-col>
+
+                            <ion-col col-4 class="coloNomFav">
+                                <div (click)="establecerUbicacion(itemUbicacionFavorita)">
+                                    <span class="textUbifav">
+                                        <label>{{itemUbicacionFavorita.nombreCategoria}}</label>
+                                    </span>
+                                </div>
+                            </ion-col>
+
+                            <ion-col col-4>
+                                <div (click)="establecerUbicacion(itemUbicacionFavorita)">
+                                    <span class="textDirfav">
+                                        <label>{{itemUbicacionFavorita.nombre}}</label>
+                                    </span>
+                                </div>
+                            </ion-col>
+
+                            <ion-col col-2>
+                                <a class="ion-button icon-only item-end clear" (click)="mostrarOpcionesUbicacion($event, itemUbicacionFavorita)">
+                                    <img src="assets/movilidad/iconos/btnpuntos.png" class="btnList">
+                                </a>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+
+
+                </ion-item>
+            </ion-list>
+        </ion-card>
+    </div>
+
+
+    <div class="btn-buscar">
+            <button ion-fab mini right (click)="obtenerUbicacionActual()" >
+                <ion-icon name="locate" ></ion-icon>
+            </button>
+    </div>
+
+    <ion-footer>
+        <menu-opciones [activeLayer]="1"></menu-opciones>
+    </ion-footer>
+</ion-content>

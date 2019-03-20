@@ -1,0 +1,18 @@
+territorio {
+    pointer-events: none;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    ion-fab-list[side='top'] {
+        bottom: 0 !important;
+    }
+    ion-buttons {
+        > div:last-child {
+            .fab {
+                width: 15rem;
+            }
+        }
+    }
+}

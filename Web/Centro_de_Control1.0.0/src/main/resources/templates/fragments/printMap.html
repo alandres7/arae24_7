@@ -1,0 +1,266 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head lang="en">
+<title th:text="'' + ${title}"></title>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<div th:replace="fragments/frameMaps :: header-contend"></div>
+<div th:replace="fragments/enviarMensajePush :: mensajes-push-header"></div>
+<div th:replace="area247/adminAplicaciones/adminAplicaciones :: adminAplicacionesHeader"></div>
+</head>
+
+<div th:replace="area247/adminAplicaciones/adminAplicaciones :: adminAplicacionesStyles"></div>
+
+<body>
+	<div th:replace="fragments/frameMaps :: sideBar-Left-App"></div>
+
+	<section id="main-content">
+
+		<div id="mapa" style="height: 100%"></div>
+
+	</section>
+	
+	<div th:fragment="printMap">
+
+	    <div th:replace="fragments/frameMaps :: header-degra"></div>
+        
+	    <script th:inline="javascript">
+            var map = new google.maps.Map(document.getElementById('mapa'), {
+                zoom: 11,
+                center: {lat: 6.21394, lng: -75.55897},
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                disableDefaultUI: true,
+                styles: [
+                    { "elementType": "labels", "stylers": [{"visibility": "off"}] }, 
+                    { "featureType": "administrative.neighborhood", "elementType": "labels", "stylers": [{ "visibility": "off" }] },
+                    { "featureType": "administrative.land_parcel", "elementType": "labels", "stylers": [{ "visibility": "off" }] },
+                    { "featureType": "administrative.locality", "elementType": "labels", "stylers": [{ "visibility": "on" }]}                  
+                ]
+            });                  
+            
+            var ctaLayer1 = new google.maps.KmlLayer({
+                url: [[${kmlBorder}]],
+                map: map,
+                suppressInfoWindows: true
+            });               
+	    </script>
+	    
+	    
+	    
+	    
+
+	    <script type="text/javascript" th:inline="javascript">
+            /*<![CDATA[*/              
+	    	    var paqueteImpresion = [[${paqueteImpresion}]];
+                       
+	    	    var marcadorList = paqueteImpresion.listaMarcadores;				
+	    	    for(j = 0; j < marcadorList.length; j++){
+				
+				    var venInfo = '';					
+				    if(!marcadorList[j].markerEntorno){
+	    	    	    var nombreMark = marcadorList[j].nombre;
+    	        	    if(nombreMark == null){
+    	        	    	nombreMark = "Sin nombre";	
+    	        	    }    	        	    
+    	        	    var descripcionMark = marcadorList[j].descripcion;
+    	        	    if(descripcionMark == null){
+    	        	    	descripcionMark = "Sin descripción";	
+    	        	    }   	        	         	          	        	
+	        	        venInfo = ''+
+                        '<div style = "text-align: center;font-family: \'Roboto\', sans-serif; max-heigth:180px;max-width:150px;overflow: hidden">' +	
+	    	                '<div class="img">' +   		    	               
+	    	                    '<img src = "' + marcadorList[j].urlImagen + '" style ="max-width: 150px;max-heigth:150px;padding-top:5px"></img>' +    		    	               
+	    	                    '<span>' +
+	    	    	    	        '<p align="left" style= "font-size: 10px">' + nombreMark + '</p>' +
+	    	    	            '</span>' +
+	    	                '</div>' +	    		    	                       
+	    	                '<p align="left" style= "color:#696b69;max-width:150px;font-size: 9px">' + descripcionMark + '</p>' +	    		    	               
+	                    '</div>';
+					}else{
+						var datosEstacion = JSON.parse(marcadorList[j].datosEstacion);
+					    venInfo = ''+
+					    '<div style = "text-align: center;font-family: \'Roboto\', sans-serif; max-heigth:180px;max-width:150px;overflow: hidden">';
+                        var nombreEst = '';
+                        var iconoEst = '';
+                        var descrEstAire = '';
+                        var descrEstAgua = '';
+                        var interpEst = '';
+                        var cuencaEst = '';
+                        var estadoEst = '';
+                        var municipioEst = '';
+                        for(let l = 0; l < datosEstacion.length; l++){
+                            let key = Object.keys(datosEstacion[l]);                            
+                            if(key[0]=="nombre"){
+                            	nombreEst = '<p align="center" style= "color:#696b69;max-width:150px;font-size: 9px">' 
+                                             + datosEstacion[l][key[0]] + '</p>';	
+                            }
+                        	if(key[0]=="icono"){
+                        		iconoEst = '<img src = "' + datosEstacion[l][key[0]] 
+                        		            + '" style ="max-width: 70px;max-heigth:70px;"></img>';	
+                        	} 
+                        	if(key[0]=="descripcionAire"){
+                        		descrEstAire = '' + datosEstacion[l][key[0]];
+                        		if(descrEstAire != "null"){
+                        		    descrEstAire = '<p align="center" style= "background-color:' + estadoEst + ';' +
+                        		                   'color:#696b69;max-width:150px;font-size: 9px">' +
+                                                   datosEstacion[l][key[0]] + '</p>';
+                        		}             
+                            }
+                        	if(key[0]=="descripcionAgua"){
+                        		descrEstAgua = '' + datosEstacion[l][key[0]];
+                        		if(descrEstAgua != "null"){
+                        		    descrEstAgua = '<p align="center" style= "background-color:' + estadoEst + ';' +
+                        		                   'color:#696b69;max-width:150px;font-size: 9px">' +
+                                                   datosEstacion[l][key[0]] + '</p>';
+                        		}               
+                            }
+                        	if(key[0]=="interpretacion"){
+                        		interpEst = '<p align="left" style= "color:#696b69;max-width:150px;font-size: 9px">' 
+                                             + datosEstacion[l][key[0]] + '</p>';	
+                            }
+                        	if(key[0]=="subcuenca"){                        		
+                        		cuencaEst = '' + datosEstacion[l][key[0]];
+                        		if(cuencaEst != ""){
+                        			cuencaEst = '<p align="center" style= "color:#696b69;max-width:150px;font-size: 9px">' 
+                                                 + datosEstacion[l][key[0]] + '</p>';                        			
+                        		}                        		                        			
+                            }
+                        	if(key[0]=="estado"){
+                        		estadoEst = '' + datosEstacion[l][key[0]];	
+                            }
+                        	if(key[0]=="municipio"){
+                        		municipioEst = '<p align="center" style= "color:#696b69;max-width:150px;font-size: 9px">' 
+                                                + datosEstacion[l][key[0]] + '</p>';	
+                            }
+                        }	
+                        
+                        if( (descrEstAire == "null") && (descrEstAgua == "null") ){                        	
+                        	venInfo = venInfo + nombreEst + iconoEst + municipioEst + '</div>';                        	
+                        }else{                       
+                            if(cuencaEst == ""){
+                        	    venInfo = venInfo + descrEstAire + iconoEst + nombreEst + interpEst + '</div>'; 
+                            }else{
+                            	venInfo = venInfo + descrEstAgua + iconoEst + nombreEst + interpEst + cuencaEst + '</div>'; 
+                            } 
+					    }
+					}
+        
+	    		   	var image = {
+	    			    url: marcadorList[j].rutaWebIcono,
+	    			    size: new google.maps.Size(135,135),
+	    			    scaledSize: new google.maps.Size(35,35),
+	    		    	origin: new google.maps.Point(0,0),			    	    
+	    		    	anchor: new google.maps.Point(16,16)
+	    			};      		   		
+	    		        		    		   		
+	    		   	if(!marcadorList[j].point != null){
+	    		   	    var marker = new google.maps.Marker({
+		    		        position: {lat: marcadorList[j].point.lat, lng: marcadorList[j].point.lng},
+		    		        map: map,
+		    		        icon: image
+		    		    }); 
+						
+		    		    addInfoWindow(marker,map,venInfo);		
+	    		   	}
+	    		}
+	    	    
+	    	    
+	    	    var poligonoList = paqueteImpresion.listaPoligonos;	
+    		   	var colorBorde = "#0f7016";
+    		   	var colorFondo = "#9FC418";	
+	    	    for(j = 0; j < poligonoList.length; j++){
+				
+				    var windowPol = '';					
+				    if(!poligonoList[j].markerEntorno){				
+	    	    	    var nombrePol = poligonoList[j].nombre;
+    	        	    if(nombrePol == null){
+    	        	    	nombrePol = "Sin nombre";	
+    	        	    }    	        	
+    	        	    var descripcionPol = poligonoList[j].descripcion;
+    	        	    if(descripcionPol == null){
+    	        	    	descripcionPol = "Sin descripción";	
+    	        	    }   	        	                    
+	        	        windowPol = ''+
+	        	        '<div style = "text-align: center;font-family: \'Roboto\', sans-serif; max-heigth:180px;max-width:150px;overflow: hidden">' +	
+    	                    '<div class="img">' +  
+    	                        '<span>' +
+    	    		                '<p align="left" style= "font-size: 10px">' + nombrePol + '</p>' +
+    	    	                '</span>' +
+    	                    '</div>' +	    		    	                       
+    	                    '<p align="left" style= "color:#696b69;max-width:150px;font-size: 9px">' + descripcionPol + '</p>' +	    		    	               
+                        '</div>';
+                    }else{
+					    var detalleClima = poligonoList[j].detalleClima;						
+						windowPol = ''+
+	        	        '<div style = "text-align: center;font-family: \'Roboto\', sans-serif; max-heigth:180px;max-width:150px;overflow: hidden">' +	   		    	                       
+    	                    '<p align="left" style="color:#696b69;max-width:150px;font-size: 9px">' + detalleClima.municipio + '</p>' +
+                            '<p align="left" style="color:#696b69;max-width:150px;font-size: 9px">' + detalleClima.temperatura + '</p>' +						
+                        '</div>' +                        
+						'<table class="table table-bordered"><tr>';
+						var detalleTiempo = detalleClima.tiempoDetails;
+                        for(l = 0; l < detalleTiempo.length; l++){
+						    windowPol = windowPol +
+	        	            '<td><div style = "text-align: center;font-family: \'Roboto\', sans-serif; max-heigth:180px;max-width:150px;overflow: hidden">' +	   		    	                       
+    	                        '<p align="left" style="color:#696b69;font-size: 9px">' + detalleTiempo[l].etiqueta + '</p>' +
+                                '<p align="left" style="color:#696b69;font-size: 9px">' + detalleTiempo[l].tiempo + ' ' + detalleTiempo[l].descripcion + '</p>' +		
+                                '<img src = "' + detalleTiempo[l].urlIcono + '" style ="max-width: 70px;max-heigth:70px;"></img>';									
+                            '</div></td>';												
+                        }                        
+                        windowPol = windowPol + '</tr></table>'; 						
+					}					
+	    	    	
+	    	    	if(!poligonoList[j].listaPuntos.isEmpty){
+                    	var listaPuntos = poligonoList[j].listaPuntos
+  			   		    
+		   	    	    var poligono = new google.maps.Polygon({
+    		       	    	paths: listaPuntos,
+                            strokeColor: colorBorde,
+                            strokeOpacity: 0.8,
+                            strokeWeight: 1.5,
+                            fillColor: colorFondo,
+                            fillOpacity: 0.35
+                        });
+												
+                        poligono.setMap(map);	  
+                        addInfoWindowPol(poligono,map,windowPol);
+                    }	
+	    		}
+	    		
+
+	    		function addInfoWindow(marker,mapa,message){
+                    var infoWindow = new google.maps.InfoWindow({
+                    	pixelOffset: new google.maps.Size(-52,20),
+                        content: message	                
+                    });
+                    google.maps.event.addListener(marker,'click',function (){	            	
+                        infoWindow.open(mapa,marker);
+                    });
+                } 
+	    			    		    		
+	    		function addInfoWindowPol(poligono,mapa,windowPol){
+                    var infoWindowPol = new google.maps.InfoWindow({
+                    	pixelOffset: new google.maps.Size(-52,20),
+                        content: windowPol	                
+                    });
+                    google.maps.event.addListener(poligono,'click',function(event){
+                    	infoWindowPol.setPosition(event.latLng);
+                        infoWindowPol.open(mapa,poligono);
+                    });
+                } 
+	    		
+	    		function rgbToHex(colorRGB) {
+	    			var cor = colorRGB.slice(1,(colorRGB.length-1));
+	    			var colorHex = cor.split(",");	    		    
+	    		    return "#" + ((1 << 24) + (colorHex[0] << 16) + (colorHex[1] << 8) + colorHex[2]).toString(16).slice(1);
+	    		}
+	    		
+	    	/*]]>*/	
+        </script> 	        
+         
+    </div>
+
+</body>
+
+</html>

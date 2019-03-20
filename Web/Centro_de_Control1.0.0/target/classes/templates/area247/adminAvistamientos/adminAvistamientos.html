@@ -1,0 +1,701 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title th:text="'' + ${title}"></title>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+       
+    <div th:replace="fragments/frameMaps :: header-contend"></div>       
+</head>
+
+
+    <style>    
+        .modal {
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        } 
+    </style>
+
+
+<body>
+	<div th:replace="fragments/frameMaps :: sideBar-Left-App"></div>
+
+	<section id="main-content">
+
+		<div class="row margin-reset"> 
+			<div class="col-xs-12 col-sm-12 col-md-6" 
+			 th:style="'padding: 0px; border: 2px solid; font-size: 1.3vw; font-size: 1.3vh; border-color: ' + ${colorApp} + ';'">
+				<a href="#" onclick="openModal();currentSlide(1)"> 
+				    <span class="glyphicon glyphicon-resize-full" style="float: right;"></span>
+				</a>
+				<div th:replace="area247/adminAvistamientos/pantallasAvistamiento :: quarter-section1"></div>
+			</div>
+
+			<div class="col-xs-12 col-sm-12 col-md-6" 
+			 th:style="'padding: 0px; border: 2px solid; font-size: 1.3vw; font-size: 1.3vh; border-color: ' + ${colorApp} + ';'">
+				<a href="#" onclick="openModal();currentSlide(2)"> 
+				    <span class="glyphicon glyphicon-resize-full" style="float: right;"></span>
+				</a>
+				<div th:replace="area247/adminAvistamientos/pantallasAvistamiento :: quarter-section2"></div>
+			</div>
+		</div>
+
+		<div class="row margin-reset">
+			<div class="col-xs-12 col-sm-12 col-md-6"
+			 th:style="'padding: 0px; border: 2px solid; font-size: 1.3vw; font-size: 1.3vh; border-color: ' + ${colorApp} + ';'">
+				<a href="#" onclick="openModal();currentSlide(3)"> 
+				    <span class="glyphicon glyphicon-resize-full" style="float: right;"></span>
+				</a>
+				<div th:replace="area247/adminAvistamientos/pantallasAvistamiento :: quarter-section3"></div>
+				<div id="chart_div_user1"></div>
+                <div id="chart_div_muni1"></div>
+                <h1 th:style="'text-align:center; color: #' + ${numColorApp} + '; margin-left:1em;'">Total avistamientos:
+                    <span id="totalAvistEst1" th:text="${totalAvist}" style="color:#777575;">0</span>
+                </h1> 
+			</div>
+
+			<div class="col-xs-12 col-sm-12 col-md-6" 
+			 th:style="'padding: 0px; border: 2px solid; border-color: ' + ${colorApp} + ';'">
+				<a href="#" onclick="openModal();currentSlide(4)"> 
+				    <span class="glyphicon glyphicon-resize-full" style="float: right;"></span>
+				</a>
+				<div id="mapa1" style="width: 100%; padding: 200px; height: 100%;"></div>
+			</div>
+		</div>
+		  						       
+	</section>
+	
+	<div th:replace="fragments/frameMaps :: ribbon-List-MensajePush"></div>
+	
+	<div th:replace="fragments/enviarMensajePush :: mensajes-push-chat"></div>
+	<div th:replace="fragments/enviarMensajePush :: modalNotificaHisto"></div>
+
+	<div th:replace="fragments/frameMaps :: header-degra"></div>
+
+	<div id="modalFourViews" class="modal">
+		<div class="modal-content center" style="width: 90%; left: 5%; top: 5%;">
+			<div class="row margin-reset">
+				<div class="col-xs-12 col-sm-12 col-md-9"
+				 th:style="'padding: 0px; border: 2px solid; height: 100%; border-color: ' + ${colorApp} + ';'">
+
+					<a href="#" onclick="closeModal()"> <span
+						class="glyphicon glyphicon-remove" style="float: right;"></span>
+					</a>
+
+					<div class="mySlides">
+						<div th:replace="area247/adminAvistamientos/pantallasAvistamiento :: quarter-section1" style="width: 100%"></div>
+					</div>
+
+					<div class="mySlides">
+						<div th:replace="area247/adminAvistamientos/pantallasAvistamiento :: quarter-section2" style="width: 100%"></div>
+					</div>
+
+					<div class="mySlides">
+						<div th:replace="area247/adminAvistamientos/pantallasAvistamiento :: quarter-section3" style="width: 100%"></div>
+						<div id="chart_div_user2"></div>
+                        <div id="chart_div_muni2"></div>
+                        <h1 th:style="'text-align:center; color: #' + ${numColorApp} + '; margin-left:1em;'">Total avistamientos:
+                            <span id="totalAvistEst2" th:text="${totalAvist}" style="color:#777575;">0</span>
+                        </h1>
+					</div>
+
+					<div class="mySlides" style="height: 100%;">
+						<div id="mapa2" style="width: 100%; padding: 300px; height: 100%;"></div>												
+					</div>
+
+				</div>
+
+				<div class="col-xs-12 col-sm-12 col-md-3" style="padding: 0px;">
+                                                   
+					<div id="demoSmall1" class="row margin-reset" onclick="currentSlide(1)" th:style="'border: 2px solid; font-size: 0.8vw; font-size: 0.8vh; border-color: ' + ${colorApp} + ';'">
+						<div class="demo cursor" th:replace="area247/adminAvistamientos/pantallasAvistamiento :: quarter-section1"></div>
+					</div>
+
+					<div id="demoSmall2" class="row margin-reset" onclick="currentSlide(2)" th:style="'border: 2px solid; font-size: 0.8vw; font-size: 0.8vh; border-color: ' + ${colorApp} + ';'">
+						<div class="demo cursor" th:replace="area247/adminAvistamientos/pantallasAvistamiento :: quarter-section2"></div>
+					</div>
+
+					<div id="demoSmall3" class="row margin-reset" onclick="currentSlide(3)" th:style="'border: 2px solid; font-size: 0.8vw; font-size: 0.8vh; border-color: ' + ${colorApp} + ';'">
+						<div class="demo cursor" th:replace="area247/adminAvistamientos/pantallasAvistamiento :: quarter-section3"></div>
+						<div id="chart_div_user3"></div>
+                        <div id="chart_div_muni3"></div>
+                        <h1 th:style="'text-align:center; color: #' + ${numColorApp} + '; margin-left:1em;'">Total avistamientos:
+                            <span id="totalAvistEst3" th:text="${totalAvist}" style="color:#777575;">0</span>
+                        </h1>
+					</div>
+
+					<div id="demoSmall4" class="row margin-reset" onclick="currentSlide(4)" th:style="'border: 2px solid; border-color: ' + ${colorApp} + ';'">
+						<div id="mapa3" style="width: 100%; padding: 100px; height: 100%;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+		
+ 
+    <div th:replace="area247/adminAvistamientos/pantallasAvistamiento :: modalHistorias"></div>
+    
+
+    <div th:replace="area247/adminAvistamientos/pantallasAvistamiento :: modalComenHisto"></div>
+    
+     
+    <div th:replace="area247/adminAvistamientos/pantallasAvistamiento :: modalComenAvist"></div>  
+    
+       
+    <div th:replace="area247/adminAvistamientos/pantallasAvistamiento :: modalEditAvist"></div>     
+        
+      
+    <div th:replace="area247/adminAvistamientos/pantallasAvistamiento :: modalAproAvist"></div>      
+
+    
+    
+	<script th:inline="javascript">  
+        /*<![CDATA[*/
+        function openModal() {
+            document.getElementById('modalFourViews').style.display = "block";
+        }
+        
+        function closeModal() {
+            document.getElementById('modalFourViews').style.display = "none";
+        }
+        
+        $(document).ready(function() {
+            $('#tableHistorias').dataTable({
+                "language": {"url": "/assets/json/spanishTable.json"},
+                "order": [[ 0, "desc" ]]
+            });
+        });
+        
+        $(document).ready(function() {
+            $('#tableComenHisto').dataTable({
+                "language": {"url": "/assets/json/spanishTable.json"},
+                "order": [[ 0, "desc" ]]
+            });
+        });
+        
+        $(document).ready(function() {
+            $('#tableComenAvist').dataTable({
+                "language": {"url": "/assets/json/spanishTable.json"},
+                "order": [[ 0, "desc" ]]
+            });
+        });
+        
+        
+       
+        var slideIndex = 1;
+        showSlides(slideIndex);
+        
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+        
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+        
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("demo");
+                                          
+            var captionText = document.getElementById("caption");
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}               
+            
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            } 
+
+            for (i = 1; i <= 4; i++) {
+                if(i==slideIndex){
+                    document.getElementById('demoSmall'+i).style.display = "none";
+                }else{
+                	document.getElementById('demoSmall'+i).style.display = "block";
+                }
+            } 
+                                               
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace("active", "");
+            }
+                                        
+            slides[slideIndex-1].style.display = "block"; 
+            
+            if(slideIndex!=4){
+        		initMapSinMarkers('mapa3'); 
+        	}
+       
+        }
+        /*]]>*/
+    </script>
+    
+    
+    
+      
+    <script th:inline="javascript"> 
+    
+        function initMap(paqueteImpresion,mapa){ 
+        	        	        	
+        	var mapa = new google.maps.Map(document.getElementById(''+mapa), {
+                zoom: 10,
+                center: {lat: 6.21394, lng: -75.55897},
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                disableDefaultUI: false
+            });
+            
+            var layerMapa = new google.maps.KmlLayer({
+                url: [[${kmlBorder}]],
+                map: mapa,
+                suppressInfoWindows: true,
+                preserveViewport: true
+            });     
+            
+            /*<![CDATA[*/                   
+    	        var marcadorList = paqueteImpresion.listaMarcadores;                
+    	        for(j = 0; j < marcadorList.length; j++){    	        	
+    	        	var nombreMark = marcadorList[j].nombre;
+    	        	if(nombreMark == null){
+    	        		nombreMark = "Sin nombre";	
+    	        	}
+    	        	
+    	        	var descripcionMark = marcadorList[j].descripcion;
+    	        	if(descripcionMark == null){
+    	        		descripcionMark = "Sin descripción";	
+    	        	}
+    	        	
+    	        	var nombreCien = marcadorList[j].nombreCientifico;
+    	        	if(nombreCien == null){
+    	        		nombreCien = "-";	
+    	        	}
+    	        	                    
+	        	    var contentString = ''+
+                    '<div style = "text-align: center;font-family: \'Roboto\', sans-serif; overflow: hidden;">' +	
+	    	            '<div class="img">' +   		    	               
+	    	                '<img src = "' + marcadorList[j].urlImagen + '" style ="padding-top:5px;max-width:150px;max-heigth:220px;"></img>' +    		    	               
+	    	                '<span>' +
+	    	    		        '<p align="center" style="color:#569837;font-size:12px"><strong>' + nombreMark + ' |</strong> ' + nombreCien + '</p>' +
+	    	    	        '</span>' +
+	    	            '</div>' +	  
+	    	            '<p align="left" style="color:#569837;font-size:10px"><strong>Descripción: </strong>' +	
+	    	                '<span style="color:#696b69;font-size:9px">' + descripcionMark + '</span>' +
+	    	            '</p>' +	    		    	               
+	                '</div>';
+			    	              
+    		       	var image = {
+    		    	    url: marcadorList[j].rutaWebIcono,
+    		    	    size: new google.maps.Size(135,135),
+    		    	    scaledSize: new google.maps.Size(35,35),
+    		        	origin: new google.maps.Point(0,0),			    	    
+    		        	anchor: new google.maps.Point(16,16)
+    		    	};      		   		
+    		            		    		   		
+    		       	if(!marcadorList[j].point != null){
+    		       	    var marker = new google.maps.Marker({
+	    	    	        position: {lat: marcadorList[j].point.lat, lng: marcadorList[j].point.lng},
+	    	    	        map: mapa,
+	    	    	        icon: image
+	    	    	    }); 
+	    	    	    addInfoWindow(marker,mapa,contentString);				    			
+    		       	}
+    		    }
+                
+    		    function addInfoWindow(marker,mapa,message){
+                    var infoWindow = new google.maps.InfoWindow({
+                    	pixelOffset: new google.maps.Size(-52,20),
+                        content: message	                
+                    });
+                    google.maps.event.addListener(marker, 'click', function (){	            	
+                        infoWindow.open(mapa,marker);
+                    });
+                } 
+    		/*]]>*/	            
+        }
+        
+        
+        function initMapSinMarkers(idmapa){        	
+            var map = new google.maps.Map(document.getElementById(''+idmapa), {
+                zoom: 11,
+                center: {lat: 6.21394, lng: -75.55897},
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                disableDefaultUI: false
+            });
+            var ctaLayer1 = new google.maps.KmlLayer({
+                url: [[${kmlBorder}]],
+                map: map,
+                suppressInfoWindows: true
+            });           
+        }
+    </script>
+      
+     
+      
+    <style>        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }   
+        .contenido {
+            position: relative;           
+            margin: auto;
+            top: 10%;
+            width: 70%;
+        }	        
+	</style> 
+	
+	
+	
+	
+	
+	
+	<script th:inline="javascript"> 
+	
+	    $(document).ready(function() {
+	        var fechaIni = [[${fechaIni}]]; 
+        	var fechaFin = [[${fechaFin}]]; 
+    	    var idCapa = [[${idCapaSel}]];
+    	    var idApp = [[${idApp}]];
+    	    
+    	    drawGraficoUsuarios(fechaIni,fechaFin);
+    	    
+        	var tabla = $('#tableAvistamientos');
+        	imprimirTablaPorPagina(tabla,fechaIni,fechaFin,idApp,idCapa,"0","1,2,0");
+        	
+        	var tablaModal = $('#modalFourViews').find('#tableAvistamientos');
+        	imprimirTablaPorPagina(tablaModal,fechaIni,fechaFin,idApp,idCapa,"0","1,2,0");
+        	
+        	dataTable().fnSetFilteringEnterPress();
+        	       	
+        }); 
+	    
+	    
+	    function imprimirTablaPorPagina(tabla,fechaIni,fechaFin,idApp,idCapa,idCategoria,estadosList) {
+        	tabla.DataTable({
+        		"language": {"url": "/assets/json/spanishTable.json"},
+                "processing": true,
+                "serverSide": true,
+                "pageLength": 10,    
+                "order":[[0, "desc"]],
+                "ajax": {
+                    "url": "/getAvistamientosPaginated/" + fechaIni + "/" + fechaFin + "/" + idApp + "/" + idCapa + "/" + idCategoria + "/" + estadosList,
+        	        "dataSrc": function (json) {                                                  
+                        initMap(json.markerPrintPackage,"mapa1");
+                        initMap(json.markerPrintPackage,"mapa2");
+                        return json.data;
+        	        }
+                },
+                "columns": [
+                	{ "data": "id", "name" : "ID_AVISTAMIENTO", "title" : "ID"},
+                    { "data": "nombreComun", "name" : "NOMBRE_COMUN" , "title" : "Nombre Comun"},
+                    { "data": "descripcion", "name" : "DESCRIPCION_AVISTAMIENTO" , "title" : "Descripcion"},
+                    { "data": "tipoAvistamiento", "name" : "TIPO_AVISTAMIENTO" , "title" : "Tipo"},
+                    { "data": "tipoEspecie", "name" : "TIPO_ESPECIE", "title" : "Especie"},
+                    { "data": "fechaCreacion", "name" : "FECHA_REGISTRO" , "title" : "Fecha Creacion"},
+                    { "data": "nombreEstado", "title" : "Estado"}, 
+                    { "data": "botonVisualizar", "title" : "Visualizar"} 
+                ]
+        	});
+        	
+        }
+        
+        
+               
+        function visualizarAvistamiento(id,numColorApp){ 
+        	$.ajax({
+                url: "/getAvistamientoVista/" + id + "/" + numColorApp,
+                method: "GET",
+                beforeSend: function() {
+                	$('avistamientoDetalle').remove();
+                },
+                success: function(html) { 
+                	$('#avistamientoDetalle').replaceWith(html);
+                	$('#modalFourViews').find('#avistamientoDetalle').replaceWith(html);
+                	                    	
+                	$.ajax({
+                        url: "/getMarcadorAvistamiento/" + id,
+                        method: "GET",
+                    }).success(function(paquete) {
+                    	/*<![CDATA[*/                            
+                            initMap(paquete,"mapa1");
+                            initMap(paquete,"mapa2");
+    		            /*]]>*/	                   	
+                    });                 	                	
+                }
+            }); 
+        };
+        
+        
+        function borrarAvistamientoVista(numColorApp){            
+        	$.ajax({
+                url: "/borrarAvistamientoVista/" + numColorApp,
+                method: "GET",
+                beforeSend: function() {
+                	$('avistamientoDetalle').remove();
+                },
+                success: function(html) { 
+                	$('#avistamientoDetalle').replaceWith(html);
+                	$('#modalFourViews').find('#avistamientoDetalle').replaceWith(html);                	                	
+                }
+            }); 
+        };        
+        
+
+        function rechazarAvistamiento(id,numColorApp){ 
+            $.ajax({
+                url: "/rechazarAvistamiento/" + id + "/" + numColorApp + "",                
+                method: "GET",
+                beforeSend: function() {
+                	$('avistamientoDetalle').remove();
+                },
+                success: function(html) { 
+                	$('#avistamientoDetalle').replaceWith(html);
+                	$('#modalFourViews').find('#avistamientoDetalle').replaceWith(html);                	
+                	$('#estadoAvist_' + id).text("Rechazado"); 
+                    $('#estadoAvist_' + id).css('background-color',"#B22D2C");                	
+                	$('#modalFourViews').find('#estadoAvist_'+id).text("Rechazado");
+                	$('#modalFourViews').find('#estadoAvist_'+id).css('background-color',"#B22D2C"); 
+                	
+                	$.ajax({
+                        url: "/getMarcadorAvistamiento/" + id,
+                        method: "GET",
+                    }).success(function(paquete) {
+                    	/*<![CDATA[*/                            
+                            initMap(paquete,"mapa1");
+                            initMap(paquete,"mapa2");
+    		            /*]]>*/	                   	
+                    }); 
+                }                                
+            });                                  
+        };     
+        
+        function visualizarHistoriasAvistamiento(id){            
+        	$.ajax({
+                url: "/getHistoriasByAvistamiento/" + id,
+                method: "GET",
+                beforeSend: function() {
+                	$('modalHistorias').remove();
+                },
+                success: function(html) { 
+                	$('#modalHistorias').replaceWith(html);
+                	
+                	$('#tableHistorias').dataTable({
+                        "language": {"url": "/assets/json/spanishTable.json"}
+                    });
+                }
+            }); 
+        };
+		
+		function visualizarComentariosHistoria(id){            
+        	$.ajax({
+                url: "/getComentariosByHistoria/" + id,
+                method: "GET",
+                beforeSend: function() {
+                	$('modalComenHisto').remove();
+                },
+                success: function(html) { 
+                	$('#modalComenHisto').replaceWith(html);
+                	
+                	$('#tableComenHisto').dataTable({
+                        "language": {"url": "/assets/json/spanishTable.json"}
+                    });
+                }
+            }); 
+        };
+		
+		function visualizarComentariosAvistamiento(id){            
+        	$.ajax({
+                url: "/getComentariosByAvistamiento/" + id,
+                method: "GET",
+                beforeSend: function() {
+                	$('modalComenAvist').remove();
+                },
+                success: function(html) { 
+                	$('#modalComenAvist').replaceWith(html);
+                	
+                	$('#tableComenAvist').dataTable({
+                        "language": {"url": "/assets/json/spanishTable.json"}
+                    });
+                }
+            }); 
+        };
+        
+		function visualizarEditarAvistamiento(id,numColorApp){ 
+        	$.ajax({
+                url: "/visualizarEditarAvistamiento/" + id + "/" + numColorApp,
+                method: "GET",
+                beforeSend: function() {
+                	$('modalEditAvist').remove();
+                },
+                success: function(html) { 
+                	$('#modalEditAvist').replaceWith(html);
+                }
+            }); 
+        };
+        
+		function visualizarAprobarAvistamiento(id,numColorApp){ 
+        	$.ajax({
+                url: "/visualizarAprobarAvistamiento/" + id + "/" + numColorApp,
+                method: "GET",
+                beforeSend: function() {
+                	$('modalAproAvist').remove();
+                },
+                success: function(html) { 
+                	$('#modalAproAvist').replaceWith(html);
+                }
+            }); 
+        };
+        
+        function ponerCantidadesAvistamientos(fechaIni,fechaFin,capa,categoria){            
+        	$.ajax({
+                url: "/getCantidadesEstadosbyFechaCapa/" + fechaIni + "/" + fechaFin + "/" + capa + 
+                                                     "/" + categoria + "",
+                method: "GET",
+                success: function(response) { 
+                	$('#numApr').text(response.cantidadAprobados);
+                	$('#numPen').text(response.cantidadPendientes);
+                	$('#numRec').text(response.cantidadRechazados);
+                	
+                	$('#modalFourViews').find('#numApr').text(response.cantidadAprobados);
+                	$('#modalFourViews').find('#numPen').text(response.cantidadPendientes);
+                	$('#modalFourViews').find('#numRec').text(response.cantidadRechazados);
+                }
+            }); 
+        };
+        
+        function crearStringEstadosAvist(checkApr,checkPen,checkRec){ 
+        	var estadosList = "";
+        	if(checkApr){
+        		estadosList = estadosList + "1";
+        	}
+        	if(checkPen){
+        		if(estadosList!=""){
+        			estadosList = estadosList + ",2";
+        		}else{
+        			estadosList = estadosList + "2";
+        		}        		
+        	}
+        	if(checkRec){
+        		if(estadosList!=""){
+        			estadosList = estadosList + ",0";
+        		}else{
+        			estadosList = estadosList + "0";
+        		}       		
+        	}        	
+        	if(estadosList==""){
+        		estadosList = "1,2,0"
+        	}
+        	return estadosList; 
+        };
+        
+    
+	
+              	    	
+        function drawGraficoUsuarios(fechaIni,fechaFin){ 
+        	$.ajax({
+                url: "/getMatrizDatosPantalla/" + fechaIni + "/" + fechaFin + "/usuario",
+                method: "GET",
+        	}).success(function(datosUsuario) {        		
+        		/*<![CDATA[*/ 
+        		google.charts.load('current', {'packages':['bar']});
+                google.charts.setOnLoadCallback(drawChart);   
+                
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable(datosUsuario);
+                
+                    var options = {
+                        chart: {
+                            title: 'Avistamientos por Estado de los Usuarios',
+                            subtitle: 'Avistamientos Aprobados, Pendientes y Rechazados',
+                        },
+                        bars: 'horizontal', // Required for Material Bar Charts.
+                        hAxis: {format: 'decimal'},
+                        height: 300,
+                        colors: ['#559839','#B2B2B2','#B22D2C']               
+                    };
+                
+                    document.getElementById('chart_div_muni1').style.display = "none";
+            		document.getElementById('chart_div_user1').style.display = "block";            		            		
+                    var chart = new google.charts.Bar(document.getElementById('chart_div_user1'));            
+                    chart.draw(data, google.charts.Bar.convertOptions(options));
+                    
+                    document.getElementById('chart_div_muni2').style.display = "none";
+            		document.getElementById('chart_div_user2').style.display = "block";            		            		
+                    var chart = new google.charts.Bar(document.getElementById('chart_div_user2'));            
+                    chart.draw(data, google.charts.Bar.convertOptions(options));
+                    
+                    document.getElementById('chart_div_muni3').style.display = "none";
+            		document.getElementById('chart_div_user3').style.display = "block";            		            		
+                    var chart = new google.charts.Bar(document.getElementById('chart_div_user3'));            
+                    chart.draw(data, google.charts.Bar.convertOptions(options));
+                }
+                /*]]>*/	
+            });  	
+        }
+		
+    
+        function drawGraficoMunicipios(fechaIni,fechaFin){ 
+        	$.ajax({
+                url: "/getMatrizDatosPantalla/" + fechaIni + "/" + fechaFin + "/municipio",
+                method: "GET",
+        	}).success(function(datosMunicipio) {         		
+        		/*<![CDATA[*/ 
+        		google.charts.load('current', {packages: ['corechart', 'bar']});
+                google.charts.setOnLoadCallback(drawMultSeries);
+                
+                function drawMultSeries() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string','Municipio del AMVA');
+                    data.addColumn('number','Aprobado');
+                    data.addColumn('number','Pendiente');
+                    data.addColumn('number','Rechazado');
+                    
+                    data.addRows(datosMunicipio);
+                
+                    var options = {
+                        title: 'Cantidad de avistamientos por estado en los municipios del AMVA',
+                        hAxis: {
+                            title: 'Municipios',
+                        },
+                        vAxis: {
+                            title: 'Tasa (Escala de 1-100)',
+                		    viewWindow: {
+                                min: [1],
+                                max: [20]
+                            }
+                        },
+                		colors: ['#559839','#B2B2B2','#B22D2C']
+                    };
+                
+                    document.getElementById('chart_div_user1').style.display = "none";
+        			document.getElementById('chart_div_muni1').style.display = "block";
+                    var chart = new google.visualization.ColumnChart(document.getElementById('chart_div_muni1'));
+                    chart.draw(data, options);
+                    
+                    document.getElementById('chart_div_user2').style.display = "none";
+        			document.getElementById('chart_div_muni2').style.display = "block";
+                    var chart = new google.visualization.ColumnChart(document.getElementById('chart_div_muni2'));
+                    chart.draw(data, options);
+                    
+                    document.getElementById('chart_div_user3').style.display = "none";
+        			document.getElementById('chart_div_muni3').style.display = "block";
+                    var chart = new google.visualization.ColumnChart(document.getElementById('chart_div_muni3'));
+                    chart.draw(data, options);
+                }
+                /*]]>*/	
+            }); 		                        	
+        }    
+		
+    </script> 
+    
+
+</body>
+</html>

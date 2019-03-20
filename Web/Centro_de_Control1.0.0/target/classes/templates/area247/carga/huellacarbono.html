@@ -1,0 +1,178 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head lang="en">	
+    <title th:text="'' + ${title}"></title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <link id="bs-css" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" />    
+    <link id="bsdp-css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.css" rel="stylesheet" />
+       
+	<div th:replace="fragments/frameMaps :: header-contend"></div> 
+	   		
+</head>
+		
+	<style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }   
+        .contenido {
+            position: relative;           
+            margin: auto;
+            top: 10%;
+            width: 70%;
+        }	
+	</style>
+	    
+<body >
+   	<div th:replace="fragments/frameMaps :: header-degra"></div> 
+   	
+   	<div th:replace="fragments/frameMaps :: sideBar-Left-App"></div> 
+ 	
+	<section id="main-content" >
+
+		<div id="mapa" style="height: 100%"></div>
+
+		<div th:replace="fragments/frameMaps :: ribbon-List"></div>
+
+		<div th:replace="fragments/frameMaps :: notification-List"></div>
+
+		<div th:replace="fragments/enviarMensajePush :: mensajes-push-chat"></div>
+		<div th:replace="fragments/enviarMensajePush :: modalNotificaHisto"></div>
+				
+		<div id="modalCargarInfo" class="modal" th:style="'display: block'">    
+	        <div class="contenido" >		      
+	          
+	            <button onclick="closeModalCargarInfo()" class="btn btn-default" style="background-color: #FB0101; float: right;">
+                    <span class="glyphicon glyphicon-remove" style="float: right; color: #FFFFFF;"></span> 
+                </button>
+				
+	            <h1 style="background-color: #9FC418; color:#FFFFFF; width:460px;">Estadísticas</h1>
+	        		        			        	
+	        	<div style="border: 25px solid; border-color: transparent; background-color: rgba(0,0,0,0.8);">
+	        	     
+                    <form id="huellacarbono-form" action="/archivos/reporte/huellacarbono/form" th:object="${huellacarbonoModel}" th:method="post" enctype="multipart/form-data"
+                    		style="width:100%; background-color: #E8E8E8; float: center; display: block;" >         							  			
+					    <div class="row margin-reset"> 
+                            <ul class="nav nav-tabs">
+                            
+                                <li data-toggle="tooltip" title="Cargar">
+                                    <button class="btn btn-default" style="background-color: #9FC418;" type="submit" name="action" value="estadisticas">
+                                        <span style="color: #FFFFFF;" class="glyphicon glyphicon-search"></span>
+                                    </button>
+                                </li>
+                                
+                            </ul> 						
+					    </div>
+					    
+					    <br/>
+						
+						<div class="row margin-reset">  
+						    <div class="col-xs-12 col-sm-12 col-md-12">					   
+					            <div class="row margin-reset"> 
+									<div class="col-xs-12 col-sm-12 col-md-3">
+									    <p style="color:#9FC418;">Placa *</p>
+					                </div>
+									<div class="col-xs-12 col-sm-12 col-md-3">
+									    <input id="placa" name="placa" type="text" th:value="*{placa}"></input>
+					                </div>
+									<div class="col-xs-12 col-sm-12 col-md-3"></div>
+									<div class="col-xs-12 col-sm-12 col-md-3"></div>					                
+					            </div>
+                            </div>
+					    </div>
+						<div class="row margin-reset">  
+						    <div class="col-xs-12 col-sm-12 col-md-12">					   
+					            <div class="row margin-reset"> 
+                                    <div class="col-xs-12 col-sm-12 col-md-3">
+										<p style="color: #9FC418;">Fecha Desde *</p>
+									</div>
+									<div class="col-xs-12 col-sm-12 col-md-3">
+										<div id="sandbox-container">
+											<div class="input-group date" style="width:150px;">
+												<input id="fecha" name="fecha" th:value="*{fecha}" type="text" class="form-control" /><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>									
+											</div>										
+										</div>
+									</div>	
+                                    <div class="col-xs-12 col-sm-12 col-md-3">
+										<p style="color: #9FC418;">Fecha Hasta</p>
+									</div>
+									<div class="col-xs-12 col-sm-12 col-md-3">
+										<div id="sandbox-container">
+											<div class="input-group date" style="width:150px;">
+												<input id="fechaHasta" name="fechaHasta" th:value="*{fechaHasta}" type="text" class="form-control" /><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>									
+											</div>										
+										</div>
+									</div>																										
+					            </div>
+                            </div>
+					    </div>
+					    
+					    <br/>
+					    <div th:substituteby="layouts/tags/util/messages :: messages" th:remove="tag" style="text-align:center; color: #FB0101">MESSAGES</div>
+					    
+                    </form> 
+					
+                    <br/>
+                          
+                    <h2 style="text-align:left; color: #FFFFFF;">Resultados</h2>
+      	        	  
+               	    <table class="table  table-bordered table-striped" style="width:100%; background-color: #E8E8E8;">
+               	        <thead>
+               	            <tr>                                   
+                                <th>Indicador</th>
+                                <th>Valor</th> 
+                            </tr>
+                        </thead>                          
+                        <tbody>                   
+                            <tr>
+  								<td>Distancia Mínima Recorrida</td>
+  								<td><label th:text="${vehiculoDto.distanciaRecorrida}" /></td>                                
+                            </tr>                                                                                                     
+                        </tbody>
+                    </table>   
+						
+                </div>
+               
+            </div>       
+        </div>  
+                          				
+    </section>
+
+    <div th:replace="fragments/printMap :: printMap"></div>	
+ 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
+	
+	<script type="text/javascript">
+		$('#sandbox-container .input-group.date').datepicker({
+		    format: "yyyy/mm/dd",
+		    language: "es",
+		    autoclose: true
+		});		
+	</script>
+ 
+    <script th:inline="javascript">  
+    
+        function openModalCargarInfo() {
+            document.getElementById('modalCargarInfo').style.display = "block";
+        }  
+    
+        function closeModalCargarInfo() {
+            document.getElementById('modalCargarInfo').style.display = "none";
+        }
+        
+    </script>
+ 
+</body>
+    
+</html>

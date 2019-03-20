@@ -1,0 +1,88 @@
+<ion-header>
+        <ion-navbar [ngStyle]="{'background':color}">
+            <ion-title *ngIf="decisionTree" >{{decisionTree.name}}</ion-title> 
+        </ion-navbar>
+    </ion-header>
+    
+    <ion-content *ngIf="decisionTree">
+        <div *ngIf="decisionTree.hasChildren" padding>
+            <h4 class="title-up">Selecciona el animal que deseas identificar</h4>
+            <p class="text-up">Sigue estos pasos de selección y te ayudaremos a identificar la especie y el tipo de animal que has visto.</p>
+            <div class="arbol-cont">           
+                <div class="ionic-button last-specie"  
+                        *ngFor="let childTree of decisionTree.children" 
+                        [ngStyle]="{'color':color}">
+
+                    <p *ngIf="childTree.name" class="titulo" [ngStyle]="{'color':color}">{{childTree.name}}</p>
+                    
+                    <button *ngIf="childTree.name" (click)="nextNode(childTree)" [ngStyle]="{'background':color}">Decisión</button>
+                    
+                    <img *ngIf="childTree.formatMedia == 'Imagen'"
+                         [src]="childTree.urlMedia">
+
+                    <video *ngIf="childTree.formatMedia == 'Video'"
+                           controls="controls" 
+                           preload="metadata" 
+                           webkit-playsinline="webkit-playsinline" 
+                           class="videoPlayer">
+                        <source [src]="childTree.urlMedia" 
+                                type="video/mp4" />
+                    </video>
+                    
+                    <audio *ngIf="childTree.formatMedia == 'Audio'"
+                           controls="controls" 
+                           preload="metadata">
+                        <source [src]="childTree.urlMedia" 
+                                type="audio/mpeg" />
+                    </audio>
+
+                    <p *ngIf="childTree.description">{{childTree.description}}</p>
+                </div>                
+            </div>
+
+            <button *ngIf="fromAvistamientoCreate" ion-button block big [ngStyle]="{'background-color': color}" (click)="isAnotherSpecies()" >¿Es otra especie?</button>              
+        </div>
+
+        <div *ngIf="decisionTree.name && !decisionTree.hasChildren" padding style="text-align: center">
+            <h4 class="titulo">Tu avistamiento es</h4>
+
+            <div class="last-specie">
+                <p class="titulo">{{decisionTree.name}}</p>
+
+                <img *ngIf="decisionTree.formatMedia == 'Imagen'"
+                         [src]="decisionTree.urlMedia">
+
+                <video *ngIf="decisionTree.formatMedia == 'Video'"
+                    controls="controls" 
+                    preload="metadata" 
+                    webkit-playsinline="webkit-playsinline" 
+                    class="videoPlayer">
+                    <source [src]="decisionTree.urlMedia" 
+                            type="video/mp4" />
+                </video>
+                
+                <audio *ngIf="decisionTree.formatMedia == 'Audio'"
+                    controls="controls" 
+                    preload="metadata">
+                    <source [src]="decisionTree.urlMedia" 
+                            type="audio/mpeg" />
+                </audio>
+
+                <p *ngIf="decisionTree.name">{{decisionTree.description}}</p>
+            </div>
+    
+            <ion-row padding>
+                <ion-col *ngIf="!fromAvistamientoCreate" >
+                    <button ion-button block big [ngStyle]="{'background-color': color}" (click)="closeView()">
+                        Finalizar
+                    </button>
+                </ion-col>
+                <ion-col *ngIf="fromAvistamientoCreate" >
+                    <button ion-button block big [ngStyle]="{'background-color': color}" (click)="closeView()">
+                        Finalizar y enviar
+                    </button>
+                </ion-col>
+            </ion-row>
+        </div>
+    </ion-content>
+    

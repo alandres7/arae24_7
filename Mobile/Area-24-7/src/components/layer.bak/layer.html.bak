@@ -1,0 +1,12 @@
+<button *ngIf="layer.layerLevel=='CAPA'" style="border-radius:0;" ion-fab 
+        (click)="onTapLayer()">
+    <img [src]="layerProvider.getUrlIcon(layer.idIconLayer)">
+    {{layer.name}}
+</button>
+
+
+<button *ngIf="layer.layerLevel=='CATEGORIA'" class="vertical-divider" (click)="onTapLayer()" >
+    <img style="height: auto; width: 3rem;" [src]="layerProvider.getUrlIcon(layer.idIconLayer)"/>
+    <br>
+    <label style="font-size:1rem">{{layer.name}}</label>
+</button>

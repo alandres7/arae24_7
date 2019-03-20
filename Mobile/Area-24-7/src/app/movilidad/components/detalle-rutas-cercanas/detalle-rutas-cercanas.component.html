@@ -1,0 +1,130 @@
+<div class="detailContainer">
+        <ion-header>
+                <ion-toolbar>
+                    <ion-title>
+                        <span><img [src]="icon" alt="icon" id="modalIcon" style="width:3.5rem; height: 3.5rem"> </span>
+                        <span class="titulo">{{title}}</span>
+                    </ion-title>
+                    <ion-buttons end>
+                        <button ion-button icon-only end (click)="closeModal()">
+                            <ion-icon name="close"></ion-icon>
+                        </button>
+                    </ion-buttons>
+                </ion-toolbar>
+            </ion-header>
+            
+            <ion-content>
+                <div *ngIf="!isEnciclaDetail && !isrecargaDetail" style="text-align: left; padding: 15px">
+                    <div class="banner-icon-civica " id="{{desc.id}}">
+                    </div>
+                    <div style="text-align: center; margin-top: -10px;">
+                        <span class="textBanner">{{title}}</span>
+                    </div>
+            
+                    <ion-row style="margin:10px 0px;">
+                        <ion-col col-12 style="margin-top: -20px; padding:0px;">
+                            <h1 style="text-align: center; font-size: 2rem">{{desc.desc}}</h1>
+                        </ion-col>
+                    </ion-row>
+            
+            
+            
+            
+                <div id="tableDetail" *ngIf='desc.rutas != undefined '>
+                        <span id="titulo">Detalle</span>
+                        <div *ngFor="let linea of desc.rutas let i = index" class="row-table">
+                            <ion-grid (click)="toggleDetalle(i)">
+                                <ion-row>
+                                    <ion-col col-10>
+                                        {{linea.descripcion}}
+                                    </ion-col>
+                                    <ion-col col-2>
+                                        <ion-icon class="iconFlecha" name="{{iconClass}}"></ion-icon>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                            <div class="detalle-ruta hideDetalle" id="{{i}}">
+                                <div class="itemDetail">
+                                    <span class="labelsDetalle">Empresa: </span>
+                                    <span *ngIf="data.nombreModoEstacion" class="labelsDes">
+                                        Metro De Medellín
+                                    </span>
+                                    <span *ngIf="linea.empresas && linea.empresas.length > 0" class="labelsDes">
+                                        {{linea.empresa}}
+                                    </span>
+                                </div>
+            
+                                <div class="itemDetail">
+                                    <span class="labelsDetalle">Horario: </span>
+                                    <span *ngIf="linea.horariosRuta && linea.horariosRuta.length > 0" class="labelsDes">{{common.convertTime24to12(linea.horariosRuta[0].horaInicioOperacion)}}
+                                        a {{common.convertTime24to12(linea.horariosRuta[0].horaFinOperacion)}}</span>
+                                    <span *ngIf="linea.horariosLinea && linea.horariosLinea.length > 0" class="labelsDes">{{common.convertTime24to12(linea.horariosLinea[0].horaInicioOperacion)}}
+                                        a {{common.convertTime24to12(linea.horariosLinea[0].horaFinOperacion)}}</span>
+                                </div>
+            
+                                <div class="itemDetail">
+                                    <span class="labelsDetalle">Tarifa: </span>
+                                    <span  *ngIf="linea.tarifa" class="labelsDes">{{linea.tarifa}}</span>
+                                </div>
+            
+            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div *ngIf="isEnciclaDetail">
+                    <!-- <ion-row> -->
+                    <div class="banner-icon" id="bannerIcon">
+                    </div>
+                    <div style="text-align: center; margin-top: -10px;" *ngIf="data.tipoEstacion != undefined">
+                        <span *ngIf="data.tipoEstacion == 'A'" class="textBanner">Estacion Automatica</span>
+                        <span *ngIf="data.tipoEstacion == 'M'" class="textBanner">Estacion Manual</span>
+                    </div>
+                    <!-- </ion-row> -->
+            
+                    <ion-row style="margin:10px 0px;">
+                        <ion-col col-12>
+                            <h1 *ngIf="data.nombre.length < 18" style="text-align: center; font-size: 3.5rem">{{data.nombre}}</h1>
+                            <h1 *ngIf="data.nombre.length >= 18" style="text-align: center; font-size: 2.5rem">{{data.nombre}}</h1>
+                            <p class="description">{{data.descripcion}}</p>
+                            <p class="description">{{data.direccion}}</p>
+                        </ion-col>
+                    </ion-row>
+            
+            
+                    <ion-row style="margin:3rem 3rem;">
+            
+                        <div style="width: 50%;" *ngIf="data.cantidadBicicletasDisponibles >= 0">
+                            <div class="iconDetail" id="bicicletas"></div>
+                            <div class="servicio" style="margin: 0px auto;">
+                                <span style="font-size:2.7rem">{{data.cantidadBicicletasDisponibles}}</span>
+                                <div>Bicicletas Disponibles</div>
+                            </div>
+                        </div>
+                        <div style="width: 45%; margin-left:5px;" *ngIf=" data.tipoEstacion != 'M' && data.cantidadPuestosDisponibles >= 0">
+                            <div class="iconDetail" id="puestos"></div>
+                            <div class="servicio" style="margin: 0px auto;">
+                                <span style="font-size:2.7rem">{{data.cantidadPuestosDisponibles}}</span>
+                                <div>Puestos Disponibles</div>
+                            </div>
+                        </div>
+                    </ion-row>
+                </div>
+            
+                <div *ngIf="isrecargaDetail">
+                    <div class="banner-icon-civica " id="civica">
+                    </div>
+                    <div style="text-align: center; margin-top: -10px;">
+                        <span class="textBanner">Punto de recarga</span>
+                    </div>
+            
+                    <ion-row style="margin:10px 0px;">
+                        <ion-col col-12>
+                            <h1 style="text-align: center; font-size: 3.5rem">{{desc.desc}}</h1>
+                        </ion-col>
+                    </ion-row>
+                </div>
+            
+            </ion-content>
+</div>

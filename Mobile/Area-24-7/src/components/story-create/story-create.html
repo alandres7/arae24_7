@@ -1,0 +1,33 @@
+<ion-header>
+    <ion-navbar [ngStyle]="{'background': color}">
+        <ion-title>Publicar Historia</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <form [formGroup]="formGroup" (ngSubmit)="saveStory()">
+        <ion-item>
+            <ion-label floating>Título</ion-label>
+            <ion-input type="text" formControlName="titleFormCtrl"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="formGroup.get('titleFormCtrl').errors && formGroup.get('titleFormCtrl').dirty">
+            <p *ngIf="formGroup.get('titleFormCtrl').hasError('required')">Campo requerido</p>                
+            <p *ngIf="formGroup.get('titleFormCtrl').hasError('minlength')">Mínimo 3 caracteres</p>
+            <p *ngIf="formGroup.get('titleFormCtrl').hasError('maxlength')">Máximo 100 caracteres</p>
+        </ion-item> 
+
+        <ion-item>
+            <ion-label floating>Contenido</ion-label>
+            <ion-textarea formControlName="contentFormCtrl"></ion-textarea>
+        </ion-item>
+
+        <ion-item *ngIf="formGroup.get('contentFormCtrl').errors && formGroup.get('contentFormCtrl').dirty">
+            <p *ngIf="formGroup.get('contentFormCtrl').hasError('required')">Campo requerido</p>                
+            <p *ngIf="formGroup.get('contentFormCtrl').hasError('minlength')">Mínimo 3 caracteres</p>
+            <p *ngIf="formGroup.get('contentFormCtrl').hasError('maxlength')">Máximo 4000 caracteres</p>
+        </ion-item> 
+
+        <button full ion-button type="submit" [disabled]="!formGroup.valid" [ngStyle]="{'background': color}">Publicar</button>
+    </form>
+</ion-content>

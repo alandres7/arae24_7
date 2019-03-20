@@ -1,0 +1,569 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title th:text="'' + ${title}"></title>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <div th:replace="fragments/frameMaps :: header-contend"></div>
+
+</head>
+
+
+    <style>
+        .modal {
+        	display: none;
+        	position: fixed;
+        	z-index: 1;
+        	left: 0;
+        	top: 0;
+        	width: 100%;
+        	height: 100%;
+        	overflow: auto;
+        	background-color: rgba(0, 0, 0, 0.4);
+        }
+        
+        .contenido {
+        	position: relative;
+        	margin: auto;
+        	top: 10%;
+        	width: 70%;
+        }
+        
+        #RC .slider-selection {
+        	background: #9FC418;
+        }
+        
+        #RC .slider-handle {
+        	background: #9FC418;
+        }
+    </style>
+
+
+<body>
+	<div th:replace="fragments/frameMaps :: header-degra"></div>
+
+	<div th:replace="fragments/frameMaps :: sideBar-Left-App"></div>
+
+
+
+	<section id="main-content">
+
+		<div id="mapa" style="height: 100%"></div>
+
+		<div th:replace="fragments/frameMaps :: ribbon-List"></div>
+
+		<div th:replace="fragments/frameMaps :: notification-List"></div>
+
+		<div th:replace="fragments/enviarMensajePush :: mensajes-push-chat"></div>
+		<div th:replace="fragments/enviarMensajePush :: modalNotificaHisto"></div>
+		
+		
+
+		<div id="modalMediciones" class="modal" th:style="'display: ' + ${despliegeModalMedicion}">
+			<div class="contenido">
+			
+				<button onclick="closeModalMediciones()" class="btn btn-default" style="background-color: #FB0101; float: right;">
+                    <span class="glyphicon glyphicon-remove" style="float: right; color: #FFFFFF;"></span> 
+                </button>
+
+				<h1 style="background-color: #9FC418; color: #FFFFFF; width:490px;">Configuración de Mediciones</h1>
+
+				<div style="border: 25px solid; border-color: transparent; background-color: rgba(0, 0, 0, 0.8);">
+							                                      
+					<form id="editMedicionForm" th:action="@{/createUpdateMedicion}" 
+					 style="width: 100%; background-color: #E8E8E8; float: center; font-size: 0.9vw; display: block;" th:method="post" enctype="multipart/form-data" >
+
+						<div class="row margin-reset">
+							<ul class="nav nav-tabs">							
+							
+							    <li data-toggle="tooltip" title="Agregar nueva medicion">
+                                    <div id="showFormNewMedicion" class="btn btn-default" style="background-color: #9FC418;"
+                                     th:if="${puedeAdicionar}">
+                                        <span style="color: #FFFFFF;" class="glyphicon glyphicon-plus-sign"></span>
+                                    </div>
+                                </li>
+                                                                                               
+                                <li data-toggle="tooltip" title="Guardar Cambios">
+                                    <div id="botonEdicion" class="btn btn-default" onclick="realizarValidacionesEdicion()" 
+                                     style="background-color: #00BFFF; display:none;">
+                                        <span style="color: #FFFFFF;" class="glyphicon glyphicon-floppy-disk"></span>
+                                    </div>
+                                </li> 	
+                                																					
+								<li data-toggle="tooltip" title="Retornar a Capas">
+								    <a id="returnCapas" class="btn btn-default" style="height:32px; border: 1px solid; 
+								     border-color: #D0D0D0; border-radius: 3px; background-color: #9FC418;" 
+								     th:href="'/getCapasByIdAplicacion/' + ${idAplicacionDeCapa}">
+								         <span style="color: #FFFFFF;" class="glyphicon glyphicon-arrow-left"></span>
+								     </a>
+								</li> 
+			
+							</ul>
+						</div>
+
+						<br />
+
+						<div class="row margin-reset">
+							<div class="col-xs-12 col-sm-9 col-md-9">
+
+								<div class="row margin-reset">
+									<div class="col-xs-12 col-sm-1 col-md-1">
+										<p style="color: #9FC418;">ID</p>
+									</div>
+									<div class="col-xs-12 col-sm-1 col-md-1">
+										<input type="text" id="id" name="id" class="form-control" readonly="true" style="border-radius: 0px;"></input>
+									</div>
+									<div class="col-xs-12 col-sm-2 col-md-2">
+										<p style="color: #9FC418;">Nombre</p>
+									</div>
+									<div class="col-xs-12 col-sm-6 col-md-6">
+										<input type="text" id="nombre" th:name="nombre" class="form-control editField" readonly="true" style="border-radius: 0px;"></input>
+									</div>
+									<div class="col-xs-12 col-sm-1 col-md-1">
+										<p style="color: #9FC418;">Color</p>
+									</div>
+									<div class="col-xs-12 col-sm-1 col-md-1">
+										<input type="color" id="color" name="color" value="#ff0000"></input>
+									</div>
+								</div>
+
+								<br />
+								<div class="row margin-reset">
+									<div class="col-xs-12 col-sm-2 col-md-2">
+										<p style="color: #9FC418;">Descripción</p>
+									</div>
+									<div class="col-xs-12 col-sm-10 col-md-10">
+										<input type="text" id="descripcion" name="descripcion" class="form-control editField" readonly="true" style="border-radius: 0px;"></input>
+									</div>
+								</div>
+								
+                                <br />
+								<div class="row margin-reset">
+									<div class="col-xs-12 col-sm-2 col-md-2">
+										<p style="color: #9FC418;">Significado</p>
+									</div>
+									<div class="col-xs-12 col-sm-10 col-md-10">
+										<input type="text" id="significado" name="significado" class="form-control editField" readonly="true" style="border-radius: 0px;"></input>
+									</div>
+								</div>								
+								
+                                <br />
+								<div class="row margin-reset">
+									<div class="col-xs-12 col-sm-2 col-md-2">
+										<p style="color: #9FC418;">Recomendación</p>
+									</div>
+									<div class="col-xs-12 col-sm-10 col-md-10">
+										<input type="text" id="recomendacion" name="recomendacion" class="form-control editField" readonly="true" style="border-radius: 0px;"></input>
+									</div>
+								</div>	
+
+                                <br />
+								<div class="row margin-reset">
+									<div class="col-xs-12 col-sm-3 col-md-3">
+										<p style="color: #9FC418;">Escala Inicial</p>
+									</div>
+									<div class="col-xs-12 col-sm-3 col-md-3">
+									    <input type="number" step="any" id="escalaInicial" name="escalaInicial" value="00.00"></input>
+									</div>																		
+									<div class="col-xs-12 col-sm-3 col-md-3">
+										<p style="color: #9FC418;">Escala Final</p>
+									</div>
+									<div class="col-xs-12 col-sm-3 col-md-3">
+										<input type="number" step="any" id="escalaFinal" name="escalaFinal" value="00.00"></input>
+									</div>									
+								</div>									
+								
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-3" style="font-size: 0.8vw;">
+								<div class="row margin-reset">
+									<div class="col-xs-12 col-sm-12 col-md-4">
+										<p style="color: #9FC418;">Icono</p>
+									</div>
+									<div class="col-xs-12 col-sm-12 col-md-8">
+										<label for="icono1">Seleccionar Imagen</label>
+										<div class="file-loading">
+											<input id="icono1" name="icono" type="file"></input>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+						<br/>
+						<p id="validacionEdicion" style="text-align:center; color: #FB0101"></p>
+					    <p id="mensajeFormMedicion" th:text="'' + ${mensajeFormMedicion}" style="text-align:center"></p>
+					    <input type="hidden" id="idAplicacionDeCapa" name="idAplicacionDeCapa" th:value="${idAplicacionDeCapa}"></input>
+					    <input type="hidden" id="idCapaDeMedicion" name="idCapaDeMedicion" th:value="${idCapaDeMedicion}"></input>
+					</form>
+					
+					<form id="createMedicionForm" th:action="@{/createUpdateMedicion}" th:method="post"  
+					 style="width: 100%; background-color: #E8E8E8; float: center; font-size: 0.9vw; display: none;" enctype="multipart/form-data" >
+
+						<div class="row margin-reset"> 
+                            <ul class="nav nav-tabs">
+                            
+                                <li data-toggle="tooltip" title="Guardar nueva medicion">
+                                    <div id="addNewMedicion" class="btn btn-default" onclick="realizarValidacionesCreacion()"
+                                        style="background-color: #00BFFF;">
+                                        <span style="color: #FFFFFF;" class="glyphicon glyphicon-floppy-disk"></span>
+                                    </div>
+                                </li> 
+                                
+                                <li data-toggle="tooltip" title="Cancelar">
+                                    <button id="cancelNewMedicion" class="btn btn-default" style="background-color: #FB0101;">
+                                        <span style="color: #FFFFFF;" class="glyphicon glyphicon-remove-sign"></span>
+                                    </button>
+                                </li>
+                                
+                            </ul> 						
+					    </div>
+
+						<br />
+
+						<div class="row margin-reset">
+							<div class="col-xs-12 col-sm-12 col-md-9">
+
+								<div class="row margin-reset">
+									<div class="col-xs-12 col-sm-2 col-md-2">
+										<p style="color: #9FC418;">Nombre</p>
+									</div>
+									<div class="col-xs-12 col-sm-5 col-md-5">
+										<input type="text" id="nombreNew" th:name="nombre" class="form-control" style="border-radius: 0px;"></input>
+									</div>
+									<div class="col-xs-12 col-sm-2 col-md-2">
+										<p style="color: #9FC418;">Color</p>
+									</div>
+									<div class="col-xs-12 col-sm-3 col-md-3">
+										<input type="color" id="color" name="color" value="#ff0000"></input>
+									</div>
+								</div>
+
+								<br />
+								<div class="row margin-reset">
+									<div class="col-xs-12 col-sm-2 col-md-2">
+										<p style="color: #9FC418;">Descripción</p>
+									</div>
+									<div class="col-xs-12 col-sm-10 col-md-10">
+										<input type="text" id="descripcion" name="descripcion" class="form-control" style="border-radius: 0px;"></input>
+									</div>
+								</div>
+								
+                                <br />
+								<div class="row margin-reset">
+									<div class="col-xs-12 col-sm-2 col-md-2">
+										<p style="color: #9FC418;">Significado</p>
+									</div>
+									<div class="col-xs-12 col-sm-10 col-md-10">
+										<input type="text" id="significado" name="significado" class="form-control" style="border-radius: 0px;"></input>
+									</div>
+								</div>								
+								
+                                <br />
+								<div class="row margin-reset">
+									<div class="col-xs-12 col-sm-2 col-md-2">
+										<p style="color: #9FC418;">Recomendación</p>
+									</div>
+									<div class="col-xs-12 col-sm-10 col-md-10">
+										<input type="text" id="recomendacion" name="recomendacion" class="form-control" style="border-radius: 0px;"></input>
+									</div>
+								</div>	
+
+                                <br />
+								<div class="row margin-reset">
+									<div class="col-xs-12 col-sm-3 col-md-3">
+										<p style="color: #9FC418;">Escala Inicial</p>
+									</div>
+									<div class="col-xs-12 col-sm-3 col-md-3">
+									    <input type="number" step="any" id="escalaInicialNew" name="escalaInicial" value="00.00"></input>
+									</div>																		
+									<div class="col-xs-12 col-sm-3 col-md-3">
+										<p style="color: #9FC418;">Escala Final</p>
+									</div>
+									<div class="col-xs-12 col-sm-3 col-md-3">
+										<input type="number" step="any" id="escalaFinalNew" name="escalaFinal" value="00.00"></input>
+									</div>									
+								</div>									
+								
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-3" style="font-size: 0.8vw;">
+								<div class="row margin-reset">
+									<div class="col-xs-12 col-sm-12 col-md-4">
+										<p style="color: #9FC418;">Icono</p>
+									</div>
+									<div class="col-xs-12 col-sm-12 col-md-8">
+										<label for="icono2">Seleccionar Imagen</label>
+										<div class="file-loading">
+											<input id="icono2" name="icono" type="file"></input>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+						<br/>
+						<p id="validacionCreacion" style="text-align:center; color: #FB0101"></p>
+						<input type="hidden" id="idAplicacionDeCapa" name="idAplicacionDeCapa" th:value="${idAplicacionDeCapa}"></input>
+						<input type="hidden" id="idCapaDeMedicion" name="idCapaDeMedicion" th:value="${idCapaDeMedicion}"></input>
+					</form>
+					
+					<h4 style="background-color: #9FC418; color:#FFFFFF;" th:text="${rutaMostrada}"></h4>
+
+					<br />					
+
+					<h2 style="text-align: left; color: #FFFFFF;">Mediciones</h2>
+
+                    <div style="overflow-x:auto;">
+					<table id="tableMediciones" class="table table-striped table-bordered" cellspacing="0" 
+					       style="width: 100%; background-color: #E8E8E8; font-size: 0.9vw;">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Nombre</th>
+								<th>Descripción</th>
+								<th>Color</th>								
+								<th>Significado</th>
+								<th>Recomendación</th>
+								<th>Escala Inicial</th>
+								<th>Escala Final</th>														
+								<th>Icono</th>
+								<th>Eliminar</th>
+								<th>Editar</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<tr th:each="medicion : ${medicionList}">
+								<td th:text="${medicion.id}"></td>
+								<td th:text="${medicion.nombre}"></td>
+								<td th:text="${medicion.descripcion}"></td>
+								<td th:style="'background-color: ' + ${medicion.color}"></td>
+								<td th:text="${medicion.significado}"></td>
+								<td th:text="${medicion.recomendacion}"></td>
+								<td th:text="${medicion.escalaInicial}"></td>
+								<td th:text="${medicion.escalaFinal}"></td>								
+								<td>
+									<img th:src="${medicion.icono.rutaLogo}" style="width: 40px; top: -9px;" />
+								</td>
+								<td>
+									<a th:id="${medicion.id}" class="btn btn-default deleteButton" th:if="${puedeBorrar}"  
+									 style="height:32px; background-color: #FB0101; border: 1px solid; border-color: #D0D0D0; border-radius: 3px;"> 								     
+								        <span style="color: #FFFFFF;" class="glyphicon glyphicon-trash"></span> 
+								    </a>
+								</td> 
+								<td>
+									<button th:id="${medicion.id}" style="background-color: #9FC418;" 
+									 th:if="${puedeEditar}" class="btn btn-default editButton">
+									    <span style="color: #FFFFFF;" class="glyphicon glyphicon-pencil"></span>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+						
+	</section>
+	
+	<div th:replace="fragments/printMap :: printMap"></div>
+	
+    <script>  
+       $(document).ready(function() {
+            $('#tableMediciones').dataTable({
+                "language": {"url": "/assets/json/spanishTable.json"}
+            });
+        });
+        function openModalMediciones() {
+            document.getElementById('modalMediciones').style.display = "block";
+        }  
+    
+        function closeModalMediciones() {
+            document.getElementById('modalMediciones').style.display = "none";
+        }
+		
+        
+        $('.editButton').on('click', function() {
+            var id = $(this).attr('id');           
+            $.ajax({
+                url: "/getMedicion/" + id,
+                method: "GET",
+            }).success(function(response) {
+            	$('#validacionEdicion').text("  ");
+            	$('#validacionCreacion').text("  ");            	
+            	$('#mensajeFormMedicion').text("  "); 
+            	
+                $('#editMedicionForm')
+                    .find('[name="id"]').val(response.id).end()
+                    .find('[name="nombre"]').val(response.nombre).end()
+                    .find('[name="descripcion"]').val(response.descripcion).end()
+                    .find('[name="color"]').val(response.color).end()										
+					.find('[name="significado"]').val(response.significado).end()
+					.find('[name="recomendacion"]').val(response.recomendacion).end()
+					.find('[name="escalaInicial"]').val(response.escalaInicial).end()
+					.find('[name="escalaFinal"]').val(response.escalaFinal).end();
+                
+                $('.editField').attr("readonly",false);
+                $('#botonEdicion').css("display","block");
+                
+                $("#redirectCapas").attr("href","/getCapasByIdMedicion/" + id);
+        
+            });                               
+        });  
+		
+		
+        $('#showFormNewMedicion').on('click', function() {
+        	document.getElementById("editMedicionForm").reset();
+            $('#editMedicionForm').hide(); 
+            $('#createMedicionForm').show(); 
+            $('#validacionCreacion').text("  ");
+            $('#mensajeFormMedicion').text("  "); 
+        });       
+        
+        $('#cancelNewMedicion').on('click', function() {
+            $('#editMedicionForm').show(); 
+            document.getElementById("createMedicionForm").reset();
+            $('.editField').attr("readonly",true);
+            $('#botonEdicion').css("display","none");
+            $('#createMedicionForm').hide(); 
+            $('#validacionEdicion').text("  ");
+            $('#mensajeFormMedicion').text("  "); 
+        });     		
+
+		      
+        $(document).on('ready', function() {
+            $("#icono1").fileinput({
+                browseClass: "btn-sm btn-primary btn-block",
+                showCaption: false,
+                showRemove: false,
+                showUpload: false,
+                allowedFileExtensions: ["jpg","png","svg"]
+            });
+        });  
+
+        $(document).on('ready', function() {
+            $("#icono2").fileinput({
+                browseClass: "btn-sm btn-primary btn-block",
+                showCaption: false,
+                showRemove: false,
+                showUpload: false,
+                allowedFileExtensions: ["jpg","png","svg"]
+            });
+        });  
+                
+    </script>
+    
+    
+    <script th:inline="javascript">
+        $('.deleteButton').on('click', function() {
+        	var id = $(this).attr('id'); 
+        	var linkDelete = "/deleteMedicion/" + [[${idAplicacionDeCapa}]] + "/" + [[${idCapaDeMedicion}]] + "/" + id
+        	$('#confirmDelete').attr("href",linkDelete);        	
+        	$('#modalConfirmDelete').show();        	
+        	$('#modalConfirmDelete').find('#cancelDelete').on('click', function() {
+                $('#modalConfirmDelete').hide();
+            });        	
+        	$('#modalConfirmDelete').find('#confirmDelete').on('click', function() {
+                $('#modalConfirmDelete').hide();
+            });
+        });  
+    </script>
+    
+    <div th:replace="fragments/dialog :: modalConfirmDelete"></div> 
+    
+     
+	<script type="text/javascript" th:inline="javascript" >	
+        /*<![CDATA[*/ 											
+        function realizarValidacionesEdicion(){        	
+        	var nombre = $("#nombre").val();         
+            if(nombre != null){ 	
+        	    if(nombre == ""){ 
+        	    	document.getElementById('validacionEdicion').innerHTML = "El Nombre está vacío";                 
+        	    }else{	
+                    var escalaInicial = $("#escalaInicial").val();
+                    var escalaFinal   = $("#escalaFinal").val(); 				
+				    validacionesRangosMedicion("validacionEdicion",escalaInicial,escalaFinal)																
+                }
+        	} 	
+        };
+		
+		
+		function realizarValidacionesCreacion(){        	
+        	var nombre = $("#nombreNew").val();         
+            if(nombre != null){ 	
+        	    if(nombre == ""){ 
+        	    	document.getElementById('validacionCreacion').innerHTML = "El Nombre está vacío";                 
+        	    }else{		
+					var icono = $("#iconoNew").val();     
+                    if(icono != null){ 
+                    	if(icono == ""){ 
+        	                document.getElementById('validacionCreacion').innerHTML = "Debe cargar un icono";
+                    	}else{
+						    var escalaInicial = $("#escalaInicialNew").val();
+                            var escalaFinal   = $("#escalaFinalNew").val(); 
+					        validacionesRangosMedicion("validacionCreacion",escalaInicial,escalaFinal)	
+                        }											
+        	        }																				
+                }
+        	} 	
+        };
+		
+		
+        function validacionesRangosMedicion(mensajeImpreso,escalaInicial,escalaFinal){                   
+            if(escalaInicial != null){ 
+                if(escalaInicial == ""){ 
+                	document.getElementById(mensajeImpreso).innerHTML = "La Escala inicial está vacía";
+                }else{
+                	if(isNaN(escalaInicial)){   
+                		document.getElementById(mensajeImpreso).innerHTML = "Valor incorrecto para Escala inicial";
+                	}else{
+                    	if(escalaFinal != null){
+                            if(escalaFinal == ""){ 
+                            	document.getElementById(mensajeImpreso).innerHTML = "La Escala final está vacía";
+                            }else{
+                            	if(isNaN(escalaFinal)){   
+                            		document.getElementById(mensajeImpreso).innerHTML = "Valor incorrecto para Escala final"; 
+                            	}else{	
+                                	if((escalaInicial != null) && (escalaFinal != null)){          	
+                                        if(parseFloat(escalaInicial) > parseFloat(escalaFinal)){
+                                            document.getElementById(mensajeImpreso).innerHTML = "La Escala final debe ser mayor que la inicial";
+                                            return false;
+                                        }else{
+                                        	var idMedicion   = $("#id").val();
+                                        	if(idMedicion==""){
+                                        		idMedicion = 0;
+                                            }
+                                        	$.ajax({
+                                                url: "/verificarsolapamiento/" + [[${idCapaDeMedicion}]] + "/" 
+                                                                               + escalaInicial + "/" + escalaFinal+ "/" + idMedicion,
+                                                method: "GET",
+                                            }).success(function(response) {                   	
+                                            	if(response){
+                                            	    document.getElementById(mensajeImpreso).innerHTML = "El rango de las escalas se solapa con otro ya existente";
+                                            	}else{
+                                            	    if(idMedicion==null){
+                                            	    	$('#createMedicionForm').submit();
+                                            	    }else{
+                                            	    	$('#editMedicionForm').submit();
+                                            	    }                                            		
+												}      
+                                            });
+                                        }	
+                                	}											
+		                        } 
+                            }
+                    	}        					
+					} 
+                }
+        	}								
+        };		
+        /*]]>*/
+    </script>
+
+</body>
+
+</html>

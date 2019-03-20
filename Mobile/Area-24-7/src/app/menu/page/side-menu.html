@@ -1,0 +1,79 @@
+<ion-header>
+    <ion-toolbar text-center [ngStyle]="{'background': currentApp.color}">
+        <ion-row>
+            <ion-col col-1>
+                <ion-icon name="close" color="light" menuClose item-left></ion-icon>
+            </ion-col>
+            <ion-col text-center>
+                <ion-title *ngIf="currentApp.id === -1" >CONFIGURACIÓN</ion-title>
+                <ion-title *ngIf="currentApp.id > -1" >CONFIGURACIÓN<p class="subtitulo">{{currentApp.name}}</p></ion-title>
+            </ion-col>
+        </ion-row>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list no-margin [ngClass]="currentApp.name">
+        <ion-item *ngIf="currentApp.id > -1" class="action-radius">
+            <ion-label style="margin-bottom: 0;">Radio de Acción</ion-label>
+            <ion-range [min]="currentApp.minRadius" 
+                       [max]="currentApp.maxRadius" 
+                       pin="true" 
+                       [ngStyle]="{'color': currentApp.color}" 
+                       step="1" 
+                       [(ngModel)]="currentApp.radius"
+                       (ngModelChange)="emitActionRadiusChange()" 
+                       style="width: 100%; margin-left: 15px; margin-right:15px; padding-top: 2px;">
+                <ion-icon (click)="actionRadiusStepDown()" [ngStyle]="{'color': currentApp.color}" range-left small name="remove"></ion-icon>
+                <ion-icon (click)="actionRadiusStepUp()" [ngStyle]="{'color': currentApp.color}" range-right name="add"></ion-icon>
+            </ion-range>
+        </ion-item>
+        <ion-item *ngIf="currentApp.id > -1" text-center style="border-top: none; min-height: 0">
+            <ion-label>{{currentApp.radius}} metros</ion-label>
+        </ion-item>
+
+        <ion-list *ngIf="currentApp.id === 1" no-margin class="prefTrans">
+            <ion-item class="header">
+                <ion-label> Preferencias de transporte</ion-label>
+            </ion-item>
+            <div #options [id]="'sub-item-' + i" scrollY="true">
+                <ng-template ngFor let-item [ngForOf]="transportsPreferences">
+                    <ion-item class="itemMenu">
+                        <ion-avatar item-start>
+                            <img style="width:auto; height: 3rem;" src="{{item.icon}}">
+                        </ion-avatar>
+                        <ion-label> {{ item.name }}</ion-label>
+                        <ion-toggle [(ngModel)]="item.active" item-rigth></ion-toggle>
+                    </ion-item>
+                </ng-template>
+            </div>
+        </ion-list>
+
+        <!--
+        <ion-list *ngIf="common.submenu.sMovilidad" no-margin class="accordion-menu">
+            <ion-item class="header" tappable (click)="toggleItemOptions(options, headerIcon, transportsPreferences.length)">
+                <ion-avatar item-start>
+                    <ion-icon #headerIcon [id]="'header-icon-' + 'ios-arrow-down'" class="header-icon" name='ios-arrow-down'
+                        item-left></ion-icon>
+                </ion-avatar>
+                <ion-label> Preferencias de transporte</ion-label>
+            </ion-item>
+            <div #options [id]="'sub-item-' + i" class="options">
+                <ion-scroll style="height: 100%;" scrollY="true">
+                    <ng-template ngFor let-item [ngForOf]="transportsPreferences">
+                        <ion-item style="height: 51px;" (click)="select(item)" class="itemMenu">
+                            <ion-avatar item-start>
+                                <img style="width:auto; height: 3rem;" src="{{item.icon}}">
+                            </ion-avatar>
+                            <ion-label> {{ item.name }}</ion-label>
+                            <ion-toggle [(ngModel)]="item.active" (ngModelChange)="emitTransportsPreferencesChange(); guargarPreferenciasTransporte(item.stringifyToDefault())"
+                                item-rigth></ion-toggle>
+                        </ion-item>
+                    </ng-template>
+                </ion-scroll>
+            </div>
+        </ion-list> -->
+
+        <general-configuration *ngIf="currentApp.id === -1" class="anim"></general-configuration>
+    </ion-list>
+</ion-content>

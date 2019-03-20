@@ -1,0 +1,52 @@
+<!-- Generated template for the ItemComponent component -->
+<!--<div>
+  {{text}}
+</div> -->
+<!--<ion-scroll scrollX="false" scrollY="true" zoom="true">
+  <!-- <div *ngFor="let item of listaEquipamientos">
+    <ion-item>
+      <ion-avatar [class.active]="esActivo(item)" onclick="Seleccionado(item)">
+        <img style="width:auto; height: 4rem;" src="{{item.rutaLogo}}">
+      </ion-avatar>
+    </ion-item>
+  </div> -->
+<!--
+  <ng-template class="item-ordenamiento" ngFor let-item [ngForOf]="listaEquipamientos" let-i="index">
+    <ion-item>
+      <ion-avatar [class.active]="esActivo(item)" onclick="Seleccionado(item)">
+        <img style="width:auto; height: 4rem;" src="{{item.rutaLogo}}">
+      </ion-avatar>
+    </ion-item>
+  </ng-template>
+</ion-scroll>-->
+
+
+<!--<ng-template *ngIf="lista !== undefined" class="item-ordenamiento" ngFor let-item [ngForOf]="lista" let-i="index">
+    <button ion-fab style="background-color:rgba(113, 133, 102, 0.46);" [class.active]="esActivo(item)" (click)="seleccionado(item)">
+          <img style="height: 80px; max-width: 60px;"  src="{{item.icono.rutaLogo}}"/>
+    </button>
+  </ng-template>-->
+
+<div class="item-ordenamiento" style="background-color: #F5F5F5; box-shadow: none" *ngIf="lista.categorias && !listaFiltrados">
+    <div class="item-ordenamiento" style="box-shadow: none">
+        <div *ngIf="lista.categorias && !listaFiltrados">
+            <ng-template ngFor let-item [ngForOf]="lista.categorias" let-i="index">
+                <button class="vertical-divider" [class.active]="esActivo(item)" (click)="seleccionado(item)">
+          <img style="height: auto; width: 3rem;"  src="{{item.icono.rutaLogo}}" *ngIf="item.icono" />
+          <br>
+          <label style="font-size:1rem">{{item.nombre}}</label>
+    </button>
+            </ng-template>
+        </div>
+
+        <div class="item-ordenamiento" style="background-color: #F5F5F5; box-shadow: none" *ngIf="listaFiltrados">
+            <div *ngIf="listaFiltrados">
+                <ng-template ngFor let-item [ngForOf]="listaFiltrados.categorias" let-i="index">
+                    <button class="vertical-divider" [class.active]="esActivo(item)" (click)="seleccionado(item)">
+          <img style="height: auto; width: 3rem;"  src="{{item.icono.rutaLogo}}" *ngIf="item.icono" />
+          <br>
+          <label style="font-size:1rem">{{item.nombre}}</label>
+    </button>
+                </ng-template>
+            </div>
+        </div>

@@ -1,0 +1,114 @@
+import { Common } from './shared/utilidades/common';
+import { menuDinamico } from './menu/provider/menu';
+import { Component, ViewChild } from '@angular/core';
+import { Nav, Platform, MenuController } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { DetailsPage } from '../pages/details/details';
+import { HomePage } from '../pages/home/home';
+import { ListPage } from '../pages/list/list';
+import { LoginPage } from './login/pages/login-page/login-page';
+import { InicioPage } from './inicio/pages/inicio-page/inicio-page';
+import { AvistamientosPage } from './avistamientos/pages/avistamientos-page/avistamientos-page';
+import { HuellasAmbientalesPage } from './huellas-ambientales/pages/huellas-ambientales-page/huellas-ambientales-page';
+import { MiEntornoPage } from './mi-entorno/pages/mi-entorno-page/mi-entorno-page';
+import { MovilidadPage } from './movilidad/pages/movilidad-page/movilidad-page';
+import { VigiasMedioAmbientePage } from './vigias-medio-ambiente/pages/vigias-medio-ambiente-page/vigias-medio-ambiente-page';
+
+import { SideMenu } from './menu/page/side-menu';
+import { MenuOptionModel } from './menu/model/menu-model';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+
+@Component({
+  templateUrl: 'app.html',
+  styles: ['app.scss']
+})
+export class Amva_247_App {
+  @ViewChild(Nav) nav: Nav;
+  items: FirebaseListObservable<any[]>;
+
+  @ViewChild(SideMenu) sideMenu: SideMenu;
+  rootPage: any = LoginPage;
+  public options: Array<any>;
+  pages: Array<{ title: string, component: any }>;
+  //public options:Array<any>;
+
+  constructor(
+    public platform: Platform,
+    public statusBar: StatusBar,
+    public splashScreen: SplashScreen,
+    private menuCtrl: MenuController,
+    private db: AngularFireDatabase,
+    private pmenuService: menuDinamico,
+    private utilidad: Common 
+  ) {
+    this.initializeApp();
+    this.items = db.list('/24-7/tokens');
+  }
+
+  initializeApp() {
+    this.platform.ready().then(() => {
+      // Okay, so the platform is ready and our plugins are available.
+      // Here you can do any higher level native things you might need.
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
+
+          setTimeout(() => {
+         this.splashScreen.hide();
+      }, 100);
+  
+      //let options = new Array<any>();
+
+      this.cagarMenu();
+      //this.options = options;
+    });
+  }
+
+  // Redirect the user to the selected page
+  public selectOption(option: MenuOptionModel): void {
+    this.menuCtrl.close().then(() => {
+
+      // Collapse all the options
+      this.sideMenu.collapseAllOptions();
+
+      // Redirect to the selected page
+      // this.nav.push(option.component || DetailsPage, { 'title': option.displayName });
+    });
+  }
+
+  public collapseMenuOptions(): void {
+    // Collapse all the options
+    this.sideMenu.collapseAllOptions();
+  }
+
+  openPage(page) {
+    // Reset the content nav to have just this page
+    // we wouldn't want the back button to show in this scenario
+    this.nav.setRoot(page.component);
+  }
+
+  private cagarMenu() {
+
+    this.pmenuService.cargarMenuWeb('/api/aplicacion/menu')
+      .then((res) => {
+        this.options = JSON.parse(res._body);
+        this.pmenuService.modelDinamico(this.options);
+        this.pmenuService.listaMenu = this.options;
+        var pusuario: any = JSON.parse(localStorage.getItem("usuario"));
+        if (pusuario !== null && pusuario !== undefined) {
+          var objPreferencias = JSON.parse(pusuario.preferencias);
+          var pArreglo: Array<any> = <Array<any>>objPreferencias.preferencias;
+          this.pmenuService.compararOpcionesMenu(this.options, pArreglo);
+          console.log("Lista Preferencias"+JSON.stringify(this.pmenuService.listaMenu));
+        }
+
+      },
+      (error) => {
+        if (error.status == 400) {
+
+        }
+      })
+
+  }
+
+}

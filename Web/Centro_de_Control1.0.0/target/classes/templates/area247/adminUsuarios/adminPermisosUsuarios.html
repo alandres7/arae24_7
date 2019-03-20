@@ -1,0 +1,196 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+<title th:text="'' + ${title}"></title>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<div th:replace="fragments/frameMaps :: header-contend"></div>
+
+</head>
+
+
+    <style>
+        .modal {
+        	display: none;
+        	position: fixed;
+        	z-index: 1;
+        	left: 0;
+        	top: 0;
+        	width: 100%;
+        	height: 100%;
+        	overflow: auto;
+        	background-color: rgba(0, 0, 0, 0.4);
+        }       
+        .contenido {
+        	position: relative;
+        	margin: auto;
+        	top: 10%;
+        	width: 70%;
+        }
+
+    </style>
+
+
+<body>
+	<div th:replace="fragments/frameMaps :: header-degra"></div>
+
+	<div th:replace="fragments/frameMaps :: sideBar-Left-App"></div>
+
+
+
+	<section id="main-content">
+
+		<div id="mapa" style="height: 100%"></div>
+
+		<div th:replace="fragments/frameMaps :: ribbon-List"></div>
+
+		<div th:replace="fragments/frameMaps :: notification-List"></div>
+
+		<div th:replace="fragments/enviarMensajePush :: mensajes-push-chat"></div>
+		<div th:replace="fragments/enviarMensajePush :: modalNotificaHisto"></div>
+		
+		
+
+		<div id="modalPermisosUsuarios" class="modal" th:style="'display: ' + ${despliegeModalPermisosUsuarios}">
+			<div class="contenido">
+			
+				<button onclick="closeModalPermisosUsuarios()" class="btn btn-default" style="background-color: #FB0101; float: right;">
+                    <span class="glyphicon glyphicon-remove" style="float: right; color: #FFFFFF;"></span> 
+                </button>
+
+				<h1 style="background-color: #9FC418; color: #FFFFFF; width:710px;" th:text="'Asignacion de permisos a: ' + ${username}" ></h1>
+
+				<div style="border: 25px solid; border-color: transparent; background-color: rgba(0, 0, 0, 0.8);">
+                    
+					<form id="permisosUsuarioForm" th:action="@{/updatePermisosUsuario}" th:object="${permisoWrapper}"
+					 style="width: 100%; background-color: #E8E8E8; float: center; font-size: 0.9vw;" th:method="post" enctype="multipart/form-data" >
+                    
+					    <div class="row margin-reset">
+					    	<ul class="nav nav-tabs">
+					    	
+					    		<li data-toggle="tooltip" title="Guardar Cambios">
+								    <button class="btn btn-default" style="background-color: #00BFFF;" type="submit">
+								        <span style="color: #FFFFFF;" class="glyphicon glyphicon-floppy-disk"></span>
+								    </button>
+								</li>
+					    							    							    		
+					    		<li data-toggle="tooltip" title="Retornar a Usuarios">
+								    <a id="returnUsuarios" class="btn btn-default" style="height:32px; border: 1px solid; 
+								     border-color: #D0D0D0; border-radius: 3px; background-color: #9FC418;" 
+								     th:href="@{/adminUsuarios}">
+								         <span style="color: #FFFFFF;" class="glyphicon glyphicon-user"></span>
+								     </a>
+								</li> 
+																
+					    	</ul>
+					    </div>
+
+					    <div style="overflow-x:auto;">   
+					    <table id="tablePermisosUsuarios" class="table table-striped table-bordered" cellspacing="0" 
+					           style="width: 100%; background-color: #E8E8E8">
+					    	<thead>
+					    		<tr>
+					    		    <th style="text-align:center; width:80px;">ID</th>
+					    			<th style="text-align:center;">Nombre Objeto</th>
+					    			<th style="text-align:center;">Tipo Objeto</th>
+					    			<th style="text-align:center;">Adicionar</th>
+					    			<th style="text-align:center;">Editar</th>
+					    			<th style="text-align:center;">Borrar</th>
+					    			<th style="text-align:center;">Imprimir</th>
+					    			<th style="text-align:center;">Consultar</th>
+					    		</tr>
+					    	</thead>
+					    	<tbody>
+					    		<tr th:each="objeto : ${permisoWrapper.permisosUsuario}">	
+					    						    		
+					    		    <td style="text-align:center;">			    		    
+					    			    <input type="text" th:name="|permisosUsuario[${objetoStat.index}].idObjeto|" 
+					    			                       th:value="${permisoWrapper.permisosUsuario[__${objetoStat.index}__].idObjeto}" class="form-control" style="border-radius: 0px;" readonly="true"></input>	
+					    			</td>
+					    								    		                                           								
+					    			<td style="text-align:center; font-size: 0.9vw;">				    				
+					    			    <input type="text" th:name="|permisosUsuario[${objetoStat.index}].nombreObjeto|" 
+					    			                       th:value="${permisoWrapper.permisosUsuario[__${objetoStat.index}__].nombreObjeto}" class="form-control" style="border-radius: 0px;" readonly="true"></input>	
+					    			                       					    			
+					    			    <input type="hidden" th:name="|permisosUsuario[${objetoStat.index}].id|" 
+					    			                         th:value="${permisoWrapper.permisosUsuario[__${objetoStat.index}__].id}"></input>
+					    							    			    					    			     									    			     				    		    
+					    			    <input type="hidden" th:name="|permisosUsuario[${objetoStat.index}].idUsuario|" 
+					    			                         th:value="${permisoWrapper.permisosUsuario[__${objetoStat.index}__].idUsuario}"></input>
+					    			</td>
+					    			
+					    			<td style="text-align:center;">
+					    			    <input type="text" th:name="|permisosUsuario[${objetoStat.index}].tipoObjeto|" 
+					    			                       th:value="${permisoWrapper.permisosUsuario[__${objetoStat.index}__].tipoObjeto}" class="form-control" style="border-radius: 0px;" readonly="true"></input>
+					    			</td>
+					    			
+					    			
+					    		    <td style="text-align:center;">
+					    			    <input type="checkbox" th:name="|permisosUsuario[${objetoStat.index}].puedeAdicionar|" th:value="true" 
+					    			                           th:checked="${permisoWrapper.permisosUsuario[__${objetoStat.index}__].puedeAdicionar}"
+					    			                           th:if="${permisoWrapper.permisosUsuario[__${objetoStat.index}__].checkAdicionar}"></input>
+					    			      <input type="hidden" th:name="|permisosUsuario[${objetoStat.index}].puedeAdicionar|" th:value="false"></input>                       				    			                           			    			    
+					    			</td>
+					    			
+					    			<td style="text-align:center;">
+					    			    <input type="checkbox" th:name="|permisosUsuario[${objetoStat.index}].puedeEditar|" th:value="true" 
+					    			                           th:checked="${permisoWrapper.permisosUsuario[__${objetoStat.index}__].puedeEditar}"
+					    			                           th:if="${permisoWrapper.permisosUsuario[__${objetoStat.index}__].checkEditar}"></input>
+					    			      <input type="hidden" th:name="|permisosUsuario[${objetoStat.index}].puedeEditar|" th:value="false"></input>                      				    			    
+					    			</td>
+					    			
+					    			<td style="text-align:center;">
+					    			    <input type="checkbox" th:name="|permisosUsuario[${objetoStat.index}].puedeBorrar|" th:value="true" 
+					    			                           th:checked="${permisoWrapper.permisosUsuario[__${objetoStat.index}__].puedeBorrar}"
+					    			                           th:if="${permisoWrapper.permisosUsuario[__${objetoStat.index}__].checkBorrar}"></input>
+					    			      <input type="hidden" th:name="|permisosUsuario[${objetoStat.index}].puedeBorrar|" th:value="false"></input>                         				    			    
+					    			</td>	
+					    							    			  
+					    			<td style="text-align:center;">
+					    			    <input type="checkbox" th:name="|permisosUsuario[${objetoStat.index}].puedeImprimir|" th:value="true" 
+					    			                           th:checked="${permisoWrapper.permisosUsuario[__${objetoStat.index}__].puedeImprimir}"
+					    			                           th:if="${permisoWrapper.permisosUsuario[__${objetoStat.index}__].checkImprimir}"></input>	
+					    			      <input type="hidden" th:name="|permisosUsuario[${objetoStat.index}].puedeImprimir|" th:value="false"></input>                         				    			    
+					    			</td>
+					    			
+					    			<td style="text-align:center;">
+					    			    <input type="checkbox" th:name="|permisosUsuario[${objetoStat.index}].puedeConsultar|" th:value="true" 
+					    			                           th:checked="${permisoWrapper.permisosUsuario[__${objetoStat.index}__].puedeConsultar}"
+					    			                           th:if="${permisoWrapper.permisosUsuario[__${objetoStat.index}__].checkConsultar}"></input>
+					    			      <input type="hidden" th:name="|permisosUsuario[${objetoStat.index}].puedeConsultar|" th:value="false"></input>                      					    			    			   			    
+					    			</td>
+					    									    							    											    						    			    				    			    														
+					    		</tr>					    		
+					    	</tbody> 					    	                          						
+					    </table>
+					    </div>
+					    				    						    		
+					</form>					
+				</div>
+			</div>
+		</div>					
+
+	</section>
+	
+	<div th:replace="fragments/printMap :: printMap"></div>
+	
+	<script> 
+        $(document).ready(function() {
+            $('#tablePermisosUsuarios').dataTable({
+                "language": {"url": "/assets/json/spanishTable.json"}
+            });
+        });	
+	
+        function openModalPermisosUsuarios() {
+            document.getElementById('modalPermisosUsuarios').style.display = "block";
+        }  
+    
+        function closeModalPermisosUsuarios() {
+            document.getElementById('modalPermisosUsuarios').style.display = "none";
+        }                             
+    </script>		
+
+</body>
+
+</html>

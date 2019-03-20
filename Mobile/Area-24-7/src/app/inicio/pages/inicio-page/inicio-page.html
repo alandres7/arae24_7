@@ -1,0 +1,80 @@
+﻿<ion-header class="anim" [ngClass]="currentApp.name">
+    <!-- TODO: Revisar el color  -->
+    <ion-toolbar [ngStyle]="{'background': currentApp.color}">
+        <!-- <ion-toolbar> -->
+        <div>
+            <img item-left src="assets/logo2.png" (click)="onClickHome()">
+        </div>
+        <ion-title>
+            {{ currentApp.name | uppercase }} <br>
+            <!-- <small> {{ currentApp.name }} </small> -->
+        </ion-title>
+
+        <!-- <ion-buttons end *ngIf="!common.submenu.sEntorno"> -->
+        <ion-buttons end>
+            <button ion-button menuToggle icon-only color="royal" id="toggle">
+                <i class="fas fa-cog fa-lg"></i>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="norm">
+    <div
+        *ngIf="!common.submenu.sEntorno && !common.submenu.sHuellas && !common.submenu.sVigias && !common.submenu.sAvistamientos && !common.submenu.sMovilidad && !common.submenu.sOrdenamiento">
+        <ion-list reorder="true" (ionItemReorder)="reorderApps($event)" side="start" class="app-list">
+            <ion-item *ngFor="let app of apps; let appIndex=index" [id]="app.id" [ngStyle]="{'background': app.color}">
+                <div>
+                    <ion-card *ngIf="app.children && app.children.length > 0 && app.active"
+                        [style.background-color]="app.color">
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col col-2 (click)="swtAplicacion(app.id)">
+                                    <img [src]="app.urlIcon">
+                                </ion-col>
+
+                                <ion-col col-9 (click)="swtAplicacion(app.id)">
+                                    <ion-row>
+                                        <span style="white-space: normal;">{{ app.name | uppercase }}</span>
+                                    </ion-row>
+
+                                    <ion-row text-justify>
+                                        <p *ngIf="app.recommendation && app.recommendation.description">
+                                            {{ app.recommendation.description }}
+                                        </p>
+                                    </ion-row>
+                                </ion-col>
+
+                                <ion-col col-1 (click)="notificationButton(app)">
+                                    <div>
+                                        <!-- <ion-toggle item-right id="{{app.id}}" [(ngModel)]="app.notification" (ngModelChange)="onAppActiveChange(apps, appIndex)" color="{{app.name}}"></ion-toggle> -->
+                                        <i *ngIf="app.notification" class="far fa-bell fa-lg fa-fw"
+                                            style="margin: 1rem auto; pointer-events: all"></i>
+                                        <i *ngIf="!app.notification" class="fas fa-bell-slash fa-lg fa-fw"
+                                            style="margin: 1rem auto; pointer-events: all"></i>
+                                    </div>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </ion-card>
+                </div>
+            </ion-item>
+        </ion-list>
+    </div>
+
+    <mapa [ngClass]="absolute()"></mapa>
+
+    <movilidad-page *ngIf="common.submenu.sMovilidad" [app]="getApp('1')" class="anim"></movilidad-page>
+
+    <!-- <vigias-medio-ambiente-page *ngIf="common.submenu.sVigias" [app]="getApp('2')"></vigias-medio-ambiente-page> -->
+    <vigia *ngIf="common.submenu.sVigias" [app]="getApp('2')" class="anim"> </vigia>
+
+    <avistamiento *ngIf="common.submenu.sAvistamientos" [app]="getApp('3')" class="anim"></avistamiento>
+
+    <territorio *ngIf="common.submenu.sOrdenamiento" [app]="getApp('4')" class="anim"></territorio>
+
+    <mi-entorno *ngIf="common.submenu.sEntorno" [app]="getApp('5')" class="anim"></mi-entorno>
+
+    <huellas *ngIf="common.submenu.sHuellas" [app]="getApp('6')" class="anim"></huellas>
+
+</ion-content>

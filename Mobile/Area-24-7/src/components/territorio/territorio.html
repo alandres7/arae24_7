@@ -1,0 +1,12 @@
+<layer-manager [app]="app"></layer-manager>
+
+<mixed-typeahead *ngIf="layerManagerComponent.getCurrentLayer() && layerManagerComponent.getCurrentLayer().children"
+                 [color]="app.color"
+                 (clickGoogleSuggestion)="onClickGoogleSuggestion($event)"
+                 (clickApiSuggestion)="onClickApiSuggestion($event)"></mixed-typeahead>
+
+<my-location [color]="app.color" 
+             [actionRadius]="app.radius" 
+             (clickPedestrian)="onClickPedestrian($event)" 
+             (clickMyLocationButton)="onClickMyLocationButton($event)" 
+             (dragendPedestrian)="onDragendPedestrian($event)"></my-location>

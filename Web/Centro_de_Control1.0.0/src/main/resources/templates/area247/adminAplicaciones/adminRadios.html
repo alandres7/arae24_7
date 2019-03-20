@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+<title th:text="'' + ${title}"></title>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<div th:replace="fragments/frameMaps :: header-contend"></div>
+
+</head>
+
+
+<style>
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+}
+
+.contenido {
+	position: relative;
+	margin: auto;
+	top: 10%;
+	width: 70%;
+}
+
+#RC .slider-selection {
+	background: #9FC418;
+}
+
+#RC .slider-handle {
+	background: #9FC418;
+}
+</style>
+
+
+<body onload="closeMenu()">
+	<div th:replace="fragments/frameMaps :: sideBar-Left-App"></div>
+
+	<section id="main-content">
+
+		<div id="mapa" style="height: 100%"></div>
+
+		<div id="modalAplicaciones" class="modal"
+			th:style="'z-index: auto;background: transparent;display: block;margin: 55px 0 0 257px;display: ' + ${despliegeModalAplicacion}">
+			<div class="contenido"
+				style="width: 100%; height: calc(100% - 60px); margin-right: 0px; top: 0;">
+				<form id="aplicacionForm" th:action="@{/updateRadios}"
+					onsubmit="return realizarValidacionesEdicion()"
+					style="width: 100%; font-size: 1.1vw" th:method="post"
+					enctype="multipart/form-data">
+
+					<div class="row margin-reset">
+						<h1 class="title" style="float: left; margin: 0px;">Radio de
+							acción</h1>
+					</div>
+					
+					<div class="contenido-form"
+						style="border: none; padding: 0px; background-color: #0000004f; position: absolute; bottom: 0px; width: 100%;">
+						<div class="row margin-reset" style="margin-top:10px!important;">
+							<ul class="nav nav-tabs" style="border: none; float: left;margin-top:-60px;">
+								<li data-toggle="tooltip" title="Guardar Cambios"
+									style="background: #E8E8E8; height: 50px;"><a
+									style="padding: 0px; height: 100%;">
+										<button id="botonEdicion" class="btn btn-action" type="submit">
+											<span class="glyphicon glyphicon-floppy-disk"></span> <span
+												class="btn-text"> Guardar</span>
+										</button>
+								</a></li>
+								<li data-toggle="tooltip" title="Cerrar"
+									style="background: #E8E8E8; height: 50px;"><a
+									style="padding: 0px; height: 100%;">
+										<button class="btn btn-action"
+											onclick="closeModalAplicaciones()" type="submit">
+											<span class="glyphicon glyphicon-remove"></span> <span
+												class="btn-text"> Cerrar</span>
+										</button>
+								</a></li>
+							</ul>
+						</div>
+						<div class="row margin-reset">
+							<div class="col-xs-2 col-sm-2 col-md-2">
+								<p style="color: #9FC418;">Aplicacion</p>
+							</div>
+						</div>
+						
+						<div class="row margin-reset">
+							<div class="col-xs-3 col-sm-3 col-md-2">
+								<label class="lbl-select"> <select id="idAplicacion"
+									th:name="idAplicacion" class="form-control">
+										<option th:each="aplicacion : ${aplicacionesList}"
+											th:value="${aplicacion.id}" th:text="${aplicacion.nombre}"></option>
+								</select>
+								</label>
+							</div>
+							<div class="col-xs-7 col-sm-7 col-md-6 col-md-offset-1">
+								<div class="row margin-reset">
+									<div class="col-xs-2 col-sm-2 col-md-2">
+										<input type="number" id="limInfRadio" th:name="limInfRadio"
+											min="0" max="150" class="form-control"
+											style="border-radius: 0px;" value="0"></input>
+									</div>
+									<div class="col-xs-8 col-sm-8 col-md-8">
+										<input type="number" id="radioAccion" name="radioAccion"
+											data-slider-id="RC" style="width: 100%;"></input>
+									</div>
+
+									<div class="col-xs-2 col-sm-2 col-md-2">
+										<input type="number" id="limSupRadio" th:name="limSupRadio"
+											min="0" max="150" class="form-control"
+											style="border-radius: 0px;" value="1500"></input>
+									</div>
+								</div>
+							</div>
+						</div>
+						<br />
+						<p id="validacionEdicion"
+							style="text-align: center; color: #FB0101"></p>
+						<p id="mensajeFormRadio" th:text="'' + ${mensajeFormRadio}"
+							style="text-align: center"></p>
+					</div>
+				</form>
+
+			</div>
+		</div>
+
+	</section>
+	<div th:replace="fragments/frameMaps :: ribbon-List"></div>
+	<div th:replace="fragments/frameMaps :: notification-List"></div>
+	<div th:replace="fragments/enviarMensajePush :: mensajes-push-chat"></div>
+	<div th:replace="fragments/enviarMensajePush :: modalNotificaHisto"></div>
+	<div th:replace="fragments/printMap :: printMap"></div>
+
+
+	<script>        
+        var mySlider = new Slider("#radioAccion", { 
+        	min:0, 
+        	max:1500,
+        	value:900,
+        	step:100
+        });
+        $('#limInfRadio').focusout(function() {
+        	 var ya = $(this).val();
+        	 mySlider.min = ya;
+        	});
+        var cityCircle = new google.maps.Circle({
+            strokeColor: '#9FC418',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#9FC418',
+            fillOpacity: 0.35,
+            map: map,
+            center: {lat: 6.21394, lng: -75.55897},
+            radius: 10000
+        });
+        
+        function openModalAplicaciones() {
+            document.getElementById('modalAplicaciones').style.display = "block";
+        }  
+    
+        function closeModalAplicaciones() {
+            document.getElementById('modalAplicaciones').style.display = "none";
+            openMenu();
+        }
+    </script>
+
+</body>
+
+</html>

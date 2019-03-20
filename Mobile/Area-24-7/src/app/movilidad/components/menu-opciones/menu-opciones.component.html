@@ -1,0 +1,31 @@
+<ion-buttons>
+    <button (click)="goTo(1)" *ngIf="isLayerActive('1')" [ngClass]="getStyleClass('1')" [ngStyle]="{'background': appSettings.color}" class="vertical-divider" style="border-radius:0;display: inline" ion-fab>
+        <img style="height: auto; width: 4rem" src="assets/movilidad/menu/viajes.png">
+        <label class="fab-label">Viajes</label>
+    </button>
+
+    <button *ngIf="!isLayerActive(1)" (click)="goTo(1)" class="vertical-divider" style="border-radius:0;display: inline" ion-fab>
+        <img style="height: auto; width: 4rem" src="assets/movilidad/menu/viajes.png">
+        <label class="fab-label">Viajes</label>
+    </button>
+
+    <button (click)="goTo(2)" *ngIf="isLayerActive('2')" [ngClass]="getStyleClass('2')" [ngStyle]="{'background': appSettings.color}" class="vertical-divider" style="border-radius:0;display: inline" ion-fab>
+        <img style="height: auto; width: 4rem" src="assets/movilidad/menu/rutascercanas.png">
+        <label class="fab-label">Rutas Cercanas</label>
+    </button>
+
+    <button *ngIf="!isLayerActive(2)" (click)="goTo(2)" class="vertical-divider" style="border-radius:0;display: inline" ion-fab>
+        <img style="height: auto; width: 4rem" src="assets/movilidad/menu/rutascercanas.png">
+        <label class="fab-label">Rutas Cercanas</label>
+    </button>
+
+    <button (click)="goTo(3)" *ngIf="isLayerActive('3')" [ngClass]="getStyleClass('3')" [ngStyle]="{'background': appSettings.color}" class="vertical-divider" style="border-radius:0;display: inline" ion-fab>
+        <img style="height: auto; width: 4rem" src="assets/movilidad/menu/lineasyrutas.png">
+        <label class="fab-label">Rutas y Líneas</label>
+    </button>
+
+    <button *ngIf="!isLayerActive(3)" (click)="goTo(3)" class="vertical-divider" style="border-radius:0;display: inline" ion-fab>
+        <img style="height: auto; width: 4rem" src="assets/movilidad/menu/lineasyrutas.png">
+        <label class="fab-label">Rutas y Líneas</label>
+    </button>
+</ion-buttons>

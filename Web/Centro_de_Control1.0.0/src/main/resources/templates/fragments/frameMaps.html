@@ -1,0 +1,289 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" >
+	<head lang="en">	
+	    <title>Area 24/7</title>
+	    <meta charset="utf-8"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                
+        <div th:fragment="header-contend">
+            <link th:href="@{/css/bootstrap-theme.css}" rel="stylesheet"/>
+  	    	<link th:href="@{/css/style.css}" rel="stylesheet"/>
+  	    	<link th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+  	    		  	
+  	     	<script th:src="@{/js/jquery-1.8.3.min.js}"></script>   
+            <script th:src="@{/js/bootstrap.min.js}"></script>
+            <script th:src="@{/js/jquery.nicescroll.js}" type="text/javascript"></script>
+            <script th:src="@{/js/scripts.js}"></script>        
+        	<script th:src="@{https://maps.googleapis.com/maps/api/js?key=AIzaSyBYu46VlikN0QFUFMg7aOydSsBuehD1Lbc&amp;callback=initMap}"></script>
+        	        	
+        	<link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet"/>
+            <script th:src="@{/js/jquery.dataTables.min.js}" type="text/javascript"></script>
+            <script th:src="@{/js/dataTables.bootstrap.min.js}" type="text/javascript"></script>
+             
+            <link th:href="@{/css/fileinput.css}" rel="stylesheet" />
+            <link th:href="@{/css/fileinput.min.css}" rel="stylesheet" />
+            <script th:src="@{/js/fileinput.js}"></script>
+            <script th:src="@{/js/fileinput.min.js}"></script>   
+            
+            <link th:href="@{/css/bootstrap-slider.css}" rel="stylesheet" />
+            <link th:href="@{/css/bootstrap-slider.min.css}" rel="stylesheet" />
+            <script th:src="@{/js/bootstrap-slider.js}"></script>
+            <script th:src="@{/js/bootstrap-slider.min.js}"></script>                       
+        </div>  
+            
+	</head>
+
+
+<body>
+
+
+    <div th:fragment="header-degra">   
+        
+		<header class="header dark-bg" id="headerDegra">
+		
+			<a th:href="@{/inicio}" class="logo">
+				<img alt="" th:src="@{/assets/images/descarga.jpg}" style="width: 40px;margin-top: -5px;"/>
+			</a> 
+			
+			<div class="top-nav notification-row" >                
+				<ul class="nav pull-right top-menu" >                                                                  
+					<li class="dropdown">
+						<a data-toggle="dropdown" class="dropdown-toggle" style="background: transparent !important;">
+							<span class="profile-ava">
+								<img alt="" th:src="@{/assets/images/user_icon.png}" style="width: 25%;"/>
+							</span>
+							<span class="username" style="font-size: 13px; color: #bdbdbd;">Area 247</span>
+							<b class="caret"></b>
+						</a>
+						<ul class="dropdown-menu extended logout" style="width: 200px; float: right; right: 0; left: auto;">
+							<div class="log-arrow-up"/>                                                   
+							<li><a th:href="@{/logout}">Cerrar sesión</a></li>
+							<li><a th:href="@{/inicio}">Ir a inicio</a></li>                         
+						</ul>
+					</li>
+				</ul>
+			</div>
+			
+		</header>  
+    </div>
+ 
+ 
+ 
+    <div th:fragment="ribbon-List-MensajePush"> 
+        <div class="ribbon" style="top:9vw; background-color:#02A868;">
+            <a href="#" onclick="openModalMensajePush();">
+			    <img th:src="@{/assets/images/tag-mensaje.png}" style="width: 4vw; position: relative;" />
+			</a> 
+        </div>                         
+    </div> 
+    
+    
+       
+    <div th:fragment="ribbon-List"> 
+        <div class="ribbon" style="top:9vw; background-color:#02A868;">
+            <a href="#" onclick="openModalMensajePush();">
+			    <img th:src="@{/assets/images/tag-mensaje.png}" style="width: 4vw; position: relative;" />
+			</a> 
+        </div>    
+        <div class="ribbon" style="top:13vw; background-color: #AAC02F;">
+            <a href="#">
+			    <img th:src="@{/assets/images/tag-lupa.png}" style="width: 4vw; position: relative;" />
+			</a>          
+        </div>	
+        <div class="ribbon" style="top:17vw; background-color:#B42C2D;">
+            <a href="#" onclick="showNotificationList();">
+			    <img th:src="@{/assets/images/tag-campana.png}" style="width: 4vw; position: relative;" />
+			</a>                       
+        </div> 
+        <script>	
+            function showNotificationList() {
+                var x = document.getElementById('notificationList')
+                if (x.style.display === 'none') {
+                    x.style.display = 'block';
+                } else {
+                    x.style.display = 'none';
+                }
+            } 
+        </script>                       
+    </div>
+    
+  
+    
+    <div th:fragment="notification-List"> 
+        <div id="notificationList" >
+            <!--<a href="#">
+	            <div class="ribbon-notification" th:if="${showNewEntor}" th:style="'top:21vw; background-color: ' + ${colorFondoEntorno}">
+			        <img th:src="${rutaIconoEntorno}" class="ribbon-icon"/>
+					<span class="ribbon-name"><b th:text="${nombreEntorno}"></b></span>
+					<div class="circleNumber">
+						<p th:style="'color: ' + ${colorFondoEntorno}" th:text="${newEntor}"></p>						
+					</div>						
+	            </div>            
+   			</a>-->
+            <a th:href="@{/adminVigias}">
+    	        <div class="ribbon-notification" th:if="${showNewDenun}" th:style="'background-color: ' + ${colorFondoVigia}">
+			        <div class="ribbon-icon">
+			        	<img th:src="${rutaIconoVigia}"/>
+			        </div>
+                    <p class="ribbon-name"><b th:text="${nombreVigia}"></b></p>
+                	<div class="circleNumber">
+	                	<p th:style="'color: ' + ${colorFondoVigia}" th:text="${newDenun}"></p>
+                	</div>
+	            </div>
+   			</a>
+            <a th:href="@{/adminAvistamientos}" >
+            	<div class="ribbon-notification" th:if="${showNewAvist}" th:style="'background-color: ' + ${colorFondoAvistamiento}">
+			        <div class="ribbon-icon">
+			        	<img th:src="${rutaIconoAvistamiento}"/>
+			        </div>
+                    <p class="ribbon-name"><b th:text="${nombreAvistamiento}"></b></p>
+                    <div class="circleNumber">
+	                    <p th:style="'color: ' + ${colorFondoAvistamiento}" th:text="${newAvist}"></p>
+                    </div>	                						
+	            </div> 
+   			</a>                      
+        </div>
+    </div>
+
+   <div th:fragment="sideBar-Left-App">  
+		<aside>
+  		    <div th:replace="fragments/frameMaps :: toggle"></div>
+			<div id="sidebar"  class="nav-collapse ">
+				<ul class="sidebar-menu" style="margin-top: 10px;">
+				
+				    <li class="sub-menu" th:each="menuItem : ${menuItemsList}" th:style="'background-color: ' + ${menuItem.codigoColor}">
+				        <a href="#" style="padding: 0 0 0 10px;" th:onclick  = "'javascript:rotateArrow(\'' + ${menuItem.id} + '\');'">
+				            <img class="img-menu" th:src="${menuItem.icono.rutaLogo}"/>	                        
+	                        <span th:id="${menuItem.id}" th:text="${menuItem.nombre}" style="color:#FFFFFF; top: 8px;"></span>	
+	                        <img class="img-arrow" th:id="'arrow'+${menuItem.id}" th:src="@{/assets/images/right-arrow.png}"/>						
+	                    </a>
+	                    <ul class="sub">
+							<li class="sub-menu" th:each="submenu : ${menuItem.capas}" >
+								<a class="nombre-submenu" th:text="${submenu.nombre}" th:href="${submenu.urlRef}"></a>
+							</li>													
+						</ul>                        
+                    </li> 
+					<script type="text/javascript">
+						$( document ).ready(function() {
+							$.each( $(".nombre-submenu"), function( key, text ) {
+								var item = $(".nombre-submenu")[key];
+								if (item.text.length > 25){
+									item.style.padding = "5px 0px 5px 32px";
+									
+								}
+							});
+						});
+					</script>
+                                      
+                    <li id="liAdmin" class="sub-menu" style="background-color: #858585;">                     
+	                    <a href="#" style="padding: 0 0 0 10px;" th:onclick = "'javascript:rotateArrow(\'Seg\');'">
+	                        <img class="img-menu" th:src="@{/assets/images/configuraciones.svg}"/>
+	                        <span id="seg" style="color:#FFFFFF; top: 8px;">Administración</span>
+							<img class="img-arrow" th:id="'arrowSeg'" th:src="@{/assets/images/right-arrow.png}"/>
+	                    </a>  
+                        <ul class="sub">
+							<li><a class="" th:href="@{/adminAplicaciones}">Aplicaciones</a></li>	
+							<li><a class="" th:href="@{/adminArboles}">Árboles de decisión</a></li>	
+							<li><a class="" th:href="@{/adminFormularios}">Formularios</a></li>								
+							<li><a class="" th:href="@{/adminMensajes}">Mensajes</a></li>
+							<li><a class="" th:href="@{/adminAutoridades}">Autoridades Competentes</a></li>	
+							<li><a class="" th:href="@{/adminRadios}">Radio de acción</a></li>
+							<!--<li><a class="" th:href="@{/adminRecursos}">Recursos</a></li>-->	
+							<!--<li><a class="" th:href="@{/adminAfectaciones}">Afectaciones</a></li>-->											
+						</ul>							
+	                </li> 
+	                
+	                <li id="liMoni" class="sub-menu" style="background-color: #724E2E;">                         
+	                    <a href="#" style="padding: 0 0 0 10px;" th:onclick = "'javascript:rotateArrow(\'Carg\');'">
+	                        <img class="img-menu" th:src="@{/assets/images/monitoreoCarga.svg}"/>
+	                        <span id="carg" style="color:#FFFFFF; top: 8px;">Monitoreo de carga</span>
+							<img class="img-arrow" th:id="'arrowCarg'" th:src="@{/assets/images/right-arrow.png}"/>
+	                    </a>  
+                        <ul class="sub">
+							<li><a class="" th:href="@{/cargarInfo}">Subir archivos</a></li>
+							<li><a class="" th:href="@{/reportes}">Mostrar reportes</a></li>													
+						</ul>							
+	                </li>
+	                
+	                <li id="liSeg" class="sub-menu" style="background-color: #22276B;">                     
+	                    <a href="#" style="padding: 0 0 0 10px;"  th:onclick = "'javascript:rotateArrow(\'Car\');'">
+	                        <img class="img-menu" th:src="@{/assets/images/seguridad.svg}"/>
+	                        <span id="car" style="color:#FFFFFF; top: 8px;">Seguridad</span>
+							<img class="img-arrow" th:id="'arrowCar'" th:src="@{/assets/images/right-arrow.png}"/>
+	                    </a>  
+                        <ul class="sub">
+							<li><a class="" th:href="@{/adminUsuarios}">Usuarios</a></li>
+							<li><a class="" th:href="@{/adminRoles}">Roles</a></li>	
+							<li><a class="" th:href="@{/adminAuditorias}">Auditorias</a></li>											
+						</ul>							
+	                </li>	                
+                    
+				</ul>
+			</div>	
+			<style>
+				.img-menu{
+				    width: 35px;
+				    height: 35px;
+				    position: relative;
+				    top: calc(25px - 18px);
+				}
+				.img-arrow{
+				    margin-top: calc(25px - 8px);
+				    margin-right: 10px;
+				    float: right;
+			        transform: rotate(90deg);
+				}	
+			</style>
+		</aside> 
+			
+				
+        <script>	
+        
+            function changeTextColor(idTexto,idColor) {
+            	var span = document.getElementById(idTexto);
+            	span.style.color = idColor;
+            	var li = span.parentNode.parentNode;
+            	li.style.backgroundColor = "#FFFFFF";
+            } 
+            function rotateArrow(idTexto){
+            	var arrow = document.getElementById('arrow'+idTexto);
+            	if (arrow.style.transform == "rotate(270deg)"){
+            		arrow.style.transform = "rotate(90deg)";
+            	}else{
+	            	arrow.style.transform = "rotate(270deg)";
+            	}
+            }
+            function changeTextWhite(idTexto,idColor) {
+            	var span = document.getElementById(idTexto);
+            	span.style.color = "#FFFFFF";
+            	var li = span.parentNode.parentNode;
+            	li.style.backgroundColor = idColor;
+            }
+        </script>			    
+   </div>
+   <div th:fragment="toggle">  
+   	<div id="toggleButton"  style="background-color:green; opacity: 0.2; position:fixed; top:40px; left: 220px; height: calc(100% - 40px); 
+   		text-align:center;  display: flex; justify-content: center; align-items: center;" onclick="toggleMenu()" onmouseout="show()" onmouseover="hide()">
+   		<span id="arrow" class="glyphicon glyphicon-menu-left" style="color:white; font-size: 17px; "> </span>
+   	</div>
+
+	<script type="text/javascript">
+		var btn = document.getElementById("toggleButton");
+		function toggleMenu() {
+	    	if (btn.style.left == "220px"){
+	    		closeMenu();
+	    	}else{
+	    		openMenu();
+	    	}
+	    }
+		function hide(){
+			btn.style.opacity = "0.7";
+		}
+		function show(){
+			btn.style.opacity = "0.2";
+		}
+	</script>
+   </div>
+   
+</body>
+</html>

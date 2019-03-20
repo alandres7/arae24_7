@@ -1,0 +1,141 @@
+/*@ResponseBody
+	@ApiOperation(value = "/vigia/reporte/estado", notes = "Permite la actualización de un reporte de vigia del sistema Área 24/7 del Área Metropolitana del Valle de Aburrá")
+	@ApiResponses(value = { 
+			@ApiResponse(code = 200, message = "Actualización exitosa"),
+			@ApiResponse(code = 404, message = "Not Found. No se encuentra el recurso solicitado"),
+			@ApiResponse(code = 400, message = "Bad Request. El request solicitado tiene problemas sintácticos o semánticos, revisar el ejemplo Swagger provisto"), 
+	})
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "Authorization", value = "Authorization token", dataType = "string", paramType = "header") 
+	})
+	@RequestMapping(value = "/vigia/reporte/estado", method = RequestMethod.PUT)
+	public ResponseEntity<String> cambiarEstadoVigia(
+			@RequestParam(value = "id") Long id, 
+			@RequestParam(value = "estado") String estado) {
+		
+		if (vigia == null) {
+			return new ResponseEntity<String>("El reporte de vigia que intenta actualizar no existe", HttpStatus.NOT_FOUND);
+		} else {
+			try {
+				if(estado.equals("aprobado")) {
+					vigia.setEstado(Estados.APROBADO.name().toString());						
+				}else {
+					if(estado.equals("rechazado")) {
+					    vigia.setEstado(Estados.RECHAZADO.name().toString());
+					}else {
+						if(estado.equals("pendiente")) {
+						    vigia.setEstado(Estados.PENDIENTE.name().toString());
+						}else {
+							return new ResponseEntity<String>("No se pudo realizar actualización, el estado que coloco no existe",
+									HttpStatus.BAD_REQUEST);
+						}	
+					}
+				}
+				vigiaService.vigiaActalizar(vigia);
+				return new ResponseEntity<String>("Actualización exitosa", HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity<String>("No se pudo realizar actualización, revisar datos y reintentar ",
+						HttpStatus.BAD_REQUEST);
+			}
+		}
+	}*/	
+	
+
+	/*@ApiImplicitParams({
+			@ApiImplicitParam(name = "Authorization", value = "Authorization token", dataType = "string", paramType = "header") })
+	@RequestMapping(value = "/vigia/validarReporte/{idCapa}/{latitud}/{longitud}/{aliasReporte}/{nombre}", method = RequestMethod.GET)
+	public ResponseEntity<?> vigiaValidarReporte(@PathVariable("latitud") double latitud,
+			@PathVariable("longitud") double longitud, @PathVariable("aliasReporte") String aliasReporte,
+			@PathVariable("nombre") String nombre) {
+
+		Vigia vigia = new Vigia();
+		List<Coordenada> coordenadas = null;
+		try {
+			// TODO: obtener el radio de accion desde la contenedora, radio esta en 500
+			// metros
+			double radio = 0.5;
+			coordenadas = coordenadaService.validacionReporteVigiaPorRadio(latitud, longitud, radio, aliasReporte,
+					nombre);
+			if (coordenadas.size() > 0) {
+				//vigia.setMarcador(coordenadas.get(0).getMarcador());
+
+				// if (vigia.getId() > 0) {
+				return new ResponseEntity<Vigia>(vigia, HttpStatus.OK);
+				// }
+			} else {
+				return new ResponseEntity<String>("No se encontraron reportes en radio de accion", HttpStatus.OK);
+			}
+
+		} catch (Exception e) {
+			return new ResponseEntity<String>("Error realizando validación: " + e.getMessage(), HttpStatus.CONFLICT);
+		}
+	}*/
+
+
+	/*public String reportarAmva(String url, String tipoPeticion, String usuario, String contrasena, String data) {
+		String res = "";
+		HttpURLConnection con = null;
+		try {
+			URL myurl = new URL(url);
+			con = (HttpURLConnection) myurl.openConnection();
+			con.setDoOutput(true);
+			con.setRequestProperty("User-Agent", "Java client");
+			con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+			con.setRequestProperty("Content-Type", "application/json;utf-8");
+			con.setRequestProperty("dataType", "json");
+			con.setRequestMethod(tipoPeticion);
+
+			JsonObject jsonUsuario = new JsonObject();
+			JsonObject jsonRespuesta = new JsonObject();
+			JsonObject jsonData = new JsonObject();
+			JsonParser jsonParser = new JsonParser();
+
+			jsonUsuario.addProperty("usuario", usuario);
+			jsonUsuario.addProperty("password", contrasena);
+
+			jsonData.add("ClienteRestData", jsonUsuario);
+			jsonData.add("TramiteData", jsonParser.parse(data));
+
+			byte[] postData = jsonData.toString().getBytes(StandardCharsets.UTF_8);
+
+			try (DataOutputStream wr = new DataOutputStream(con.getOutputStream())) {
+				wr.write(postData);
+			}
+			StringBuilder content;
+			try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
+				String line;
+				content = new StringBuilder();
+
+				while ((line = in.readLine()) != null) {
+					content.append(line);
+					content.append(System.lineSeparator());
+				}
+			}
+			System.out.println(content.toString());
+			if (content.toString() != null && content.toString().contains("codigoTramite")) {
+				jsonRespuesta = (JsonObject) jsonParser.parse(content.toString());
+				res = jsonRespuesta.get("codigoTramite").getAsString();
+			}
+		} catch (Exception e) {
+			LOGGER.error("Error radicando el reporte en servicio del AMVA  ", e);
+			res = null;
+		} finally {
+			con.disconnect();
+		}
+		return res;
+	}*/
+
+	/*public static String encodeToString(BufferedImage image, String type) {
+		String imageString = null;
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+		try {
+			ImageIO.write(image, type, bos);
+			byte[] imageBytes = bos.toByteArray();
+			imageString = Base64Coder.encodeLines(imageBytes);
+			bos.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return imageString;
+	}*/

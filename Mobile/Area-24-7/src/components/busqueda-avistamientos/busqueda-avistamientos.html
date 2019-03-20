@@ -1,0 +1,39 @@
+<div class="container">
+    <div id="bar-modal" class="bar">
+        <ion-row>
+            <ion-col col-10>
+                <span style="text-align: center; font-size: 1.6rem; color: #ffffff; vertical-align: -webkit-baseline-middle">
+                    Consultar Avistamientos
+                </span>
+            </ion-col>
+            <ion-col col-2 style="padding: 2px 0 0 0">
+                <button color="clear" ion-button icon-only (click)="onHideSearchView()" style="margin: 0">
+                    <ion-icon name="close"></ion-icon>
+                </button>
+            </ion-col>
+        </ion-row>
+    </div>
+    <div id="texto-modal" class="tag">
+        <form [formGroup]="formGroup" (ngSubmit)="search()" padding>
+            <ion-item>
+                <ion-label floating>Municipio</ion-label>
+                <ion-select formControlName="municipalityFormCtrl" [selectOptions]="{ title: 'Municipio' }" okText="Aceptar" cancelText="Cancelar">
+                    <ion-option *ngFor="let municipality of municipalities" [value]="municipality">{{municipality.name | titlecase}}</ion-option>
+                </ion-select>
+            </ion-item>
+
+            <ion-item>
+                <ion-label floating>Nombre</ion-label>
+                <ion-input type="text" formControlName="nameFormCtrl"></ion-input>
+            </ion-item>
+
+            <ion-item *ngIf="formGroup.errors && formGroup.dirty">
+                <p>Se debe ingresar un poco más de información</p>
+            </ion-item>
+
+            <div padding>
+                <button ion-button block [disabled]="!formGroup.valid">Buscar</button>
+            </div>
+        </form>
+    </div>
+</div>

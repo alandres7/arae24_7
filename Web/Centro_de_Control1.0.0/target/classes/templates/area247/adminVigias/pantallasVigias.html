@@ -1,0 +1,342 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" >
+
+	<head></head>
+
+
+    <body>
+    
+
+        <div th:fragment="quarter-section1" > 
+			
+			<div class="ribbon-quarter-tittle" style=" width:20%; position: relative; background-color: #71338A;">
+                <a href="#">
+			        <span style="color:#FFFFFF;">Notificaciones</span>
+			    </a>          
+            </div>
+						
+			<div class="row margin-reset">
+			
+                <div class="col-xs-12 col-sm-12 col-md-12" style="overflow-x:auto;">    
+
+                    <table id="tableVigias" class="table table-striped table-bordered paginated" cellspacing="0" 
+                     style="width: 100%; background-color: #E5E5E5;">
+               	        <thead>
+               	            <tr style="color:#569837;"> 
+               	                <th>ID</th>   
+                                <th>Descripción</th> 
+                                <th>Estado</th>                            
+                                <th></th> 
+                                <th></th>                            
+                                <th></th>                                             
+                            </tr>
+                        </thead>    
+     
+                        <tbody>                   
+                            <tr th:each="vigia : ${vigiaList}" style="color:#777575;">
+                                <td th:text="${vigia.id}"></td>  
+                                <td th:text="${vigia.descripcion}"></td>
+                                <td th:id="'estadoVigia_' + ${vigia.id}" th:text="${vigia.estado}"
+                                    th:style="'background-color: ' + ${vigia.colorEstado}"></td>
+                                <td>
+								    <button th:if="${vigia.estado=='PENDIENTE'}" th:id="'apro-' + ${vigia.id}" 
+								     style="background-color: #569837; border:none;" 
+                                     class="aproButtonVigia">
+									    <span style="color: #FFFFFF;">Aprobar</span>
+									</button>
+                                </td>   
+                                <td>
+                                    <button th:if="${vigia.estado=='PENDIENTE'}" th:id="'rech-' + ${vigia.id}" 
+                                     style="background-color: #B2B2B2; border:none;" 
+                                     class="rechaButtonVigia">
+									    <span style="color: #FFFFFF;">Rechazar</span>
+									</button>
+                                </td> 
+                                <td>
+                                    <button th:id="${vigia.id}" style="background-color: #569837; border:none;" 
+                                     class="visualButtonVigia">
+									    <span style="color: #FFFFFF;">Visualizar</span>
+									</button>
+                                </td>                      
+                            </tr>                                                                                                     
+                        </tbody>
+                    </table>                                                  						
+                </div>			
+            </div>  
+            
+            <script th:inline="javascript"> 
+            
+                $('.visualButtonVigia').on('click', function() {
+                    var id = $(this).attr('id');           
+                    $.ajax({
+                        url: "/getVigia/" + id,
+                        method: "GET",
+                    }).success(function(response) {
+                    	$('#codigo').text(response.id);  
+                    	$('#alias').text(response.aliasReporte);  		
+                    	$('#desc').text(response.descripcion);  		
+                    	$('#fecha').text(response.fechaReporte);  		
+                    	$('#sim').text(response.radicadoSim);  		
+                    	$('#est').text(response.estado);  		
+                    	$('#act').text(response.activo);                    	
+                    	if(response.multimedia != null){
+                    	    $('#img').attr('src',response.multimedia.ruta);
+                    	}else{
+                    		$('#img').attr('src','assets/images/temporales/amenazalogo.jpg');
+                    	}
+                    	                    	
+                    	$('#modalFourViews')
+                    	    .find('#codigo').text(response.id).end()
+                            .find('#alias').text(response.aliasReporte).end()
+                            .find('#desc').text(response.descripcion).end()
+                            .find('#fecha').text(""+response.fechaReporte).end()
+                            .find('#sim').text(""+response.radicadoSim).end()
+                            .find('#est').text(""+response.estado).end()
+                            .find('#act').text(""+response.activo).end();                      
+                        if(response.multimedia != null){
+                        	$('#modalFourViews').find('#img').attr('src',response.multimedia.ruta);
+                    	}else{
+                    		$('#modalFourViews').find('#img').attr('src','assets/images/temporales/amenazalogo.jpg');
+                    	}
+                        
+                        $.ajax({
+                            url: "/getComentariosByVigia/" + response.id,
+                            method: "GET",
+                        }).success(function(listado) {                        	
+                        	$('#tableComentariosVig').empty();
+                        	$('#modalFourViews').find('#tableComentariosVig').empty();
+
+                            var strHTML = ''; 
+                            $(listado).each(function(){
+                                var row = $(this)[0];
+                                strHTML += '<tr><td>'+ row["textoComentario"] + '</td><td>' + row["fechaComentario"] + '</td></tr>'; 
+                            });
+                            $('#tableComentariosVig').append(strHTML); 
+                            $('#modalFourViews').find('#tableComentariosVig').append(strHTML);
+                        });
+                        
+                    });          
+                });                                 
+                                               
+                $('.aproButtonVigia').off().click(function() {
+                	var idComplete = $(this).attr('id');  
+                    var id = idComplete.substring(5);          
+                    $.ajax({
+                        url: "/cambiarEstadoVigia/" + id + "/aprobado",
+                        method: "GET",
+                    }).success(function(response) { 
+                    	$('#estadoVigia_' + id).text("APROBADO"); 
+                        $('#estadoVigia_' + id).css('background-color',"#F1E95D");
+                    	$('#modalFourViews').find('#tableVigias').find('#estadoVigia_'+id).text("APROBADO");
+                    	$('#modalFourViews').find('#tableVigias').find('#estadoVigia_'+id).css('background-color',"#F1E95D");
+                    	$('#apro-' + id).hide(); 
+                    	$('#rech-' + id).hide();                   	
+                    	$('#modalFourViews').find('#tableVigias').find('#apro-' + id).hide(); 
+                    	$('#modalFourViews').find('#tableVigias').find('#rech-' + id).hide();
+                    	alert(response);
+                    });                               
+                });   
+                
+                $('.rechaButtonVigia').off().click(function() {
+                	var idComplete = $(this).attr('id');  
+                    var id = idComplete.substring(5);          
+                    $.ajax({
+                        url: "/cambiarEstadoVigia/" + id + "/rechazado",
+                        method: "GET",
+                    }).success(function(response) { 
+                    	$('#estadoVigia_' + id).text("RECHAZADO"); 
+                        $('#estadoVigia_' + id).css('background-color',"#E36C6C");
+                    	$('#modalFourViews').find('#tableVigias').find('#estadoVigia_'+id).text("RECHAZADO");
+                    	$('#modalFourViews').find('#tableVigias').find('#estadoVigia_'+id).css('background-color',"#E36C6C");
+                    	$('#apro-' + id).hide(); 
+                    	$('#rech-' + id).hide();                   	
+                    	$('#modalFourViews').find('#tableVigias').find('#apro-' + id).hide(); 
+                    	$('#modalFourViews').find('#tableVigias').find('#rech-' + id).hide();
+                    	alert(response);
+                    });                               
+                }); 
+                
+            </script>                         			                     
+        </div> 
+
+
+
+
+
+
+
+
+
+
+        <div th:fragment="quarter-section2">
+            			
+			<div class="ribbon-quarter-tittle" style="width:20%; position: relative; background-color: #71338A;">
+                <a href="#">
+			        <span style="color:#FFFFFF;">Visualización</span>
+			    </a>          
+            </div>
+					          
+			<div class="row margin-reset" style="padding: 0px; background-color:#FFFFFF;">
+			    
+                <div class="col-xs-12 col-sm-5 col-md-5" style="padding: 0px; background-color:#E8E8E8;">
+                    <img id="img" style="width: 100%;" th:src="${ruta}"></img>                   				  						
+                </div>
+                
+                <div class="col-xs-12 col-sm-7 col-md-7" style="padding: 0px; background-color:#E8E8E8;"> 
+                    <p style="color:#569837; margin-left:1em;">Código:
+                    <span id="codigo" style="color:#777575;" th:text="${id}"></span></p>
+                    
+                    <p style="color:#569837; margin-left:1em;">Alias:
+                    <span id="alias" style="color:#777575;" th:text="${aliasReporte}"></span></p>
+                    
+                    <p style="color:#569837; margin-left:1em;">Descripción:
+                    <span id="desc" style="color:#777575;" th:text="${descripcion}"></span></p>
+                    
+                    <p style="color:#569837; margin-left:1em;">Fecha Reporte:
+                    <span id="fecha" style="color:#777575;" th:text="${fechaReporte}"></span></p>
+                    
+                    <p style="color:#569837; margin-left:1em;">Radicado SIM:
+                    <span id="sim" style="color:#777575;" th:text="${radicadoSim}"></span></p>
+                    
+                    <p style="color:#569837; margin-left:1em;">Estado:
+                    <span id="est" style="color:#777575;" th:text="${estado}"></span></p>
+                    
+                    <p style="color:#569837; margin-left:1em;">Activo:
+                    <span id="act" style="color:#777575;" th:text="${activo}"></span></p>
+                    
+                    <p style="color:#569837; margin-left:1em;">Comentarios:</p>
+                    <table class="table table-striped table-bordered"
+                     style="width: 100%; background-color: #E5E5E5;">
+               	        <thead>
+               	            <tr> 
+               	                <th>Comentario</th>                                  
+                                <th>Fecha</th>                                           
+                            </tr>
+                        </thead>         
+                        <tbody id="tableComentariosVig" style="width: 100%; height: 20%; overflow-y: auto;">                                                                                                                      
+                        </tbody>
+                    </table> 
+                    
+                </div>			
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+        <div th:fragment="quarter-section3"> 
+            
+			<div class="ribbon-quarter-tittle" style="width:20%; position: relative; background-color: #71338A;">
+                <a href="#">
+			        <span style="color:#FFFFFF;">Monitoreo</span>
+			    </a>          
+            </div>
+					            
+			<div class="row margin-reset" style="padding: 0px; background-color:#FFFFFF;">					
+                <div class="col-xs-12 col-sm-12 col-md-12" style="background-color:#FFFFFF; padding: 0px;"> 
+                    <img src="assets/images/temporales/cuadroestadistica.jpg" style="width: 100%;"></img>	                             						
+                </div>			
+            </div> 
+                 
+        </div> 
+        
+        
+        
+        
+        
+        
+        <div th:fragment="print_coordenadas"> 
+            
+	    <script type="text/javascript" th:inline="javascript">
+            /*<![CDATA[*/              
+	    	    var marcadorList = [[${listaMarcadores}]];
+				
+	    	    for(j = 0; j < marcadorList.length; j++){
+                       
+	    	    	var contentString = ''+
+	    	           '<div style = "text-align: center;font-family: \'Roboto\', sans-serif; max-heigth:180px;max-width:150px;overflow: hidden">' +	
+	    			       '<div class="img">' +
+	    			           '<img src = "' + marcadorList[j].ventanaInformacion.rutaImagen + '" style ="max-width: 150px;max-heigth:150px;padding-top:5px">' +
+	    			           '<span>' +
+	    					       '<p align="left" style= "font-size: 10px">' + marcadorList[j].ventanaInformacion.nombre + '</p>' +
+	    				       '</span>' +
+	    			       '</div>' +			
+                              '<p align="left" style= "color:#696b69;max-width:150px;font-size: 9px">' + marcadorList[j].ventanaInformacion.descripcion + '</p>' +						
+	    		       '</div>';
+        
+	    		   	var image = {
+	    			    url: marcadorList[j].icono.rutaLogo,
+	    			    size: new google.maps.Size(135,135),
+	    			    scaledSize: new google.maps.Size(35,35),
+	    		    	origin: new google.maps.Point(0,0),			    	    
+	    		    	anchor: new google.maps.Point(16,16)
+	    			};  
+                       
+	    		   	var coordenadaList = marcadorList[j].coordenadas	    		   		    		   	
+	    		   	
+	    		   	//var colorBorde = rgbToHex(marcadorList[j].colorBorde)
+	    		   	var colorBorde = "#0f7016"
+	    		   	//var colorFondo = rgbToHex(marcadorList[j].colorFondo)
+	    		   	var colorFondo = "#9FC418"	    		   	
+	    	    	
+	    		   	for(k = 0; k < coordenadaList.length; k++){	
+	    		    		    		   		
+	    		   		if(!coordenadaList[k].coordenadaPunto2.isEmpty){
+	    		   			var marker = new google.maps.Marker({
+		    		               position: {lat: Number(coordenadaList[k].coordenadaPunto2.latitud), lng: Number(coordenadaList[k].coordenadaPunto2.longitud)},
+		    		               map: map,
+		    		               icon: image
+		    		           }); 
+		    		   		addInfoWindow(marker, contentString);		    		   		
+	    		   		}
+	    		   		if(!coordenadaList[k].coordenadaPolygon2.isEmpty){
+                        	var cordPolygon = coordenadaList[k].coordenadaPolygon2
+	    		   		    var coordPoligono = [];
+	    		   		    for(l = 0; l < cordPolygon.length; l++){
+	    		   		    	var cord = cordPolygon[l]	
+	    		   		    	coordPoligono.push({'lat': Number(cord.latitud), 'lng': Number(cord.longitud)});
+	    		   		    }	   			   		    
+	    		   		    var poligono = new google.maps.Polygon({
+		    		   	    	paths: coordPoligono,
+	                            strokeColor: colorBorde,
+	                            strokeOpacity: 0.8,
+	                            strokeWeight: 1.5,
+	                            fillColor: colorFondo,
+	                            fillOpacity: 0.35
+	                        });
+	                        poligono.setMap(map);	  	    	
+                        }			    				            
+	    			}	
+	    		}   	
+        
+	    		function addInfoWindow(marker, message){
+	                var infoWindow = new google.maps.InfoWindow({
+	                	pixelOffset: new google.maps.Size(-52,20),
+	                    content: message	                
+	                });
+	                google.maps.event.addListener(marker, 'click', function (){	            	
+	                    infoWindow.open(map, marker);
+	                    infowindow.close();
+	                });
+	            } 
+	    		
+	    		function rgbToHex(colorRGB) {
+	    			var cor = colorRGB.slice(1,(colorRGB.length-1));
+	    			var colorHex = cor.split(",");	    		    
+	    		    return "#" + ((1 << 24) + (colorHex[0] << 16) + (colorHex[1] << 8) + colorHex[2]).toString(16).slice(1);
+	    		}
+	    		
+	    	/*]]>*/	
+        </script> 	
+                 
+        </div>         
+
+
+    </body>
+	
+</html>

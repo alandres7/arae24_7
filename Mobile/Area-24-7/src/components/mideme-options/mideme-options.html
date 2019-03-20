@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar [ngStyle]="{'background': color}">
+      <ion-title>CÁLCULO CONSUMO HÍDRICO</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="center">
+  <div>
+    <div>
+      <ion-row>
+        <ion-col>
+            <span class="bold">Seleccione una de las opciones</span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+            <p class="grayText">Primero debes calcular tu consumo para acceder a las otras opciones</p>
+        </ion-col>
+      </ion-row>
+      
+    </div>
+    <div>
+
+      <ion-row>
+        <ion-col>
+          
+          <button ion-button  [ngStyle]="{'background': color}" (click)="goToCalculator()"><i class="fas fa-tint"></i> Cálculadora</button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+            <button ion-button [ngStyle]="{'background': color}" (click)="goToHistory()"><i class="fas fa-list-ul"></i> Historial</button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+            <button ion-button [ngStyle]="{'background': color}" (click)="goToChallenge()"><i class="fas fa-trophy"></i> Retos</button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+            <!-- <ion-icon ios="ios-trophy" md="md-trophy"></ion-icon> -->
+            <button ion-button [ngStyle]="{'background': green}" (click)="goToCheckChallenge()">Seguimiento del reto</button>
+        </ion-col>
+      </ion-row>
+
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,64 @@
+﻿<ion-content padding>
+    <div id="content-login" >
+        <img src="assets/logo2.png" />
+        <div>
+            <form id="content-form" [formGroup]="formGroup" (ngSubmit)="loginWithForm()">
+                <ion-list>
+                    <ion-item color="clear">
+                        <i class="fas fa-user fa-lg fa-fw" item-left></i>
+                        <ion-label floating color="light">Nombre de usuario o correo electrónico</ion-label>
+                        <ion-input type="text" name="username" formControlName="username" color="light" required text-lowercase></ion-input>
+                    </ion-item>
+                    
+                    <ion-item color="clear">
+                        <i class="fas fa-lock fa-lg fa-fw" item-left></i>
+                        <ion-label floating color="light">Contrase&ntilde;a</ion-label>
+                        <ion-input type="password" name="contrasena" formControlName="contrasena" color="light"
+                            required></ion-input>
+                    </ion-item>
+
+                    <div padding>
+                        <button ion-button  type="submit" block color="btnLogin" [disabled]="!formGroup.valid">
+                            &nbsp; Iniciar sesi&oacute;n
+                        </button>
+                        <a class="lgLink"   clear block color="light" (click)="restorePasswordDialog()">
+                            Olvidé mi contrase&ntilde;a
+                        </a>
+                    </div>
+                </ion-list>
+            </form>
+            <span class="soloTxt lgLink"> Inicia sesi&oacute;n con:</span>
+            <ion-row class="spw">
+                <ion-col>
+                    <button ion-button block  color="btnLogin"  icon-left (click)="loginWithFacebook()">
+                        <!-- <ion-icon name="logo-facebook"></ion-icon> -->
+                        Facebook
+                    </button>
+                </ion-col>
+                <ion-col>
+                    <button ion-button block  color="btnLogin"  icon-left (click)="loginWithGoogle()">
+                        <!-- <ion-icon name="logo-google"></ion-icon> -->
+                        Google +
+                    </button>
+                </ion-col>
+            </ion-row>
+            <span class="soloTxt">O</span>
+            <ion-row class="spw2">
+                <ion-col>
+                    <button ion-button block   color="btnLogin"  type="submit" (click)="enrollWithForm()">
+                        Reg&iacute;strate aqu&iacute;
+                    </button>
+                </ion-col>
+            </ion-row>
+        </div>
+        <ion-row>
+            <ion-col>
+                <a class="lgLink" block clear type="button" (click)="terminosCondiciones()">
+                    T&eacute;rminos y condiciones
+                </a>
+            </ion-col>
+        </ion-row>
+    </div>
+    <!-- <button ion-button (click)="logoutFromFacebook()">logout facebook</button>
+    <button ion-button (click)="logoutFromGoogle()">logout google</button> -->
+</ion-content>

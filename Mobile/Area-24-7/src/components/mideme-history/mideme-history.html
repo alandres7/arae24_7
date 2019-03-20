@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar [ngStyle]="{'background': color}">
+      <ion-title>HISTORIAL</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="arriba">
+    <p class="center">Acá encontrarás los resultados del cálculo de consumo hídrico.</p>
+  </div>
+  <div class="cont bad">
+    <span class="redLabel">02/10/2019 10:00pm</span>
+    <p><i class="fas"></i> ¡Alto nivel de consumo! <span>300L</span></p>
+  </div>
+  <div class="cont good">
+    <span class="redLabel" >02/11/2019 10:00am</span>
+    <p><i class="fas"></i> ¡Bajo nivel de consumo! <span>100L</span></p>
+  </div>
+  <div class="cont meh">
+    <span class="redLabel" >12/12/2019 8:00am</span>
+    <p><i class="fas"></i> ¡Medio nivel de consumo! <span>200L</span></p>
+  </div>
+  <div [ngClass]="clase" class="cont">
+    <span class="redLabel" >12/12/2019 8:00am</span>   
+    <p><i class="fas"></i> ¡{{nivel}} nivel de consumo!<span>{{valor}}</span></p>
+  </div>
+</ion-content>

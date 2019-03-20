@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" >
+	<head lang="en">	
+	    <title th:text="'' + ${title}"></title>
+	    <meta charset="utf-8"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<div th:replace="fragments/frameMaps :: header-contend" ></div>     
+		<script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js}"></script>
+   		<script th:src="@{https://secure.aadcdn.microsoftonline-p.com/lib/1.0.16/js/adal.min.js}"></script>
+		<script th:src="@{https://microsoft.github.io/PowerBI-JavaScript/demo/node_modules/powerbi-client/dist/powerbi.js}"></script> 
+    	<style type="text/css">
+    		.report{
+    			height: 100%;
+    			height: 80vh;
+    		}
+    		
+    		#main-content{
+    			height: 70vh;
+    		}
+    	</style>
+	</head>
+	<body >	
+    	<div th:replace="fragments/frameMaps :: header-degra" ></div> 
+    	<div th:replace="fragments/frameMaps :: sideBar-Left-App" ></div> 
+	    <section id="main-content">
+                <section class="panel">
+                    <header class="panel-heading">
+                        <h1 th:text="${title}"></h1>
+                    </header>
+                    <div class="panel-body container">
+						<div class="report col-md-12"></div>
+					</div>
+                </section>
+        </section>
+    
+    <script th:inline="javascript">
+		
+			var groupId = [[${groupId}]];
+			var reportId = [[${reportId}]];
+			$(".report").attr('data-report-id', reportId)
+			$(".report").attr('data-group-id', groupId)
+			console.log({"groupId" : groupId},{"reportId" : reportId})
+		
+		</script>
+    	<script th:src="@{/js/powerbi_auth/site.js}"></script>
+    </body>
+</html>

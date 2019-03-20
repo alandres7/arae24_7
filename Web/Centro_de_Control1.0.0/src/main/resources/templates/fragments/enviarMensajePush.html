@@ -1,0 +1,336 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">	
+    <title th:text="'' + ${title}"></title>
+    <meta charset="utf-8"/>
+       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+       
+	<div th:replace="fragments/frameMaps :: header-contend" ></div>   
+</head> 
+
+
+<body >
+    <a href="#" onclick="openModalMensajePush();">VER CHAT</a> 
+
+			
+	<div th:fragment="mensajes-push-chat">
+	
+   		<div id="modalMensajePush" class="modal" >    
+   		       	           
+      	    <div class="chat_window">
+      	        <a href="#" onclick="closeModalMensajePush()">  
+                    <span class="glyphicon glyphicon-remove" style="float: right; color: #000000;"></span> 
+                </a>   	    		
+   	    		<div class="row top_menu" align="center">
+	                <div class="title col-md-8">Mensaje para:</div>
+                	<div class="col-md-8" align="center">
+	                	<div class="form-group">
+						    <select id="recipient" class="selectpicker form-control" style="text-align:'center';background-color: #02A868; color:white !important; margin-left:3%">
+							    <option value="All">Todos</option>
+								<option value="Conóceme">Usuarios Conóceme</option>
+								<option value="Asómbrate">Usuarios Asómbrate</option>
+								<option value="Cuídame">Usuarios Cuídame</option>
+								<option value="Disfrútame">Usuarios Disfrútame</option>
+								<option value="Mídeme">Usuarios Mídeme</option>
+								<option value="Recórreme">Usuarios Recórreme</option>
+							</select>
+						</div>
+                	</div>
+                    <div class="col-md-4" style="background-color: #02A868;">
+						<a id="verHistorial" class="btn" style="border-color: #FFFFFF;" 
+						   onclick="visualizarHistoria();">
+						    <div class="text" style="color: #FFFFFF;">Ver Historial</div>
+						</a>
+                    </div>
+   	    		</div>
+   	    			
+   	    		<ul class="messages"></ul>
+   	    		
+   	    		<div class="bottom_wrapper clearfix">	    
+   	    		    <div class="message_input_wrapper">   
+   	    		        <span style="color: #02A868; font-size: 35px; top: 8px; left: 8px;" class="glyphicon glyphicon-plus-sign"></span>    	    		        
+   	    			    <input class="message_input " name="message" placeholder="Escribe un mensaje" style="margin-left: 30px;" />       	    			    
+   	    			</div>
+   	    			 
+   	    			<div class="send_message" align="center" >
+   	    			    <span style="color: #FFFFFF; font-size: 25px; top: 6px;" class="glyphicon glyphicon-menu-right"></span>
+   	    				<div class="text" style="margin-top:-15px">Enviar</div>
+   	    			</div>       	    			
+   	    		</div>
+   	    	</div>
+   	    	 
+   	    	<div class="message_template" style="display: none;">
+   	    	    <li class="message">
+   	    	    	<div class="row msg">
+   	    	    		<div class="col-md-2">
+   	    	    			<img th:src="@{/assets/images/user_icon.png}" style="width:35px" ></img>
+   	    		    		<p>Area 247</p>
+   	    	    		</div>
+	   	    	    	<div class="col-md-10">   	    	    		
+		   	    			<div class="text_wrapper" style="background-color: #FFFFFF;">
+		   	    			    <div class="text"></div>      	    			    
+		   	    			</div>
+		   	    			<p id="dateMessage" class="dateMessage" style="color: #02A868;"></p>
+	   	    	    	</div>
+   	    	    	</div>
+   	    		</li>       	    		
+   	    	</div>  
+
+        </div> 
+
+        <script>	
+            function openModalMensajePush() {
+                document.getElementById('modalMensajePush').style.display = "block";
+            } 
+    
+            function closeModalMensajePush() {
+                document.getElementById('modalMensajePush').style.display = "none";
+            }
+        
+           (function () {
+                var Message;
+                Message = function (arg) {
+                    this.text = arg.text, this.message_side = arg.message_side;
+                    var meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+                    var diasSemana = new Array("Dom","Lun","Mar","Mie","Jue","Vie","Sab");
+                    var d = new Date();
+                    var fechaCompleta = diasSemana[d.getDay()] + ' ' + d.getDate() + ' de ' + meses[d.getMonth()] + ' ' + d.getFullYear() + ' Hora: ' +  d.toLocaleTimeString()
+                    var fechas = document.getElementsByClassName('dateMessage');
+                    var ultimaFecha = fechas[fechas.length - 1];
+                    ultimaFecha.innerHTML = fechaCompleta;
+                    var recipient = document.getElementById('recipient').value;
+                    $.ajax({
+                        url: "/mensajePushEnviado",
+                        type: "POST",
+                        data: { message: this.text, recipients: recipient },                                            
+                        success: function (data, textStatus, jqXHR) {
+                            printResult(data, textStatus, jqXHR);
+                        },                          
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            printResult(jqXHR, textStatus, errorThrown);
+                        }
+                    });
+                    this.draw = function (_this) {
+                       return function () {
+                            var $message;
+                            $message = $($('.message_template').clone().html());
+                            $message.addClass(_this.message_side).find('.text').html(_this.text);
+                            $('.messages').append($message);
+                            return setTimeout(function () {
+                                return $message.addClass('appeared');
+                            }, 0);
+                        };
+                    }(this);
+                   return this;
+                };
+                $(function () {
+                    var getMessageText, message_side, sendMessage;
+                    message_side = 'right';
+                    getMessageText = function () {
+                        var $message_input;
+                        $message_input = $('.message_input');
+                        return $message_input.val();
+                    };
+                    sendMessage = function (text) {
+                        var $messages, message;
+                        if (text.trim() === '') {
+                            return;
+                        }
+                        $('.message_input').val('');
+                        $messages = $('.messages');
+                        message_side = 'left';
+                        message = new Message({
+                            text: text,
+                            message_side: message_side
+                        });
+                        message.draw();
+                        return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 300);
+                    };                
+                    $('.send_message').click(function (e) {
+                        return sendMessage(getMessageText());
+                    });
+                    $('.message_input').keyup(function (e) {
+                        if (e.which === 13) {
+                            return sendMessage(getMessageText());
+                        }
+                    });
+        
+                });
+            }.call(this));	
+           
+            function visualizarHistoria(){            
+           	    $.ajax({
+                    url: "/listMensajesPush",
+                    method: "GET",
+                    beforeSend: function() {
+                   	    $('modalNotificaHisto').remove();
+                    },
+                    success: function(html) { 
+                   	    $('#modalNotificaHisto').replaceWith(html);                   	    
+                    }
+                }); 
+            };   
+        </script>
+    	
+        <style>   
+            .top_menu {
+                background-color: #02A868;
+                width: calc(100% + 16px);
+                padding: 20px 0 15px;
+                box-shadow: 0 1px 30px rgba(0, 0, 0, 0.1);
+            }
+            
+            .top_menu .title {
+                text-align: center;
+                color: #FFFFFF;
+                font-size: 18px;
+            }
+            
+            .messages {
+                position: relative;
+                list-style: none;
+                padding: 20px 10px 0 10px;
+                height: calc(100% - 145px);
+                overflow: scroll;
+                background-color: #E8E8E8; 
+            }
+            
+            .messages .message .text_wrapper {
+                display: inline-block;
+                padding: 20px;
+                width: 100%;
+                min-width: 100px;
+                position: relative;
+            }
+            
+            .bottom_wrapper {
+                position: relative;
+                width: 100%;
+                background-color: #fff;
+                padding: 1px 1px;
+                position: absolute;
+                bottom: 0;
+            }
+            
+            .bottom_wrapper .message_input_wrapper {
+                display: inline-block;
+                height: 50px;
+                width: calc(100% - 50px);
+                position: relative;
+            }
+            
+            .bottom_wrapper .message_input_wrapper .message_input {
+                border: none;
+                height: 100%;
+                box-sizing: border-box;
+                width: calc(100% - 65px);
+                position: absolute;
+                outline-width: 0;
+                color: gray;
+            }
+            
+            .bottom_wrapper .send_message {
+                width: 50px;
+                height: 50px;
+                display: inline-block;
+                background-color: #02A868;
+                border: 2px solid #02A868;
+                color: #fff;
+                cursor: pointer;
+                transition: all 0.2s linear;
+                float: right;
+            }
+            
+            .bottom_wrapper .send_message .text {
+                font-size: 14px;
+                font-weight: 300;
+                display: inline-block;
+                line-height: 48px;
+            }
+            
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                background-color: rgba(0, 0, 0, 0.4);                                             
+            } 
+            
+            .chat_window { 
+                position: relative;
+                width: 30%;
+                max-width: 800px;
+                height: 85%;
+                top: 3%;
+                left: 30%;               
+                overflow: hidden; 
+                margin: 25px;
+                border: 25px solid;
+                border-color: rgba(64, 107, 84, 0.7);                                                                 
+            }	               
+        </style>   	
+	</div> 
+	
+	
+	<div id="modalNotificaHisto" th:fragment="modalNotificaHisto"> 
+        <div id="modalNotificaciones" class="modal" th:style="'display: ' + ${despliegeModalNotificaciones}">    
+	        <div style="position: relative; margin: auto; top: 10%; width: 80%;">
+	        		        
+	            <button onclick="closeModalNotificaciones()" class="btn btn-default" style="background-color: #FB0101; float: right;">
+                    <span class="glyphicon glyphicon-remove" style="float: right; color: #FFFFFF;"></span> 
+                </button>
+	 		
+	            <h1 style="background-color: #9FC418; color:#FFFFFF; width:600px;">Listado de Notificaciones</h1>
+	        		        			        	
+	        	<div style="border: 25px solid; border-color: transparent; background-color: rgba(0,0,0,0.8);">
+	        	
+	        	    <table id="tableNotificaciones" class="table table-striped table-bordered" cellspacing="0" 
+               	     style="width: 100%; background-color: #E8E8E8; font-size: 0.9vw;">
+               	        <thead>
+               	            <tr>                                   
+                                <th>ID</th>
+                                <th>Titulo</th>                               
+                                <th>Cuerpo</th> 
+                                <th>Destinatario</th>
+                                <th>Fecha</th>                                              
+                            </tr>
+                        </thead>    
+        
+                        <tbody>                   
+                            <tr th:each="notificaciones : ${notificacionesPushList}">
+                                <td th:text="${notificaciones.id}"></td>
+                                <td th:text="${notificaciones.titulo}"></td>                                
+                                <td th:text="${notificaciones.cuerpo}"></td> 
+                                <td th:text="${notificaciones.destinatario}"></td> 
+                                <td th:text="${notificaciones.fecha}" style="width: 20%;"></td>                           
+                            </tr>                                                                                                     
+                        </tbody>
+                    </table>   
+	 				
+                </div>
+               
+            </div>       
+        </div>  
+	    
+        <script th:inline="javascript">  
+        
+            $('#tableNotificaciones').dataTable({
+                "language": {"url": "/assets/json/spanishTable.json"},
+                "order": [[ 0, "desc" ]]
+            });
+        
+            function openModalNotificaciones() {
+                document.getElementById('modalNotificaciones').style.display = "block";
+            }  
+        
+            function closeModalNotificaciones() {
+                document.getElementById('modalNotificaciones').style.display = "none";
+            }
+        </script> 
+    </div> 	
+ 
+</body>
+	
+</html>

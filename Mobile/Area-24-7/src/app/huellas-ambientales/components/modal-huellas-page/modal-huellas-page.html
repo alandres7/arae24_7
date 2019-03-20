@@ -1,0 +1,85 @@
+<div class="container">
+    <div id="bar-modal" class="bar" [class.backgroundColor]="data.color">
+        <ion-buttons end>
+            <button color="clear" ion-button icon-only end (click)="closeModal()">
+                <ion-icon name="close"></ion-icon>
+            </button>
+        </ion-buttons>
+    </div>
+    <img id="img-modal" class="tag" src="{{data.imagen}}">
+    <div id="texto-modal" class="texto">
+        <p>{{data.texto}}</p>
+
+    </div>
+    <div #RealizarHuella *ngIf="!encuesta">
+        <!-- *ngIf="Property" -->
+        <ion-item color="clear" style="border:none; color:black;">
+            <ion-icon name="person" color="huellas" item-left></ion-icon>
+            <!--<ion-label stacked>Nombres:</ion-label>-->
+            <ion-input type="text" placeholder="Nombre" value="{{data.nombre}}" clearInput></ion-input>
+        </ion-item>
+        <ion-item color="clear" style="border:none; color:black;">
+            <ion-icon name="mail" color="huellas" item-left></ion-icon>
+            <!--<ion-label stacked>Username:</ion-label>-->
+            <ion-input type="email" placeholder="Correo electrónico" value="{{data.email}}" clearInput></ion-input>
+        </ion-item>
+        <ion-buttons>
+            <button ion-button color="huellas" (click)="closeModal()" outline>Cancelar</button>
+            <button ion-button color="huellas" (click)="encuesta=true">Aceptar</button>
+        </ion-buttons>
+    </div>
+    <!--<div #idMensaje *ngIf="!encuesta">
+        <span>
+            <p [style.color]="data.color"> {{data.mensajeTitulo}} </p>
+            <p style="margin-left:3px; margin-right:3px;"> {{data.mensajeTexto}} </p>
+        </span>
+        <button ion-button color="huellas" (click)="encuesta=true">Calcular</button>
+    </div>-->
+    <div #divSlidesHuellas *ngIf="!resultado && encuesta">
+        <ion-slides #Slides pager="true" (ionSlideDidChange)="slideChanged()">
+            <ion-slide *ngFor="let item of data.listaPreguntas">
+                <img style="width:150px; height:150px;top:.5rem; margin-bottom:0rem; bottom:0rem; border:none" src="{{item.imagen}}">
+                <div *ngFor="let preguntas of  item.preguntas">
+                    <ion-item style="background-color: transparent; border-bottom: none;">
+                        <ion-label>
+                            <p style="margin-left:3px; margin-right:3px; margin-top:0rem; font-size:1.2rem; overflow: auto;"> {{preguntas.encabezado}} </p>
+                        </ion-label>
+                        <ion-select>
+                            <ion-option *ngFor="let respuesta of preguntas.respuestas">{{respuesta.respuesta}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                    <!--<ion-select [(ngModel)]="optionSelect[item.id][preguntas.id]">-->
+
+                </div>
+                <ion-buttons>
+                    <button ion-button color="huellas" (click)="this.slides.slidePrev()" *ngIf="mostrarAnterior" outline>Atras</button>
+                    <button ion-button color="huellas" (click)="this.slides.slideNext()" *ngIf="!ultimoSlide">Siguiente</button>
+                    <button ion-button color="huellas" (click)="enviar()" *ngIf="ultimoSlide">Calcular</button>
+                </ion-buttons>
+            </ion-slide>
+        </ion-slides>
+    </div>
+
+    <div *ngIf="resultado">
+        <div style="background-color: transparent; border-bottom: none;">
+            <div style="display: block">
+                <canvas baseChart height="170" [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+                    [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)" [colors]="lineChartColors"></canvas>
+            </div>
+        </div>
+        <div class="texto" style="text-align: justify; color:black; margin-top:3px; margin-bottom:5px; font-size: 1.2rem;">
+            
+                Su huella hídrica es de: <b style="font-size:1.2rem"> 2.7 </b> , superior a la del ciudadano promedio. Le sugerimos aceptar el reto para reducir su huella.
+            
+
+        </div>
+        <!--<ion-item style="background-color: transparent; border-bottom: none;">
+
+        </ion-item>-->
+        <ion-buttons>
+            <button ion-button color="huellas" (click)="enviar()">Inscribirse a Reto</button>
+        </ion-buttons>
+
+    </div>
+
+</div>

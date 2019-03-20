@@ -1,0 +1,26 @@
+<ion-header>
+    <ion-toolbar  [style.background]="currentApp.color">
+        <ion-title >
+            <img class="icon-header" [src]="iconoCapa" alt="">
+            {{nombreCapa}}
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button  icon-only  end (click)="closeModal()">
+                <ion-icon name="close"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <img class="imagen-modal" [src]="info.rutaImagen"alt="">
+    <p class="ubicacion-modal">{{info.nombre}}<br/>
+    <span>{{info.direccion}}, {{info.municipio}}</span></p>
+    <p class="descripcion-modal">{{info.descripcion}}</p>
+    
+    <ion-row center>  
+        <ion-col text-center> 
+        <button ion-button (click)="goToMovilidad()">Ir</button>
+        </ion-col>
+    </ion-row>
+</ion-content>

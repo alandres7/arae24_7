@@ -1,0 +1,16 @@
+page-policy {
+    $primary: map-get($colors, primary);
+    $dark: map-get($colors, dark);
+
+    h3{
+        color: $primary;
+    }
+    ion-title {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+    }
+}

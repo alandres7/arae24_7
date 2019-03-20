@@ -1,0 +1,34 @@
+story-create {
+    textarea {
+        max-width: 100%;
+        width: 100%;
+        height: 40vh;
+    }
+    .item-md,
+    .item-ios {
+        background-color: transparent;
+    }
+    .item-md:first-child,
+    .item-ios:first-child {
+        background-color: #F4F4F4;
+        border-radius: 1rem 1rem 0 0;
+    }
+    .item.item-textarea {
+        border-left: 1px solid #F4F4F4;
+        border-right: 1px solid #F4F4F4;
+    }
+    .item.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner,
+    .item.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+        border-bottom-color: transparent;
+        box-shadow: none;
+    }
+    .toolbar-background {
+        background: inherit;
+    }
+    .toolbar-title {
+        color: map-get($colors, light);
+    }
+    .bar-button {
+        color: map-get($colors, light);
+    }
+}

@@ -1,0 +1,77 @@
+<ion-header>
+    <ion-navbar [ngStyle]="{'background':color}">
+        <ion-title>Publicar Avistamiento</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <form [formGroup]="formGroup" (ngSubmit)="saveAvistamiento()">
+        <ion-list>
+            <ion-list-header (click)="presentActionSheet()">
+                <img *ngIf="pictureUri" [src]="pictureUri" />
+                <ion-icon name="camera"></ion-icon>
+            </ion-list-header>
+
+            <ion-item>
+                <ion-label floating>Ubicación</ion-label>
+                <ion-input formControlName="locationFormCtrl"
+                           type="text"
+                           disabled
+                           (click)="selectLocationFromMap()"></ion-input>
+            </ion-item>
+
+            <ion-item *ngIf="formGroup.get('locationFormCtrl').errors && formGroup.get('locationFormCtrl').dirty">
+                <p *ngIf="formGroup.get('locationFormCtrl').hasError('required')">Campo requerido</p>                
+            </ion-item> 
+
+            <ion-item *ngIf="avistamientoLayers && avistamientoLayers.length > 1">
+                <ion-label floating>Tipo Avistamiento</ion-label>
+                <ion-select formControlName="avistamientoTypeFormCtrl" 
+                            [selectOptions]="{ title: 'Tipo Avistamiento' }" 
+                            okText="Aceptar" 
+                            cancelText="Cancelar">
+                    <ion-option *ngFor="let avistamientoLayer of avistamientoLayers" 
+                                [value]="avistamientoLayer">{{avistamientoLayer.name}}</ion-option>
+                </ion-select>
+            </ion-item>
+
+            <ion-item *ngIf="formGroup.get('avistamientoTypeFormCtrl').errors && formGroup.get('avistamientoTypeFormCtrl').dirty">
+                <p *ngIf="formGroup.get('avistamientoTypeFormCtrl').hasError('required')">Campo requerido</p>                
+            </ion-item>   
+
+            <ion-item>
+                <ion-label floating>Nombre Común</ion-label>
+                <ion-input formControlName="commonNameFormCtrl"
+                           type="text"></ion-input>
+            </ion-item>
+
+            <ion-item *ngIf="formGroup.get('commonNameFormCtrl').errors && formGroup.get('commonNameFormCtrl').dirty">
+                <p *ngIf="formGroup.get('commonNameFormCtrl').hasError('maxlength')">Máximo 100 caracteres</p>
+            </ion-item>
+
+            <ion-item>
+                <ion-label floating>Nombre Científico</ion-label>
+                <ion-input formControlName="scientificNameFormCtrl"
+                           type="text"></ion-input>
+            </ion-item>
+
+            <ion-item *ngIf="formGroup.get('scientificNameFormCtrl').errors && formGroup.get('scientificNameFormCtrl').dirty">
+                <p *ngIf="formGroup.get('scientificNameFormCtrl').hasError('maxlength')">Máximo 100 caracteres</p>
+            </ion-item>
+
+            <ion-item>
+                <ion-textarea rows="5" 
+                              placeholder="Descripción" 
+                              formControlName="descriptionFormCtrl"></ion-textarea>
+            </ion-item>
+
+            <ion-item *ngIf="formGroup.get('descriptionFormCtrl').errors && formGroup.get('descriptionFormCtrl').dirty">
+                <p *ngIf="formGroup.get('descriptionFormCtrl').hasError('required')">Campo requerido</p>                
+                <p *ngIf="formGroup.get('descriptionFormCtrl').hasError('minlength')">Mínimo 3 caracteres</p>
+                <p *ngIf="formGroup.get('descriptionFormCtrl').hasError('maxlength')">Máximo 400 caracteres</p>
+            </ion-item>            
+        </ion-list>
+        <button type="submit" [ngStyle]="{'background-color': color}" full ion-button [disabled]="!formGroup.valid || !pictureUri || pictureUri === ''">Reportar</button>
+
+    </form>
+        <button (click)="identificarAvistamiento()" [ngStyle]="{'background-color': color}" full ion-button [disabled]="!formGroup.valid || !pictureUri || pictureUri === ''">Identificar</button>
+</ion-content>

@@ -1,0 +1,213 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" >
+	<head lang="en">	
+	    <title>Area 24/7</title>
+	    <meta charset="utf-8"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                
+        <div th:fragment="header-contend">
+            <link th:href="@{/css/bootstrap-theme.css}" rel="stylesheet"/>
+  	    	<link th:href="@{/css/style.css}" rel="stylesheet"/>
+  	  	
+  	     	<script th:src="@{/js/jquery-1.8.3.min.js}"></script>      
+            <script th:src="@{/js/bootstrap.min.js}"></script>
+            <script th:src="@{/js/jquery.nicescroll.js}" type="text/javascript"></script>
+            <script th:src="@{/js/scripts.js}"></script>        
+        	<script th:src="@{https://maps.googleapis.com/maps/api/js?key=AIzaSyBYu46VlikN0QFUFMg7aOydSsBuehD1Lbc&amp;callback=initMap}"></script> 
+        </div>  
+        
+	</head>
+
+
+    <body>
+    
+    
+    
+    
+    
+    
+    
+    
+        <div th:fragment="quarter-section1" > 
+            <!--<img src="http://www.arqhys.com/wp-content/uploads/2017/04/tipo-de-monta%C3%B1a.jpg" style="width:100%; height:100%;"></img>-->
+			
+			<div class="ribbon-quarter-tittle" style=" width:20%; position: relative; background-color: #AAC02F;">
+                <a href="#">
+			        <span style="color:#FFFFFF;">Notificaciones</span>
+			    </a>          
+            </div>
+						
+			<div class="row margin-reset">
+                <div class="col-xs-12 col-sm-12 col-md-3 padding-reset">                          
+                    <div class="ribbon-quarter" style="position: relative; background-color: #B2B2B2; border-color: #B2B2B2;">
+                        <a href="#">
+			                <span style="color:#FFFFFF;">Pendientes</span>
+			            </a>          
+                    </div>	
+                    <div class="ribbon-quarter" style="position: relative; background-color:#569837; border-color: #569837;">
+                        <a href="#">
+			                <span style="color:#FFFFFF;">Aceptadas</span>
+			            </a> 
+                    </div>
+                    <div class="ribbon-quarter" style="position: relative; background-color:#B42C2D; border-color: #B42C2D;">
+                        <a href="#">
+			                <span style="color:#FFFFFF;">Rechazadas</span>
+			            </a>                       
+                    </div>					  						
+                </div>
+			
+                <div class="col-xs-12 col-sm-12 col-md-9">           
+                    <div style="background-color:#E5E5E5; padding: 10px;">
+                        <p style="color:#569837;">London</p>
+                        <p style="color:#777575;">London is the capital city of England. It is the most populous city in the United Kingdom, with a metropolitan area of over 13 million inhabitants.</p>
+                        <button type="submit" style="background-color: #B2B2B2; border:none;">
+   			                <span style="color:#FFFFFF;">Rechazar</span>
+   			            </button>
+   			            <button type="submit" style="background-color: #569837; border:none;">
+   			                <span style="color:#FFFFFF;">Visualizar</span>
+   			            </button>
+                    </div>                        
+                    <br/>                       
+                    <div style="background-color:#E5E5E5; padding: 10px;">
+                        <p style="color:#569837;">London</p>
+                        <p style="color:#777575;">London is the capital city of England. It is the most populous city in the United Kingdom, with a metropolitan area of over 13 million inhabitants.</p>
+                        <button type="submit" style="background-color: #B2B2B2; border:none;">
+   			                <span style="color:#FFFFFF;">Rechazar</span>
+   			            </button>
+   			            <button type="submit" style="background-color: #569837; border:none;">
+   			                <span style="color:#FFFFFF;">Visualizar</span>
+   			            </button>
+                    </div>             						
+                </div>			
+            </div>   			                     
+        </div> 
+
+
+
+
+
+
+
+
+
+
+        <div th:fragment="quarter-section2">
+            <!--<img src="http://cdn.masdemx.com/wp-content/uploads/2016/02/240159293_ed8f21a697_b.jpg" style="width:100%; height:100%;" ></img>-->
+            			
+			<div class="ribbon-quarter-tittle" style="width:20%; position: relative; background-color: #AAC02F;">
+                <a href="#">
+			        <span style="color:#FFFFFF;">Visualización</span>
+			    </a>          
+            </div>
+					          
+			<div class="row margin-reset" style="padding: 0px; background-color:#FFFFFF;">
+			
+                <div class="col-xs-12 col-sm-12 col-md-7" style="padding: 0px; background-color:#E8E8E8;">
+                    <img src="assets/images/temporales/squirrell.jpg" style="width: 100%; "></img>                   				  						
+                </div>
+                
+                <div class="col-xs-12 col-sm-12 col-md-5" style="padding: 0px; background-color:#E8E8E8;">                 
+                    <p style="color:#777575;"><font color="#569837">Código:</font> 06548</p><br/>   
+                    <p style="color:#777575;"><font color="#569837">Nombre Común:</font> Ardilla</p><br/>  
+                    <p style="color:#777575;"><font color="#569837">Nombre Científico:</font> Sciurus Vulgaris</p><br/> 
+                    <p style="color:#777575;"><font color="#569837">Descripción:</font> Es una especie de roedor esciuromorfo de la familia Sciuridae. 
+                                              Es una de las ardillas más extendidas por los bosques de Europa.</p><br/>
+                    <p style="color:#777575;"><font color="#569837">Fecha:</font> 08 de Agosto 2017</p><br/>  
+                    <p style="color:#777575;"><font color="#569837">Distribución:</font> Ver en el mapa</p><br/>  
+                    <p style="color:#777575;"><font color="#569837">Amenaza:</font> Media</p>                 						
+                </div>			
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+        <div th:fragment="quarter-section3"> 
+            <!--<img src="http://viajar.especiales.elperiodico.com/50-hoteles-de-ensueno/files/2013/06/montanas-colorado.jpg" style="width:100%; height:100%;" ></img>--> 
+            
+			<div class="ribbon-quarter-tittle" style="width:20%; position: relative; background-color: #AAC02F;">
+                <a href="#">
+			        <span style="color:#FFFFFF;">Monitoreo</span>
+			    </a>          
+            </div>
+					            
+			<div class="row margin-reset" style="padding: 0px; background-color:#FFFFFF;">			
+                <div class="col-xs-12 col-sm-12 col-md-6" style="background-color:#FFFFFF; padding: 0px;">
+  
+                    <div class="row margin-reset">			
+                        <div class="col-xs-12 col-sm-12 col-md-4">
+                            <img src="assets/images/temporales/amenaza.jpg" style="width: 100%;"></img>
+                            <p style="color:#FFFFFF; background-color:#B5D4B0; text-align:center">AMENAZA</p>
+                            <p style="color:#777575;">Lorem ipsum dolor sit amet.</p>
+                            <p style="color:#B5D4B0;">75 %</p>	                					  						
+                        </div>			
+                        <div class="col-xs-12 col-sm-12 col-md-4"> 
+                            <img src="assets/images/temporales/mamiferos.jpg" style="width: 100%;"></img>
+                            <p style="color:#FFFFFF; background-color:#569837; text-align:center">MAMIFEROS</p>	
+                            <p style="color:#777575;">Lorem ipsum dolor sit amet.</p>
+                            <p style="color:#569837;">80 %</p>                             						
+                        </div>	
+                        <div class="col-xs-12 col-sm-12 col-md-4">
+                            <img src="assets/images/temporales/ubicacion.jpg" style="width: 100%;"></img>
+                            <p style="color:#FFFFFF; background-color:#33552D; text-align:center">UBICACION</p>
+                            <p style="color:#777575;">Lorem ipsum dolor sit amett.</p>
+                            <p style="color:#33552D;">30 %</p>	                              						
+                        </div>	                		
+                    </div>     
+  					  						
+                </div>			
+                <div class="col-xs-12 col-sm-12 col-md-6" style="background-color:#FFFFFF; padding: 0px;"> 
+                    <img src="assets/images/temporales/cuadroestadistica.jpg" style="width: 100%;"></img>	                             						
+                </div>			
+            </div> 
+                 
+            <div class="row margin-reset" style="padding: 0px; background-color:#FFFFFF;">	
+		
+                <div class="col-xs-12 col-sm-12 col-md-4" style="background-color:#B5D4B0; padding: 0px;">							    
+                    <div class="row margin-reset">		
+                        <div class="ccol-xs-12 col-sm-12 col-md-6">
+                            <p style="color:#FFFFFF; text-align:center">AMENAZA</p><br/><br/>	 
+                            <p style="color:#FFFFFF;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>	                					  						
+                        </div>			
+                        <div class="ccol-xs-12 col-sm-12 col-md-6" style="text-align:center;">
+                            <img src="assets/images/temporales/amenazalogo.jpg" style="width: 60%;"></img>	                             						
+                        </div>	                		
+                    </div> 	                					  						
+                </div>	
+				
+                <div class="col-xs-12 col-sm-12 col-md-4" style="background-color:#569837; padding: 0px;"> 
+                    <div class="row margin-reset">			
+                        <div class="ccol-xs-12 col-sm-12 col-md-6">
+                            <p style="color:#FFFFFF; text-align:center">MAMIFEROS</p><br/><br/>	 
+                            <p style="color:#FFFFFF;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>	                					  						
+                        </div>			
+                        <div class="ccol-xs-12 col-sm-12 col-md-6" style="text-align:center;">
+                            <img src="assets/images/temporales/mamiferoslogo.jpg" style="width: 60%;"></img>	                             						
+                        </div>	                		
+                    </div> 		                             						
+                </div>	
+                
+                <div class="col-xs-12 col-sm-12 col-md-4" style="background-color:#33552D; padding: 0px;">
+                    <div class="row margin-reset">			
+                        <div class="ccol-xs-12 col-sm-12 col-md-6">
+                            <p style="color:#FFFFFF; text-align:center">UBICACION</p><br/><br/>	 
+                            <p style="color:#FFFFFF;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>               					  						
+                        </div>			
+                        <div class="ccol-xs-12 col-sm-12 col-md-6" style="text-align:center;">
+                            <img src="assets/images/temporales/ubicacionlogo.jpg" style="width: 60%;;"></img>                             						
+                        </div>	                		
+                    </div> 		                              						
+                </div>	                		
+            </div>
+        </div> 
+
+
+    </body>
+	
+</html>

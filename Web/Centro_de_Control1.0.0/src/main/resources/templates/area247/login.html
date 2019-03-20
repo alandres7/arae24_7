@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head lang="en">	
+	    <title th:text="'' + ${title}"></title>
+	    <meta charset="utf-8"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        
+		<div th:replace="fragments/frameMaps :: header-contend" ></div>      
+	</head>
+	
+	<body class=".login-img3-body"  th:style="'background:url(' + @{/assets/images/medellinNoche.jpg} + ');'">
+   
+   	    <form th:action="@{/login}" style="max-width: 350px; margin: 200px auto 0;" th:method="post" enctype="multipart/form-data">  
+   	         							
+   			<div style="text-align:center;">
+   			    <img th:src="@{/assets/images/descarga.jpg}"/>   			
+   	    		<br/><br/>
+   	    		<div class="input-group">
+   	    		    <span class="input-group-addon" style="background-color: #ABC12F; border-radius: 0px;" ><img th:src="@{/assets/images/test_user.jpg}"/></span>
+   	    		    <input type="text" name="j_username" class="form-control" placeholder="Usuario" style="border-radius: 0px; background-color: #FFFFFF;" 
+   	    		     oninvalid="this.setCustomValidity('Debe ingresar un Usuario')" oninput="setCustomValidity('')"></input>
+   	    		</div>
+   	    		<br/>
+   	    		<div class="input-group">
+   	    			<span class="input-group-addon" style="background-color: #ABC12F; border-radius: 0px;"><img th:src="@{/assets/images/test_pass.jpg}"/></span>
+   	    			<input type="password" name="j_password" class="form-control" placeholder="Contraseña" style="border-radius: 0px; background-color: #FFFFFF;"  
+   	    			 oninvalid="this.setCustomValidity('Debe ingresar una Contraseña')" oninput="setCustomValidity('')"></input>
+   	    		</div>
+   	    		<br/>  	    		
+   			    <button type="submit" class="btn" style="background-color: #AAC02F; width: 35%; border-radius: 0px;">
+   			        <span id="acep_text" style="color:#FFFFFF;">Iniciar sesión</span>
+   			    </button>
+   			</div>
+   			<br/> 	   			 			
+   			<div class="alert alert-danger" th:if="${loginError}" style="text-align: center;">
+                <strong th:text="${loginErrorMessage}"></strong> 
+            </div>	
+   	    </form>
+    	      	    
+	</body>
+	
+</html>

@@ -1,0 +1,237 @@
+ubicacion-favorita {
+
+    .imputName{
+      border-width:0px;
+
+    }
+
+    .text-input-wp {
+      margin: 0px 0px;
+    margin-left: 17px;
+    margin-right: 8px;
+    padding-left: 8px;
+      padding-right: 8px;
+      padding: 0 8px;
+      width: 89%;
+      border: 2px none rgba(0, 0, 0, 0);
+      line-height: 3rem;
+    background-color: #fff;
+    height: 35px;
+  }
+
+    buscar-ubicacion .searchbar-md .searchbar-input {
+      padding-left: 10px;
+      padding-right: 55px;
+      padding-top: 6px;
+      padding-bottom: 6px;
+      border-radius: 2px;
+      height: 35px;
+      font-size: 1.6rem;
+      font-weight: 400;
+      line-height: 3rem;
+      color: #141414;
+      background-color: #fff;
+      background-position: 8px center;
+      -webkit-box-shadow: none;
+      box-shadow: none;
+      max-width: 90%;
+  }
+    .ion-ios-locate:before {
+      content: "\f1ae";
+      color: #006FAC;
+  }
+
+  .ion-button{
+    background-color: #006FAC !important;
+  }
+
+
+    .navbarFav{
+      background-color:#006FAC !important;
+      color:white;
+    }
+
+
+  @media only screen and (min-width: 320px){
+
+  // .searchbar-md .searchbar-search-icon {
+  //   left: 195px;
+  //   top: 0px;
+  //   background-image: url('../assets/movilidad/iconos/ubiacionInp.png');
+  //   width: 43px;
+  //   height: 35px;
+  //   z-index: 10;
+  // }
+
+
+  // .searchbar-md .searchbar-clear-icon {
+  //   left: 195px;
+  //   top: 0px;
+  //   background-image: url('../assets/movilidad/iconos/cancel.png');
+  //   width: 43px;
+  //   height: 35px;
+  //   z-index: 11;
+  // }
+
+
+  }
+
+  @media only screen and (min-width: 360px){
+
+    .searchbar-md .searchbar-search-icon {
+      left: 234px;
+      top: 0px;
+      background-image: url('../assets/movilidad/iconos/ubiacionInp.png');
+      width: 43px;
+      height: 35px;
+      z-index: 10;
+    }
+
+
+    .searchbar-md .searchbar-clear-icon {
+      left: 234px;
+      top: 0px;
+      background-image: url('../assets/movilidad/iconos/cancel.png');
+      width: 43px;
+      height: 35px;
+      z-index: 11;
+    }
+  }
+
+  @media only screen and (min-width: 375px){
+
+    .searchbar-md .searchbar-search-icon {
+      left: 250px;
+      top: 0px;
+      background-image: url('../assets/movilidad/iconos/ubiacionInp.png');
+      width: 43px;
+      height: 35px;
+      z-index: 10;
+    }
+
+    .searchbar-md .searchbar-clear-icon {
+      left: 250px;
+      top: 0px;
+      background-image: url('../assets/movilidad/iconos/cancel.png');
+      width: 43px;
+      height: 35px;
+      z-index: 11;
+    }
+  }
+
+  @media only screen and (min-width: 384px){
+
+    .searchbar-md .searchbar-search-icon {
+      left: 260px;
+      top: 0px;
+      background-image: url('../assets/movilidad/iconos/ubiacionInp.png');
+      width: 43px;
+      height: 35px;
+      z-index: 10;
+    }
+
+    .searchbar-md .searchbar-clear-icon {
+      left: 260px;
+      top: 0px;
+      background-image: url('../assets/movilidad/iconos/cancel.png');
+      width: 43px;
+      height: 35px;
+      z-index: 11;
+    }
+  }
+
+  @media only screen and (min-width: 412px){
+
+    .searchbar-md .searchbar-search-icon {
+      left: 285px;
+      top: 0px;
+      background-image: url('../assets/movilidad/iconos/ubiacionInp.png');
+      width: 43px;
+      height: 35px;
+      z-index: 10;
+    }
+
+
+    .searchbar-md .searchbar-clear-icon {
+      left: 285px;
+      top: 0px;
+      background-image: url('../assets/movilidad/iconos/cancel.png');
+      width: 43px;
+      height: 35px;
+      z-index: 11;
+    }
+  }
+
+    ion-item.item-ios.item.item-block, ion-item.item-md.item.item-block, ion-item.item-wp.item.item-block {
+      border-bottom:0px none #ccc;
+  }
+
+    .gridContent{
+      background-color: rgba(255, 255, 255, 0.82);
+      padding: 0px;
+    }
+
+
+
+  .selecMapa{
+      background-color: white;
+      margin-top: -11px;
+      margin-left: 18px;
+      width: 100% !important;
+  }
+
+
+
+  .divButton{
+    width: 100%;
+    text-align: center
+  }
+
+  .btn-search{
+    right: 10% !important;
+  }
+
+
+  .saveBtn {
+      height: 2.5rem;
+      width: 6rem;
+      padding:5px;
+      background-color: #006FAC;
+  }
+
+  .compTitle{
+        color: #0060B6;
+      font-weight: 500;
+      font-size: 15px;
+  }
+
+
+
+
+	.item-md{
+		background-color:transparent !important;
+	}
+
+	.itemBorder{
+        // border-bottom-color: transparent !important;
+        .inputContainer{
+          background-color: white; height: 35px
+        }
+	}
+
+	.item-md.item-block .item-inner {
+    padding-right: 8px;
+    border-bottom: 1px none transparent;
+}
+
+.text-input-md {
+    margin: 7px 8px;
+    padding: 0;
+    width: calc(100% - 8px - 8px);
+}
+
+ion-input{
+padding-left: 1rem;
+}
+
+}

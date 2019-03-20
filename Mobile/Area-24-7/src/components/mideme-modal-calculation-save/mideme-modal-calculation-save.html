@@ -1,0 +1,17 @@
+<ion-content padding>
+
+  <ion-buttons end>
+      <button ion-button  icon-only  end (click)="closeModal()">
+          <ion-icon name="close"></ion-icon>
+      </button>
+  </ion-buttons>
+
+  <div>
+    <div class="check"></div>
+   
+    <h1 [ngStyle]="{'color': color}">Se ha guardado el Cálculo de consumo.</h1>
+   
+
+    <p>Puedes encontrar este registro en el botón <strong>Historial,</strong> si deseas puedes volver a calcular tu consumo, se generará un nuevo registro.</p>
+  </div>
+</ion-content>

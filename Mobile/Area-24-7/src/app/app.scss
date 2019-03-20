@@ -1,0 +1,517 @@
+
+page-main {
+    .content {
+        background: sienna;
+    }
+    .toolbar-title {
+        color: #fff;
+    }
+    .menu-inner .item {
+        background-color: springgreen;
+    }
+    .menu-inner>ion-header,
+    .menu-inner>ion-content,
+    .menu-inner>ion-footer {
+        background-color: skyblue;
+    }
+    .toolbar-title {
+        color: #fff;
+    }
+}
+
+my-location {
+    float: right;
+    margin-right: 0.5rem;
+    margin-bottom: 5rem;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+@media only screen and (min-height: 600px) and (min-width: 768px) {
+    .md .modal-wrapper {
+        box-shadow: none;
+    }
+}
+
+.social-button {
+    font-size: 2.5rem !important;
+    vertical-align: middle;
+    margin: 0 0.5rem;
+    &.facebook-button {
+        color: #3b5998;
+    }
+    &.twitter-button {
+        color: #1da1f2;
+    }
+    &.instagram-button {
+        color: #f56040;
+    }
+}
+
+.item.item {
+    background-color: transparent;
+}
+
+.button-md {
+    box-shadow: none;
+}
+
+.alert-wrapper {
+    border-radius: 10px;
+}
+
+.alert-md,
+.alert-ios {
+    .alert-title {
+        font-size: 1.8rem;
+        text-align: center;
+    }
+    .alert-message {
+        font-size: 1.4rem;
+        text-align: center;
+    }
+    input[type='email'] {
+        text-align: center;
+        margin: 0;
+    }
+    .alert-input-group,
+    .alert-message {
+        padding: 0 24px 1rem 24px;
+    }
+}
+
+/// RIPPLE EFFECT
+.button-effect {
+    background: map-get($colors, primary);
+    // background: transparent;
+}
+
+.alert .alert-button.activated {
+    background-color: rgba(150, 201, 61, 0.2);
+}
+
+/// RIPPLE EFFECT
+/// ESTILO DE LAS VALIDACIONES EN LOS FORMULARIOS
+.item.item-input.item-input-has-focus .item-inner,
+.item.item-input.input-has-focus .item-inner {
+    border-bottom-color: transparent;
+    box-shadow: none;
+}
+
+.item.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner,
+.item.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner,
+.list .item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child,
+.list .item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child {
+    border-bottom-color: map-get($colors, primary);
+    box-shadow: inset 0 -1px 0 0 map-get($colors, primary);
+}
+
+.list.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child,
+.list.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child,
+.item.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .item-inner,
+.list-md .item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus):last-child {
+    border-bottom-color: map-get($colors, dark-red);
+    box-shadow: inset 0 -1px 0 0 map-get($colors, dark-red);
+}
+
+/// ESTILO DE LAS VALIDACIONES EN LOS FORMULARIOS
+
+
+//Info window styles
+    /*style the box which holds the text of the information window*/  
+    .gm-style .gm-style-iw {
+        // background-color: #fff !important;
+        top: 0 !important;
+        left: 0 !important;
+        display: block !important;
+    }
+
+    /*style the paragraph tag*/
+    .gm-style .gm-style-iw #google-popup p{
+        padding: 10px;
+    }
+
+/** close-button(note that there may be a scrollbar) **/
+
+.custom-iw>div:last-child {
+    top: 0px !important;
+    right: 0 !important;
+}
+
+
+/** padding of the content **/
+.description {
+    width: 100%;
+}
+
+
+.styleHeader {
+    // background-color: map-get($colors, Conóceme);
+    height: auto;
+    text-align: center;
+    -webkit-box-shadow: 0px 5px 5px 0px rgba(188, 188, 188, 0.75);
+    -moz-box-shadow: 0px 5px 5px 0px rgba(188, 188, 188, 0.75);
+    box-shadow: 0px 5px 5px 0px rgba(188, 188, 188, 0.75);
+    margin-bottom: 1rem;
+}
+
+.styleTitle {
+    font-size: 1.4rem;
+    text-shadow: 1px 1px #333;
+    color: white;
+}
+
+.styleHeaderMovilidad {
+    height: auto;
+    text-align: center;
+    background-color: #006fac;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.styleTitleMovilidad {
+    font-size: 1.4rem;
+    color: white;
+}
+
+.styleDireccion {
+    font-size: 1.5rem;
+    // color: map-get($colors, Conóceme);
+    color:black;
+    font-weight: 200;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.styleNombreMovilidad{
+    font-size: 2rem;
+    font-weight: bold;
+    color:black;
+    margin-Top: .8rem;
+    margin-bottom: -2px;
+}
+
+.infoGeneral {
+    font-size: 1.4rem;
+    margin:1rem;
+    font-weight: 200;
+    text-align: center;
+}
+
+.styleInfoImp {
+    font-size: 12px;
+    color: #006fac;
+    font-weight: bold;
+}
+
+.ocultarDiv {
+    display: none;
+    height: 0;
+    overflow: visible;
+}
+
+.ocultarDiv2 {
+    visibility: hidden;
+    height: 0;
+    overflow: visible;
+}
+
+ion-loading {
+    // ion-backdrop {
+    //     background-color: white !important;
+    // }
+    .loading-wrapper {
+        //     justify-content: center !important;
+        opacity: 1 !important;
+        background-color: white !important;
+    }
+    .spinner-crescent circle {
+        stroke: #96c93d !important;
+        font-size: 80px;
+    }
+    .spinner-ios line,
+    .spinner-ios-small line {
+        stroke: #96c93d !important;
+    }
+    ion-spinner {
+        width: 40px;
+        height: 40px;
+        fill: white;
+    }
+}
+
+ion-header {
+    left: 0;
+    top: 0;
+    position: absolute;
+    z-index: 3;
+    display: block;
+    width: 100%;
+    height: 45px;
+}
+
+.toolbar-md {
+    padding: 4px;
+    min-height: 45px;
+}
+
+ion-alert {
+    &.alert-danger {
+        .alert-title {
+            color: #96c93d;
+        }
+        .alert-head {
+            background: white;
+            color: #71a600;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .alert-button-group {
+            background-color: white;
+            text-align: center;
+        }
+        .alert-button {
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+            font-weight: 500;
+            text-transform: uppercase;
+            color: white;
+            background-color: transparent;
+            font-size: 13pt;
+            background: #71a600;
+        }
+    }
+}
+
+.alert-md [aria-checked='true'] .alert-checkbox-icon {
+    border-color: #71a600;
+    background-color: #71a600;
+}
+
+ion-header.header.header,
+ion-header .toolbar {
+    height: 5rem;
+    max-height: 5rem;
+    min-height: 5rem;
+}
+
+ion-title img {
+    height: 5rem;
+}
+.anim {
+    animation-name: example;
+    animation-duration: .5s;
+    animation-timing-function: linear;
+ }
+ .anim.Área{
+    animation-name:nada;
+ }
+ .initial.anim #map, .anim.Recórreme, .anim.Asómbrate, .anim.Conóceme, .anim.Mídeme, .anim.Cuídame, .anim.Disfrútame{
+    animation-name: example;
+    animation-duration: .5s;
+    animation-timing-function: linear;
+ }
+
+ /* The animation code */
+@keyframes example {
+    from{left:100vw;
+        }
+    to {left:0vw;
+        }
+}
+@keyframes example2 {
+    from{left:-100vw;
+        }
+    to {left:0vw;
+        }
+}
+.custom-loading{
+        display: unset!important;
+        align-items: unset!important;
+        justify-content: unset!important;
+
+    .loading-wrapper {
+        max-width: 100vw;
+        max-height: 100vh;
+        padding: 0;
+    }
+    .loading-content {
+        background-image: url(../assets/splash2.png);
+        background-size: cover;
+        position: relative;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        min-height: 100vh;
+        width: 100vw;
+        min-width: 100vw;
+        img {
+            position: fixed;
+            width: 129px;
+            height:166px;
+            top: calc(50% - 83px);
+            left: calc(50% - 64.5px);
+        }
+    }
+    
+}
+.warning, .success {
+    .alert-wrapper {
+        position: absolute;
+        z-index: 10004;
+        .alert-head {
+            &::before {
+                height: 40px;
+                width: 40px;
+                position: relative;
+                left: calc(50% - 20px);   
+                top: 0px;
+                z-index: 20004;
+            }
+        }
+    }
+}
+/******************Alertas******************/
+.warning {
+    .alert-head{
+        &::before {
+            font-family: "Ionicons";
+            content:"\f3a5";
+            font-size:50px;
+            color:map-get($colors, btnRed);
+        }
+    }
+}
+.success {
+    .alert-head {
+        &::before {
+            font-family: "Ionicons";
+            content:"\f149";
+            font-size:50px;
+            color:map-get($colors, btnGreen);
+        }
+    }
+}
+/*Haz seleccionado una opción', '¿Estás seguro? una vez aceptes se generará el reporte.*/
+.sGenRep {
+    .alert-wrapper {
+        .alert-head {
+            &::before {
+                /*left: 0;*/ 
+            }
+            h3.alert-sub-title {
+                text-align:center;
+                margin-top:20px;
+            }
+        }
+    }
+    .alert-button-group {
+        padding: 8px;
+        justify-content: center;
+        button {
+            background:map-get($colors, btnGreen);
+            color:#ffffff;
+            height: 2.2em;
+            margin: 0.4rem 1.2rem;
+            min-width: 100px;
+            text-transform: capitalize;
+            border-radius:6px;
+            .button-inner {
+                -webkit-box-pack: center;
+                -webkit-justify-content: center;
+                -ms-flex-pack: center;
+                justify-content: center;
+            }
+        }
+        button:first-of-type {
+            background: map-get($colors, btnRed);
+        }
+    }
+}
+.sGenRep.btnSolo{
+    .alert-button-group {
+        button {
+            background:map-get($colors, primary);
+        }
+    }
+}
+
+.searchbar-md .searchbar-search-icon {
+    position: absolute;
+    left: 0%;
+    top: 0px;
+    background-image: none!important;
+    width: 43px;
+    height: 35px;
+}
+
+.menu-content-open {
+    .ion-page.show-page {
+        opacity: 0.35;
+
+    }
+    &.menu-content-overlay .ion-page.show-page{
+        opacity:1!important;
+
+    }
+}
+mideme-options, mideme-calculator, mideme-result, mideme-current-challenge, mideme-history, mideme-challenge {
+    font-size: 1.7rem;
+    ion-header {
+        .toolbar-background-md, .toolbar-background-ios {
+            background: transparent;
+        }
+        .toolbar-title, .bar-button {
+            color:#ffffff;
+        }
+        .toolbar-content {
+            margin-right: 50px;
+            text-align: center;
+        }
+    }
+
+    ion-content {
+        .colu {
+            padding: 5px;
+            position: relative;
+            width: 100%;
+            margin: 0;
+            min-height: 1px;
+            -webkit-flex-basis: 0;
+            -ms-flex-preferred-size: 0;
+            flex-basis: 0;
+            -webkit-box-flex: 1;
+            -webkit-flex-grow: 1;
+            -ms-flex-positive: 1;
+            flex-grow: 1;
+            max-width: 100%;
+            ol, ul {
+                text-align: left;
+            }
+        }
+        .button{
+            border-radius: 6px;
+            text-transform: capitalize;   
+            text-align: left;
+            font-size:2rem;
+            i {
+                margin-right:10px;
+            }
+        }
+        .scroll-content {
+            margin-top:60px!important;
+        }
+    }
+    .bold {
+        font-weight:bold;
+    }
+    .grayText {
+        color: map-get($colors , texto );
+        font-weight: 400;
+    }
+    .center {
+        text-align: center !important;
+    }
+}

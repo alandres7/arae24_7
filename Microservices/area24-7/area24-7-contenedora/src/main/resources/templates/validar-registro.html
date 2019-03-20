@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${asunto}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
+    <!-- use the font -->
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 48px;
+            color: white;
+        }
+        a {
+			border-style: solid;
+			border-color: #527a0c;
+			border-width: 2px;
+			border-radius: 12px;
+			display: inline-block;
+			font-size: 30px;
+			background: #ffffff;
+			text-decoration: none!important;
+			width: auto;
+			text-align: center;
+			padding: 5px 20px;
+			color: #527a0c;
+        }
+        a[href]{
+        	color: #527a0c;
+        }
+    </style>
+</head>
+<body style="margin: 0; padding: 0;"> 
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse;">
+	<tr>
+		<td bgcolor="#96c93c" style="color:white;text-align:center;padding: 30px;border-radius: 15px 15px 0 0;">
+			<p style="margin:0;font-size:30px;color:white;margin-bottom:10px;">Bienvenido/a a tu cuenta <b>Área 24/7</b></p>
+			<p style="margin:0;font-size:24px;">Para apropiarte y conocer el<br/>Área Metropolitana del valle de Aburrá<br/>confirma tu correo.</p>
+		</td>
+	</tr> 
+	<tr>
+		<td bgcolor="#96c93c" style="color:white;text-align:center;padding:0px 20px 20px 20px;">
+			<p style="margin:0;font-size:36px;"><a th:href="@{${urlConfirmarRegistro}}" target="_blank"><b>¡Confirmar correo!</b></a></p>
+		</td>
+	</tr>
+	<tr>
+		<td>
+				<img src="imgs/imgValidarRegistro.jpg" alt="Logo del Área Metropolitana" style="display: block;border-radius: 0 0 15px 15px;" />
+		</td>
+	</tr>
+</table>
+</body>
+</html>

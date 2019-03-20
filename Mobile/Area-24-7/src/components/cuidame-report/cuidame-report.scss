@@ -1,0 +1,64 @@
+cuidame-report {
+    ion-content{
+        margin-top: 20%;
+        height: 80%;
+        width: 80vw;
+        margin-left: 10vw;
+
+        .ion-ios-close:before {
+            font-size: 30px;
+        }
+        h5 {
+            text-align:center;
+        }
+        h5,h6{
+            font-weight:500;
+        }
+        .normalText {
+            font-weight:400;
+            color:grey;
+        }
+        .cuadro {
+            border: 1px solid #e6e1e1;
+            padding: 2px;
+        }
+        .topIcon {
+            margin-top:10px;
+            font-size:50px;
+            color:map-get($colors, btnGreen )
+        }
+        .button {
+            color:#ffffff;
+            height: 2.2em;
+            // margin: 0.4rem 1.2rem;
+            min-width: 100px;
+            text-transform: capitalize;
+            border-radius:6px;
+            &.red {
+                background-color:map-get($colors, btnRed);
+            }
+            &.green {
+                background-color:map-get($colors, btnGreen);
+            }
+        }
+        .text-center {
+            text-align:center;
+        }
+        .success::before {
+            font-family: "Ionicons";
+            content:"\f149";
+            font-size:50px;
+            color:map-get($colors, btnGreen);
+        }
+        .slide-zoom{
+            max-height:230px;
+            img, video, audio {
+                height:-webkit-fill-available;
+                padding-bottom: 20px;
+            }
+        }
+        .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal > .swiper-pagination-bullets {
+            bottom:0;
+        }
+    }
+}

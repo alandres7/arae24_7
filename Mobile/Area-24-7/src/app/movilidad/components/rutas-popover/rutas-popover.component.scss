@@ -1,0 +1,38 @@
+rutas-popover {
+  .detalle-ruta {
+      margin-left: 5%;
+      margin-bottom: 5%;
+  }
+
+	.header{
+		background-color: #006fac;
+		height: 8px;
+	}
+	.ion-md-arrow-dropup-circle:before{
+		color:#006fac;
+		font-size: 24px;
+		    margin-top: -3px;
+	}
+	.ion-md-arrow-dropdown-circle:before{
+		color:#006fac;
+		font-size: 24px;
+		margin-top: -3px;
+	}
+	.checkbox-md-dark .checkbox-checked {
+    border-color: #006fac;
+    background-color: #006fac;
+}
+
+	.checkbox-md .checkbox-icon {
+
+    width: 17px;
+    height: 17px;
+	border-color: #006fac;
+	}
+
+	.separator{
+		border-bottom-style: solid;
+		border-bottom-width: 1px;
+		border-bottom-color: lightgrey;
+	}
+}

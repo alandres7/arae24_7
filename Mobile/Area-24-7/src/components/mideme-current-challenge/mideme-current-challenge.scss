@@ -1,0 +1,84 @@
+mideme-current-challenge {
+    ion-content {    
+        .button {
+            font-weight:400;
+            background: map-get($colors , btnRed );
+            text-transform:unset;
+        }
+        h1 {
+            font-size: 2rem;
+        }
+        p {
+            color:map-get($colors , texto );
+            padding:0;
+            margin-top:-10px;
+        }
+        .wrap {
+            width: 100%;
+            margin: 0 auto;
+            text-align: -webkit-center;
+            .dcolor {
+                border-bottom-width: 2px;
+                border-bottom-style: solid;
+                padding: 0 10px;
+                width: fit-content;
+            }
+            /* -------------------------------------
+            * Bar container
+            * ------------------------------------- */
+            .progress-radial {
+                position: relative;
+                width: 110px;
+                height: 110px;
+                border-radius: 50%;
+                background-color: map-get($colors , huellas );
+            }
+
+            /* -------------------------------------
+            * Optional centered circle w/text
+            * ------------------------------------- */
+            .progress-radial .overlay {
+                position: absolute;
+                width: 84px;
+                height: 84px;
+                background-color: #fff;
+                border-radius: 50%;
+                margin-left: 13px;
+                margin-top: 13px;
+            }
+            $step: 1;
+            $loops: (21 / $step);
+            $increment: 360 / $loops;
+            $half: ($loops / 2);
+            @for $i from 0 through $loops {
+                .progress-#{$i * $step} {
+                    @if $i < $half {
+                        $nextdeg: 90deg + $increment * $i;
+                        background-image: linear-gradient(90deg, map-get($colors , light-gray ) 50%, transparent 50%, transparent), linear-gradient($nextdeg, map-get($colors , huellas ) 50%, map-get($colors , light-gray ) 50%, map-get($colors , light-gray ));
+                    }
+                    @else {
+                        $nextdeg: -90deg + $increment * ($i - $half);
+                        background-image: linear-gradient($nextdeg, map-get($colors , huellas ) 50%, transparent 50%, transparent), linear-gradient(270deg, map-get($colors , huellas ) 50%, map-get($colors , light-gray ) 50%, map-get($colors , light-gray ));
+                    }
+                }
+            }
+        }
+        .inline {
+            display:inline-flex;
+            h1 {
+                margin:0!important;
+                padding:10px;
+                &.green {
+                    color:map-get($colors , btnGreen );
+                }
+                &.red {
+                    color:map-get($colors , btnRed );
+                }
+                span {
+                    font-size:1.7rem;
+                    color:map-get($colors , soft-black );
+                }
+            }
+        }     
+    }
+}

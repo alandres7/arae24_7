@@ -1,0 +1,386 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head lang="en">	
+    <title th:text="'' + ${title}"></title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+       
+	<div th:replace="fragments/frameMaps :: header-contend"></div> 
+	   		
+</head>
+	
+	
+	<style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }   
+        .contenido {
+            position: relative;           
+            margin: auto;
+            top: 10%;
+            width: 70%;
+        }	
+	</style>
+	    
+
+<body >
+   	<div th:replace="fragments/frameMaps :: header-degra"></div>
+   	
+   	<div th:replace="fragments/frameMaps :: sideBar-Left-App"></div> 
+
+ 	
+
+	<section id="main-content" >
+
+		<div id="mapa" style="height: 100%"></div>
+
+		<div th:replace="fragments/frameMaps :: ribbon-List"></div>
+
+		<div th:replace="fragments/frameMaps :: notification-List"></div>
+
+		<div th:replace="fragments/enviarMensajePush :: mensajes-push-chat"></div>
+		<div th:replace="fragments/enviarMensajePush :: modalNotificaHisto"></div>
+		
+		
+
+		<div id="modalPreguntas" class="modal" th:style="'display: ' + ${despliegeModalPreguntas}">    
+	        <div class="contenido" >	
+	        	        
+	            <button onclick="closeModalPreguntas()" class="btn btn-default" style="background-color: #FB0101; float: right;">
+                    <span class="glyphicon glyphicon-remove" style="float: right; color: #FFFFFF;"></span> 
+                </button>
+				
+	            <h1 style="background-color: #9FC418; color:#FFFFFF; width:600px;">Configuración de Preguntas</h1>
+	        		        			        	
+	        	<div style="border: 25px solid; border-color: transparent; background-color: rgba(0,0,0,0.8);">
+	        	     
+                    <form id="editPreguntaForm" th:action="@{/createUpdatePregunta}" th:method="post" onsubmit="return realizarValidacionesEdicion()" 
+                     style="width:100%; background-color: #E8E8E8; float: center; font-size: 0.9vw; display: block;" enctype="multipart/form-data">  	         							  			
+                       
+					    <div class="row margin-reset"> 
+                            <ul class="nav nav-tabs">
+                            
+                                <li data-toggle="tooltip" title="Agregar nueva Pregunta">
+                                    <div id="showFormNewPregunta" class="btn btn-default" style="background-color: #9FC418;">
+                                        <span style="color: #FFFFFF;" class="glyphicon glyphicon-plus-sign"></span>
+                                    </div>
+                                </li>
+                                                                                               
+                                <li data-toggle="tooltip" title="Guardar Cambios">
+                                    <button id="botonEdicion" class="btn btn-default" 
+                                     style="background-color: #00BFFF; display:none;" type="submit">
+                                        <span style="color: #FFFFFF;" class="glyphicon glyphicon-floppy-disk"></span>
+                                    </button>
+                                </li> 	
+                                																					
+								<li data-toggle="tooltip" title="Retornar a Actividades">
+								    <a id="returnActividades" class="btn btn-default" style="height:32px; border: 1px solid; 
+								     border-color: #D0D0D0; border-radius: 3px; background-color: #9FC418;" 
+								     th:href="@{/adminActividades}">
+								         <span style="color: #FFFFFF;" class="glyphicon glyphicon-arrow-left"></span>
+								     </a>
+								</li> 
+								
+                            </ul>
+					    </div>
+					    
+					    <br/>					   
+			            <div class="row margin-reset"> 
+						    <div class="col-xs-12 col-sm-1 col-md-1">
+							    <p style="color:#9FC418;">ID</p>
+			                </div>
+							<div class="col-xs-12 col-sm-1 col-md-1">
+							     <input type="text" id="id" th:name="id" class="form-control" style="border-radius: 0px;" readonly="true"></input>
+			                </div>
+							<div class="col-xs-12 col-sm-1 col-md-1">
+							    <p style="color:#9FC418;">Descripción</p>
+			                </div>
+							<div class="col-xs-12 col-sm-4 col-md-4">
+							    <input type="text" id="descripcion" th:name="descripcion" style="border-radius: 0px;"
+							     class="form-control editField" readonly="true"></input>
+			                </div>					                
+			                <div class="col-xs-12 col-sm-1 col-md-1">
+								<p style="color: #9FC418;">Orden</p>
+							</div>
+							<div class="col-xs-12 col-sm-1 col-md-1">
+								<input type="number" id="orden" th:name="orden" min="1" max="100"
+								 class="form-control editField" readonly="true"></input>
+							</div> 	
+							<div class="col-xs-12 col-sm-1 col-md-1">
+								<p style="color: #9FC418;">Tipo Respuesta</p>
+							</div>
+							<div class="col-xs-12 col-sm-2 col-md-2">
+								<select id="tipoPregunta" th:name="tipoPregunta">
+									<option th:each="tipo : ${tiposRespuestaHuellaList}" 
+									 th:value="${tipo.id}" th:text="${tipo.nombre}"></option>
+								</select>
+							</div>				                					                						                						                			                								
+			            </div>														
+					   				    						    
+					    <br/>
+					    <p id="validacionEdicion" style="text-align:center; color: #FB0101"></p>
+					    <p id="mensajeFormPregunta" th:text="'' + ${mensajeFormPregunta}" style="text-align:center"></p>
+					    <input type="hidden" th:name="idActividad" th:value="'' + ${idActividad}"></input>
+					    <input type="hidden" id="ordenSelectOmitFromValidation" th:name="ordenSelectOmitFromValidation"></input>						    				
+                    </form> 
+					
+
+                    <form id="createPreguntaForm" th:action="@{/createUpdatePregunta}" th:method="post" onsubmit="return realizarValidacionesCreacion()" 
+                     style="width:100%; background-color: #E8E8E8; float: center; font-size: 0.9vw; display: none;" enctype="multipart/form-data">  	         							  			
+                       
+					    <div class="row margin-reset"> 
+                            <ul class="nav nav-tabs">
+                            
+                                <li data-toggle="tooltip" title="Guardar nueva Pregunta">
+                                    <button id="addNewPregunta" class="btn btn-default" style="background-color: #00BFFF;" type="submit">
+                                        <span style="color: #FFFFFF;" class="glyphicon glyphicon-floppy-disk"></span>
+                                    </button>
+                                </li> 
+                                
+                                <li data-toggle="tooltip" title="Cancelar">
+                                    <button id="cancelNewPregunta" class="btn btn-default" style="background-color: #FB0101;">
+                                        <span style="color: #FFFFFF;" class="glyphicon glyphicon-remove-sign"></span>
+                                    </button>
+                                </li>
+                                
+                            </ul> 						
+					    </div>
+					    
+					    <br/>					   
+			            <div class="row margin-reset"> 
+							<div class="col-xs-12 col-sm-1 col-md-1">
+							    <p style="color:#9FC418;">Descripción</p>
+			                </div>
+							<div class="col-xs-12 col-sm-6 col-md-6">
+							    <input type="text" id="descripcionNew" th:name="descripcion" class="form-control" style="border-radius: 0px;"></input>
+			                </div>						                
+			                <div class="col-xs-12 col-sm-1 col-md-1">
+								<p style="color: #9FC418;">Orden</p>
+							</div>
+							<div class="col-xs-12 col-sm-1 col-md-1">
+								<input type="number" id="ordenNew" th:name="orden" min="1" max="100"></input>
+							</div> 	
+							<div class="col-xs-12 col-sm-1 col-md-1">
+								<p style="color: #9FC418;">Tipo Respuesta</p>
+							</div>
+							<div class="col-xs-12 col-sm-2 col-md-2">
+								<select id="tipoPregunta" th:name="tipoPregunta">
+									<option th:each="tipo : ${tiposRespuestaHuellaList}" 
+									 th:value="${tipo.id}" th:text="${tipo.nombre}"></option>
+								</select>
+							</div>				                					                						                			                								
+			            </div>
+								
+					    <br/>
+					    <p id="validacionCreacion" style="text-align:center; color: #FB0101"></p>
+					    <input type="hidden" th:name="idActividad" th:value="'' + ${idActividad}"></input>						    					    					    					    				
+                    </form>
+                    
+                    <h4 id="rutaMostrada" style="color:#FFFFFF;" th:text="${rutaMostrada}"></h4> 
+					
+                    <br/>
+                          
+                    <h2 style="text-align:left; color: #FFFFFF;">Listado de Preguntas</h2>
+      	        	
+      	        	<div style="overflow-x:auto;">   
+               	    <table id="tablePreguntas" class="table table-striped table-bordered" cellspacing="0" 
+               	           style="width: 100%; background-color: #E8E8E8; font-size: 0.9vw;">
+               	        <thead>
+               	            <tr>                                   
+                                <th>ID</th>
+                                <th>Descripción</th>
+                                <th>Orden</th>
+                                <th>Tipo Respuesta</th>
+                                <th>Eliminar</th>                           
+                                <th>Editar</th>                                               
+                            </tr>
+                        </thead>                     
+                          
+                        <tbody>                   
+                            <tr th:each="pregunta : ${preguntaList}">
+                                <td th:text="${pregunta.id}"></td>
+                                <td th:text="${pregunta.descripcion}"></td>
+                                <td th:text="${pregunta.orden}"></td>
+                                <td th:text="${pregunta.tipoRespuestaHuella.nombre}"></td>                                
+								<td>
+									<a th:id="${pregunta.id}" class="btn btn-default deleteButton" 
+									 style="height:32px; background-color: #FB0101; border: 1px solid; border-color: #D0D0D0; border-radius: 3px;">
+								        <span style="color: #FFFFFF;" class="glyphicon glyphicon-trash"></span> 
+								    </a>
+								</td>								
+                                <td>
+                                    <button th:id="${pregunta.id}" style="background-color: #9FC418;" class="btn btn-default editButtonPregunta">
+									    <span style="color: #FFFFFF;" class="glyphicon glyphicon-pencil"></span>
+									</button>
+                                </td>                           
+                            </tr>                                                                                                     
+                        </tbody>
+                    </table> 
+                    </div>
+						
+                </div>
+               
+            </div>       
+        </div>  
+                                   				
+    </section>
+
+    <div th:replace="fragments/printMap :: printMap"></div>
+	
+    <script th:inline="javascript">  
+        $(document).ready(function() {
+            $('#tablePreguntas').dataTable({
+                "language": {"url": "/assets/json/spanishTable.json"},
+                "order": [[ 2, "asc" ]]
+            });
+        });    
+        function openModalPreguntas() {
+            document.getElementById('modalPreguntas').style.display = "block";
+        }  
+    
+        function closeModalPreguntas() {
+            document.getElementById('modalPreguntas').style.display = "none";
+        }
+        
+        $('.editButtonPregunta').on('click', function() {
+            var id = $(this).attr('id');           
+            $.ajax({
+                url: "/getPreguntaHuella/" + id,
+                method: "GET",
+            }).success(function(response) {
+            	$('#validacionEdicion').text("  ");   
+            	$('#validacionCreacion').text("  ");
+            	
+            	$('#mensajeFormPregunta').text("  ");
+            	
+                $('#editPreguntaForm')
+                    .find('[name="id"]').val(response.id).end()
+                    .find('[name="descripcion"]').val(response.descripcion).end()
+                    .find('[name="tipoPregunta"]').val(response.tipoRespuestaHuella.id).end()
+                    .find('[name="orden"]').val(""+response.orden).end()
+                    .find('[name="ordenSelectOmitFromValidation"]').val(""+response.orden).end(); 
+                
+                $('.editField').attr("readonly",false);
+                $('#botonEdicion').css("display","block");
+            });                               
+        });  
+    
+        $('#showFormNewPregunta').on('click', function() {
+        	document.getElementById("editPreguntaForm").reset();
+            $('#editPreguntaForm').hide(); 
+            $('#createPreguntaForm').show(); 
+            $('#validacionCreacion').text("  ");
+            $('#mensajeFormPregunta').text("  ");
+        }); 
+    
+        $('#cancelNewPregunta').on('click', function() {
+            $('#editPreguntaForm').show(); 
+            document.getElementById("createPreguntaForm").reset();
+            $('.editField').attr("readonly",true);
+            $('#botonEdicion').css("display","none");
+            $('#createPreguntaForm').hide(); 
+            $('#validacionEdicion').text("  ");
+            $('#mensajeFormPregunta').text("  "); 
+        });          
+     		  
+    </script> 
+    
+    
+    <script th:inline="javascript">
+        $('.deleteButton').on('click', function() {
+        	var id = $(this).attr('id'); 
+        	var linkDelete = "/deletePreguntaHuella/" + [[${idActividad}]] + "/" + id
+        	$('#confirmDelete').attr("href",linkDelete);        	
+        	$('#modalConfirmDelete').show();        	
+        	$('#modalConfirmDelete').find('#cancelDelete').on('click', function() {
+                $('#modalConfirmDelete').hide();
+            });        	
+        	$('#modalConfirmDelete').find('#confirmDelete').on('click', function() {
+                $('#modalConfirmDelete').hide();
+            });
+        });  
+    </script>
+    
+    <div th:replace="fragments/dialog :: modalConfirmDelete"></div>  
+    
+    
+
+    <script type="text/javascript" th:inline="javascript" >	
+        /*<![CDATA[*/ 
+        function realizarValidacionesEdicion(){         	
+        	var descripcion = $("#descripcion").val();             
+            if(descripcion != null){ 	
+        	    if(descripcion == ""){ 
+        	    	document.getElementById('validacionEdicion').innerHTML = "La Descripción está vacía";
+                    return false;
+        	    }
+        	}           
+            var orden = $("#orden").val(); 
+            var ordenSelectOmitFromValidation = $("#ordenSelectOmitFromValidation").val(); 
+            if(orden != null){
+                if(orden == ""){ 
+                	document.getElementById('validacionEdicion').innerHTML = "El Orden está vacío";
+                    return false;
+                }else{
+                	if(isNaN(orden)){   
+                		document.getElementById('validacionEdicion').innerHTML = "Valor incorrecto para Orden";
+                	    return false;  
+                	}else{
+                		var ordenesList = [[${ordenesList}]];
+                		for(i = 0; i < ordenesList.length; i++){
+                			if(ordenesList[i]!=ordenSelectOmitFromValidation){
+                			    if(ordenesList[i]==orden){
+                				    document.getElementById('validacionEdicion').innerHTML = "Este Orden ya está en uso";
+                        	        return false; 	
+                			    }
+                			}
+                		}
+                	} 
+                } 
+            }	
+        };        
+		              
+        function realizarValidacionesCreacion(){        	
+        	var descripcion = $("#descripcionNew").val();             
+            if(descripcion != null){ 	
+        	    if(descripcion == ""){ 
+        	    	document.getElementById('validacionCreacion').innerHTML = "La Descripción está vacía";
+                    return false;
+        	    }
+        	} 
+            var orden = $("#ordenNew").val(); 
+            if(orden != null){
+                if(orden == ""){ 
+                	document.getElementById('validacionCreacion').innerHTML = "El Orden está vacío";
+                    return false;
+                }else{
+                	if(isNaN(orden)){   
+                		document.getElementById('validacionCreacion').innerHTML = "Valor incorrecto para Orden";
+                	    return false;  
+                	}else{        		
+                		var ordenesList = [[${ordenesList}]];
+                		for(i = 0; i < ordenesList.length; i++){
+                			if(ordenesList[i]==orden){
+                				document.getElementById('validacionCreacion').innerHTML = "Este Orden ya está en uso";
+                        	    return false; 	
+                			}        			
+                		}
+                	}  
+                } 
+            }
+        };	
+        /*]]>*/
+	</script>
+    
+               	  
+</body>
+    
+</html>

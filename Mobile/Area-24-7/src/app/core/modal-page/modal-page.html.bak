@@ -1,0 +1,17 @@
+<ion-header>
+    <!--<ion-title>titulo</ion-title></ion-title>-->
+    <ion-navbar>
+        <img src="data.imagenUrl" />
+        <ion-buttons end>
+            <button color="clear"><ion-icon name="" color="{{data.color}}" ></ion-icon> </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content no-lines padding>
+    <ion-item>
+        <p>
+            {{data.texto}}
+        </p>
+    </ion-item>
+</ion-content>

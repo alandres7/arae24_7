@@ -1,0 +1,29 @@
+/*avistamientos-page {
+    ion-fab button {
+        bottom: 1rem;
+        margin: 2px;
+    }
+    ion-fab-list[side=top] {
+        bottom: 0 !important;
+    }
+}*/
+
+avistamientos-page {
+    pointer-events: none;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    my-location {
+        float: right;
+        margin-right: 1em;
+        margin-bottom: 1.7em;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+    ion-fab-list[side=top] {
+        bottom: 0 !important;
+    }
+}

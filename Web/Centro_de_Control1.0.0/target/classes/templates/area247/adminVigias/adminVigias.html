@@ -1,0 +1,349 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title th:text="'' + ${title}"></title>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <div th:replace="fragments/frameMaps :: header-contend"></div>
+</head>
+
+
+    <style>    
+        .modal {
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        } 
+    </style>
+
+
+<body>
+	<div th:replace="fragments/frameMaps :: sideBar-Left-App"></div>
+
+	<section id="main-content">
+
+		<div class="row margin-reset">
+			<div class="col-xs-12 col-sm-12 col-md-6" style="padding: 0px; border: 2px solid; border-color: #71338A;">
+				<a href="#" onclick="openModal();currentSlide(1)"> 
+				    <span class="glyphicon glyphicon-resize-full" style="float: right;"></span>
+				</a>
+				<div th:replace="area247/adminVigias/pantallasVigias :: quarter-section1"></div>
+			</div>
+
+			<div class="col-xs-12 col-sm-12 col-md-6" style="padding: 0px; border: 2px solid; border-color: #71338A;">
+				<a href="#" onclick="openModal();currentSlide(2)"> 
+				    <span class="glyphicon glyphicon-resize-full" style="float: right;"></span>
+				</a>
+				<div th:replace="area247/adminVigias/pantallasVigias :: quarter-section2"></div>
+			</div>
+		</div>
+
+		<div class="row margin-reset">
+			<div class="col-xs-12 col-sm-12 col-md-6" style="padding: 0px; border: 2px solid; border-color: #71338A;">
+				<a href="#" onclick="openModal();currentSlide(3)"> 
+				    <span class="glyphicon glyphicon-resize-full" style="float: right;"></span>
+				</a>
+				<div th:replace="area247/adminVigias/pantallasVigias :: quarter-section3"></div>
+			</div>
+
+			<div class="col-xs-12 col-sm-12 col-md-6" style="padding: 0px; border: 2px solid; border-color: #71338A;">
+				<a href="#" onclick="openModal();currentSlide(4)"> 
+				    <span class="glyphicon glyphicon-resize-full" style="float: right;"></span>
+				</a>
+				<div id="mapa1" style="width: 100%; padding: 200px; height: 100%;"></div>
+				
+				<script th:inline="javascript">    
+                    var map = new google.maps.Map(document.getElementById('mapa1'), {
+                        zoom: 11,
+                        center: {lat: 6.21394, lng: -75.55897},
+                        mapTypeId: google.maps.MapTypeId.ROADMAP,
+                        disableDefaultUI: false
+                    }); 
+
+                    var ctaLayer1 = new google.maps.KmlLayer({
+                        url: [[${kmlBorder}]],
+                        map: map,
+                        suppressInfoWindows: true
+                    }); 
+                </script>
+			</div>
+		</div>
+		  						       
+	</section>
+	
+	<div th:replace="fragments/frameMaps :: ribbon-List-MensajePush"></div>
+	
+	<div th:replace="fragments/enviarMensajePush :: mensajes-push-chat"></div>
+	<div th:replace="fragments/enviarMensajePush :: modalNotificaHisto"></div>
+
+	<div th:replace="fragments/frameMaps :: header-degra"></div>
+
+	<div id="modalFourViews" class="modal">
+		<div class="modal-content center" style="width: 80%; left: 10%; top: 10%;">
+			<div class="row margin-reset">
+				<div class="col-xs-12 col-sm-12 col-md-9" style="padding: 0px; border: 2px solid; border-color: #71338A; height: 100%;">
+
+					<a href="#" onclick="closeModal()"> <span
+						class="glyphicon glyphicon-remove" style="float: right;"></span>
+					</a>
+
+					<div class="mySlides">
+						<div th:replace="area247/adminVigias/pantallasVigias :: quarter-section1" style="width: 100%"></div>
+					</div>
+
+					<div class="mySlides">
+						<div th:replace="area247/adminVigias/pantallasVigias :: quarter-section2" style="width: 100%"></div>
+					</div>
+
+					<div class="mySlides">
+						<div th:replace="area247/adminVigias/pantallasVigias :: quarter-section3" style="width: 100%"></div>
+					</div>
+
+					<div class="mySlides" style="height: 100%;">
+						<div id="mapa2" style="width: 100%; padding: 300px; height: 100%;"></div>												
+					</div>
+
+				</div>
+
+				<div class="col-xs-12 col-sm-12 col-md-3" style="padding: 0px; border: 2px solid; border-color: #71338A;">
+
+					<div id="demoSmall1" class="row margin-reset" onclick="currentSlide(1)" style="border: 2px solid; border-color: #71338A; font-size: 0.8vw; font-size: 0.8vh;">
+						<div class="demo cursor" th:replace="area247/adminVigias/pantallasVigias :: quarter-section1"></div>
+					</div>
+
+					<div id="demoSmall2" class="row margin-reset" onclick="currentSlide(2)" style="border: 2px solid; border-color: #71338A; font-size: 0.8vw; font-size: 0.8vh;">
+						<div class="demo cursor" th:replace="area247/adminVigias/pantallasVigias :: quarter-section2"></div>
+					</div>
+
+					<div id="demoSmall3" class="row margin-reset" onclick="currentSlide(3)" style="border: 2px solid; border-color: #71338A; font-size: 0.8vw; font-size: 0.8vh;">
+						<div class="demo cursor" th:replace="area247/adminVigias/pantallasVigias :: quarter-section3"></div>
+					</div>
+
+					<div id="demoSmall4" class="row margin-reset" onclick="currentSlide(4)" style="border: 2px solid; border-color: #71338A;">
+						<div id="mapa3" style="width: 100%; padding: 100px; height: 100%;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    
+    
+	<script>  
+        /*<![CDATA[*/
+        function openModal() {
+            document.getElementById('modalFourViews').style.display = "block";
+        }
+        
+        function closeModal() {
+            document.getElementById('modalFourViews').style.display = "none";
+        }
+        
+        var slideIndex = 1;
+        showSlides(slideIndex);
+        
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+        
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+        
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("demo");
+                                          
+            var captionText = document.getElementById("caption");
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}               
+            
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            } 
+
+            for (i = 1; i <= 4; i++) {
+                if(i==slideIndex){
+                    document.getElementById('demoSmall'+i).style.display = "none";
+                }else{
+                	document.getElementById('demoSmall'+i).style.display = "block";
+                }
+            } 
+                                               
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace("active", "");
+            }
+                                        
+            slides[slideIndex-1].style.display = "block"; 
+            
+            if(slideIndex==4){
+        		initMap('mapa2');   
+        	}else{
+        		initMap('mapa3'); 
+        	}	             
+        }
+        /*]]>*/
+    </script>
+       
+    <div th:replace="area247/adminVigias/pantallasVigias :: print_coordenadas"></div>
+    
+    <script th:inline="javascript">   
+       
+        function initMap(idmapa){
+        	
+            var map = new google.maps.Map(document.getElementById(''+idmapa), {
+                zoom: 11,
+                center: {lat: 6.21394, lng: -75.55897},
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                disableDefaultUI: false
+            });
+
+            var ctaLayer1 = new google.maps.KmlLayer({
+                url: [[${kmlBorder}]],
+                map: map,
+                suppressInfoWindows: true
+            }); 
+                                
+            $('#modalFourViews').on('shown.bs.modal', function (){
+                google.maps.event.trigger(map, "resize");
+            });   
+            
+        	
+        	/*<![CDATA[*/  
+    	    var marcadorList = [[${listaMarcadores}]];
+			
+    	    for(j = 0; j < marcadorList.length; j++){
+                   
+    	    	var contentString = ''+
+    	           '<div style = "text-align: center;font-family: \'Roboto\', sans-serif; max-heigth:180px;max-width:150px;overflow: hidden">' +	
+    			       '<div class="img">' +
+    			           '<img src = "' + marcadorList[j].ventanaInformacion.rutaImagen + '" style ="max-width: 150px;max-heigth:150px;padding-top:5px">' +
+    			           '<span>' +
+    					       '<p align="left" style= "font-size: 10px">' + marcadorList[j].ventanaInformacion.nombre + '</p>' +
+    				       '</span>' +
+    			       '</div>' +			
+                          '<p align="left" style= "color:#696b69;max-width:150px;font-size: 9px">' + marcadorList[j].ventanaInformacion.descripcion + '</p>' +						
+    		       '</div>';
+    
+    		   	var image = {
+    			    url: marcadorList[j].icono.rutaLogo,
+    			    size: new google.maps.Size(135,135),
+    			    scaledSize: new google.maps.Size(35,35),
+    		    	origin: new google.maps.Point(0,0),			    	    
+    		    	anchor: new google.maps.Point(16,16)
+    			};  
+                   
+    		   	var coordenadaList = marcadorList[j].coordenadas	    		   		    		   	
+    		   	
+    		   	//var colorBorde = rgbToHex(marcadorList[j].colorBorde)
+    		   	var colorBorde = "#0f7016"
+    		   	//var colorFondo = rgbToHex(marcadorList[j].colorFondo)
+    		   	var colorFondo = "#9FC418"	    		   	
+    	    	
+    		   	for(k = 0; k < coordenadaList.length; k++){	
+    		    		    		   		
+    		   		if(!coordenadaList[k].coordenadaPunto2.isEmpty){
+    		   			var marker = new google.maps.Marker({
+	    		               position: {lat: Number(coordenadaList[k].coordenadaPunto2.latitud), lng: Number(coordenadaList[k].coordenadaPunto2.longitud)},
+	    		               map: map,
+	    		               icon: image
+	    		           }); 
+	    		   		addInfoWindow(marker, contentString);		    		   		
+    		   		}
+    		   		if(!coordenadaList[k].coordenadaPolygon2.isEmpty){
+                    	var cordPolygon = coordenadaList[k].coordenadaPolygon2
+    		   		    var coordPoligono = [];
+    		   		    for(l = 0; l < cordPolygon.length; l++){
+    		   		    	var cord = cordPolygon[l]	
+    		   		    	coordPoligono.push({'lat': Number(cord.latitud), 'lng': Number(cord.longitud)});
+    		   		    }	   			   		    
+    		   		    var poligono = new google.maps.Polygon({
+	    		   	    	paths: coordPoligono,
+                            strokeColor: colorBorde,
+                            strokeOpacity: 0.8,
+                            strokeWeight: 1.5,
+                            fillColor: colorFondo,
+                            fillOpacity: 0.35
+                        });
+                        poligono.setMap(map);	  	    	
+                    }			    				            
+    			}	
+    		}   	
+    
+    		function addInfoWindow(marker, message){
+                var infoWindow = new google.maps.InfoWindow({
+                	pixelOffset: new google.maps.Size(-52,20),
+                    content: message	                
+                });
+                google.maps.event.addListener(marker, 'click', function (){	            	
+                    infoWindow.open(map, marker);
+                    infowindow.close();
+                });
+            } 
+    		
+    		function rgbToHex(colorRGB) {
+    			var cor = colorRGB.slice(1,(colorRGB.length-1));
+    			var colorHex = cor.split(",");	    		    
+    		    return "#" + ((1 << 24) + (colorHex[0] << 16) + (colorHex[1] << 8) + colorHex[2]).toString(16).slice(1);
+    		}  
+    		/*]]>*/	
+        }       
+    </script>
+    
+    
+    <script th:inline="javascript"> 
+        /*<![CDATA[*/           
+        $('table.paginated').each(function() {
+            var currentPage = 0;
+            var numPerPage = 10;
+            var $table = $(this);
+            $table.bind('repaginate', function() {
+                $table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+            });
+            $table.trigger('repaginate');
+            var numRows = $table.find('tbody tr').length;
+            var numPages = Math.ceil(numRows / numPerPage);
+            var $pager = $('<div class="pager"></div>');
+            for (var page = 0; page < numPages; page++) {
+                $('<span class="page-number"></span>').text(page + 1).bind('click', {
+                    newPage: page
+                }, function(event) {
+                    currentPage = event.data['newPage'];
+                    $table.trigger('repaginate');
+                    $(this).addClass('active').siblings().removeClass('active');
+                }).appendTo($pager).addClass('clickable');
+            }
+            $pager.insertBefore($table).find('span.page-number:first').addClass('active');
+        }); 
+        /*]]>*/
+    </script>   
+       
+    <style> 
+        div.pager {
+            text-align: center;
+            margin: 1em 0;
+        }        
+        div.pager span {
+            display: inline-block;
+            width: 1.8em;
+            height: 1.8em;
+            line-height: 1.8;
+            text-align: center;
+            cursor: pointer;
+            background: #B2B2B2;
+            color: #FFFFFF;
+            margin-right: 0.5em;
+        }        
+        div.pager span.active {
+            background: #569837;
+        }
+    </style>  	    
+    
+    
+      
+</body>
+</html>

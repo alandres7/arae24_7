@@ -1,0 +1,198 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head lang="en">	
+    <title th:text="'' + ${title}"></title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+       
+	<div th:replace="fragments/frameMaps :: header-contend"></div> 
+	   		
+</head>
+		
+	<style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }   
+        .contenido {
+            position: relative;           
+            margin: auto;
+            top: 10%;
+            width: 70%;
+        }	
+	</style>
+	    
+<body >
+   	<div th:replace="fragments/frameMaps :: header-degra"></div> 
+   	
+   	<div th:replace="fragments/frameMaps :: sideBar-Left-App"></div> 
+ 	
+	<section id="main-content" >
+
+		<div id="mapa" style="height: 100%"></div>
+
+		<div th:replace="fragments/frameMaps :: ribbon-List"></div>
+
+		<div th:replace="fragments/frameMaps :: notification-List"></div>
+
+		<div th:replace="fragments/enviarMensajePush :: mensajes-push-chat"></div>
+		<div th:replace="fragments/enviarMensajePush :: modalNotificaHisto"></div>
+				
+		<div id="modalCargarInfo" class="modal" th:style="'display: block'">    
+	        <div class="contenido" >		      
+	          
+	            <button onclick="closeModalCargarInfo()" class="btn btn-default" style="background-color: #FB0101; float: right;">
+                    <span class="glyphicon glyphicon-remove" style="float: right; color: #FFFFFF;"></span> 
+                </button>
+				
+	            <h1 style="background-color: #9FC418; color:#FFFFFF; width:460px;">Carga de archivos</h1>
+	        		        			        	
+	        	<div style="border: 25px solid; border-color: transparent; background-color: rgba(0,0,0,0.8);">
+	        	     
+                    <form id="carga-archivo-form" action="/cargarInfo/form" th:object="${cargaArchivoModel}" th:method="post" enctype="multipart/form-data"
+                    		style="width:100%; background-color: #E8E8E8; float: center; display: block;" >         							  			
+                       
+					    <div class="row margin-reset"> 
+                            <ul class="nav nav-tabs">
+                            
+                                <li data-toggle="tooltip" title="Cargar">
+                                    <button class="btn btn-default" style="background-color: #9FC418;" type="submit" name="action" value="cargar">
+                                        <span style="color: #FFFFFF;" class="glyphicon glyphicon-cloud-upload"></span>
+                                    </button>
+                                </li>
+                                
+                                <li data-toggle="tooltip" title="Descargar log">
+                                    <button class="btn btn-default" style="background-color: #00BFFF;" type="submit" name="log" value="log">
+                                        <span style="color: #FFFFFF;" class="glyphicon glyphicon-download-alt"></span>
+                                    </button>
+                                </li> 	
+                                																	
+                            </ul> 						
+					    </div>
+					    
+					    <br/>
+						
+						<div class="row margin-reset">  
+						    <div class="col-xs-12 col-sm-12 col-md-12">					   
+					            <div class="row margin-reset"> 
+									<div class="col-xs-12 col-sm-12 col-md-2">
+									    <p style="color:#9FC418;">Archivo</p>
+					                </div>
+									<div class="col-xs-12 col-sm-12 col-md-6">
+									    <div class="file-loading" style="width:50%;">
+									        <input id="uploadBtn" th:field="*{archivo}" type="file" class="upload" />
+									    </div> 	    
+					                </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-2">
+										<p style="color: #9FC418;">Tipo</p>
+									</div>
+									<div class="col-xs-12 col-sm-12 col-md-2">
+       									<select th:field="*{tipoArchivo.id}">
+       									    <option th:each="tipoArchivo : ${tipoArchivoList}" th:value="${tipoArchivo.id}" th:text="${tipoArchivo.nombre}"> </option>
+       									</select>																	
+									</div>									
+					            </div>
+                            </div>
+					    </div>
+					    
+					    <br/>
+					    <div th:substituteby="layouts/tags/util/messages :: messages" th:remove="tag" style="text-align:center; color: #FB0101">MESSAGES</div>
+					    
+	       				<div th:if="${erroresCarga}">
+	       						<table class="table  table-bordered table-striped" style="width:100%; background-color: #E8E8E8;">
+	       							<thead>
+	       								<tr>
+	       									<th>Fila</th>
+	       									<th>Errores</th>
+	       								</tr>
+	       							</thead>
+	       							<tbody>
+	       								<tr th:each="lineaError : ${erroresCarga}">
+	       									<td th:text="${lineaError.linea}"></td>
+	       									<td>
+	       											<table class="table  table-bordered table-striped" style="width:100%; background-color: #E8E8E8;">
+	       											<thead>
+	       												<tr>
+	       													<th>Columna</th>
+	       													<th>Nombre columna</th>
+	       													<th>Valor</th>	       														       													
+	       													<th>Error</th>
+															<th>Id</th>       													
+	       												</tr>
+	       											</thead>								                   	
+	       											<tbody>
+	       												<tr th:each="error : ${lineaError.erroresLinea}">
+	       													<td th:text="${error.posicion}"></td> 
+	       													<td th:text="${error.nombre}"></td>
+	       													<td th:text="${error.valor}"></td>	       														       													      												
+	       													<td th:text="${error.mensajeError}"></td>												
+	       													<td th:text="${lineaError.id}"></td>       													
+	       												</tr>											
+	       											</tbody>
+	       										</table>
+	       									</td>
+	       								</tr>	
+	       							</tbody>
+	       	                   	</table>
+	       				</div>	
+					    				    				
+                    </form> 
+					
+                    <br/>
+                          
+                    <h2 style="text-align:left; color: #FFFFFF;">Lista de archivos</h2>
+      	        	  
+               	    <table class="table  table-bordered table-striped" style="width:100%; background-color: #E8E8E8;">
+               	        <thead>
+               	            <tr>                                   
+                                <th>Fecha</th>
+                                <th>Tipo</th> 
+                            </tr>
+                        </thead>                          
+                        <tbody>                   
+                            <tr th:each="archivo : ${archivosList}">
+  								<td th:text="${#dates.format(archivo.fecha, 'dd/MM/yyyy hh:mm:ss a')}"></td>
+  								<td th:text="${archivo.formatoCarga.nombre}"></td>                                
+                            </tr>                                                                                                     
+                        </tbody>
+                    </table>   
+						
+                </div>
+               
+            </div>       
+        </div>  
+                          				
+    </section>
+
+    <div th:replace="fragments/printMap :: printMap"></div>	
+ 
+    <script th:inline="javascript">  
+    
+        function openModalCargarInfo() {
+            document.getElementById('modalCargarInfo').style.display = "block";
+        }  
+    
+        function closeModalCargarInfo() {
+            document.getElementById('modalCargarInfo').style.display = "none";
+        }
+                
+        $(document).on('ready', function() {
+            $("#uploadBtn").fileinput({
+                browseClass: "btn-sm btn-primary btn-block",
+                showCaption: false,
+                showRemove: false,
+                showUpload: false
+            });
+        });       
+    </script>
+ 
+</body>
+    
+</html>

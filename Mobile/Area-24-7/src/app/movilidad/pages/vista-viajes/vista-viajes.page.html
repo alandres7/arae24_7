@@ -1,0 +1,105 @@
+<ion-header>
+    <barra-navegabilidad [titulo]="titulo"></barra-navegabilidad>
+</ion-header>barra-navegabilidad>
+
+<ion-content mapa>
+    <div contenido-mapa>
+        <ion-card>
+            <ion-card-content style="margin-top: 10px" class="cardViajes">
+                <ion-grid *ngIf="alternativaViaje">
+                    <ion-row>
+                        <ion-col col-12>
+                            <p class="mensajeInfo">No fue posible el cálculo de posibilidades de viajes teniendo en cuenta únicamente los modos de transporte establecidos, sin embargo se sugieren las siguientes posibilidades de viaje:</p>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+                <ion-list>
+
+                    <ion-item (click)="mostrarModalDetalleViaje( mejorTiempo, 2 )" *ngIf="flagShowBestTime">
+                    <ion-thumbnail item-start>
+                            <div class="divFondo">
+                                <ion-grid>
+                                    <ion-row>
+                                        <img class="iconsInc" src="assets/movilidad/iconos/tiempo.png">
+                                    </ion-row>
+                                    <ion-row>
+                                        <label class="labelInfoCu">{{ mejorTiempo.duracion }}</label>
+                                    </ion-row>
+                                </ion-grid>
+                            </div>
+                        </ion-thumbnail>
+                        <ion-grid class="gridViaje">
+                            <ion-row class="rowViaje">
+                                    <ion-col col-11>
+                                            <ion-slides [slidesPerView]="4" class="slidesViaje">
+                                                <ion-slide *ngFor="let item of mejorTiempo.pasos">
+                                                    <img [style.borderBottomWidth]="'5px'" [style.borderBottomStyle]="item.mode=='WALK'?'dotted':'solid'"
+                                                        [style.borderBottomColor]="gmapsMovildiad.obtenerTransporte(item.mode).color"
+                                                        class="iconsViajes" src="{{gmapsMovildiad.obtenerTransporte(item.mode).imagen}}">
+                                                </ion-slide>
+                                            </ion-slides>
+                                        </ion-col>
+        
+                                        <ion-col col-1 style="margin-top: 8px;">
+                                            <img class="iconDbFlecha" src="assets/movilidad/iconos/flechaDoble.png">
+                                        </ion-col>
+                            </ion-row>
+                            <ion-row class="rowTexdown">
+                                <ion-col col-auto>
+                                    <p class="labelParr">
+                                        <!--Sale desde Av. El Poblado, Cll 7 Sur. 10:10 - 10:58-->
+                                        Sale desde {{ origen.descripcion }} Hasta {{ destino.descripcion }}
+                                    </p>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </ion-item>
+
+                    <ion-item (click)="mostrarModalDetalleViaje( mejordistancia, 1 )" *ngIf="flagShowBestDistance">
+
+                        <ion-thumbnail item-start>
+                            <div class="divFondo">
+                                <ion-grid>
+                                    <ion-row>
+                                        <img class="iconsInc" src="assets/movilidad/iconos/distancia.png">
+                                    </ion-row>
+                                    <ion-row>
+                                        <label class="labelInfoCu">{{ mejordistancia.distancia }} km</label>
+                                    </ion-row>
+                                </ion-grid>
+                            </div>
+                        </ion-thumbnail>
+                        <ion-grid>
+                            <ion-row class="rowViaje">
+
+                                <ion-col col-11>
+                                    <ion-slides [slidesPerView]="4" class="slidesViaje">
+                                        <ion-slide *ngFor="let item of mejordistancia.pasos">
+                                            <img style="padding-bottom: 5px;" [style.borderBottomWidth]="'5px'" [style.borderBottomStyle]="item.mode=='WALK'?'dotted':'solid'" [style.borderBottomColor]="gmapsMovildiad.obtenerTransporte(item.mode).color" class="iconsViajes" src="{{gmapsMovildiad.obtenerTransporte(item.mode).imagen}}">
+                                        </ion-slide>
+                                    </ion-slides>
+                                </ion-col>
+
+                                <ion-col col-1 style="margin-top: 8px;">
+                                    <img class="iconDbFlecha" src="assets/movilidad/iconos/flechaDoble.png">
+                                </ion-col>
+
+                            </ion-row>
+
+                            <ion-row class="rowTexdown">
+                                <ion-col col-auto>
+                                    <p class="labelParr">
+                                        Sale desde {{ origen.descripcion }} Hasta {{ destino.descripcion }}
+                                    </p>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </ion-item>
+
+                    <chekbox-modos-trasnportes (onResponseViajesSugeridos)="onResponseViajesSugeridos($event)" [ubicacionOrigen]="ubicacionOrigen" [ubicacionDestino]="ubicacionDestino"></chekbox-modos-trasnportes>
+                </ion-list>
+            </ion-card-content>
+        </ion-card>
+
+    </div>
+</ion-content>

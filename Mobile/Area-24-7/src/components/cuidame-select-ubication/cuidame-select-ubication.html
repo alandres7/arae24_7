@@ -1,0 +1,45 @@
+<ion-header [ngStyle]="{'background': color}">
+  <ion-navbar>
+    <ion-buttons left>
+      <button ion-button icon-only (click)="closeModal()" style="color:white">
+        <ion-icon name="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Seleccionar ubicación</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <div class="searchBar">
+    <ion-item (click)="selectLocationFromMap()">
+      <ion-icon name="search" item-start></ion-icon>
+      <p *ngIf="!address.direction">Buscar dirección...</p>
+      <p *ngIf="address.direction">{{address.direction}}</p>
+    </ion-item>
+  </div>
+  <h4 class="lineTop" [ngStyle]="{'color': color}">Sugerencias</h4>
+  <p>Encontramos cerca a tu ubicación estos reportes, puedes comentarlos o generar uno nuevo.</p>
+
+  <ion-list no-lines>
+    <ion-item *ngFor="let report of reports| slice:0:currentPage" (click)="viewReport(report)">
+      <ion-grid>
+        <ion-row class="noPadding">
+          <ion-col col-1>
+            <img [src]="report.rutaIcono" alt="" style="width: 40px">
+          </ion-col>
+          <ion-col col-11 text-wrap>
+            <h5 [ngStyle]="{'color': color}">{{report.titulo}}</h5>
+            <p>{{report.subtitulo}}</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+  <ion-spinner style="left: 14rem;" *ngIf="loading == true"></ion-spinner>
+  <ion-label text-wrap no-margin class="reports" [ngStyle]="{'text-decoration-color':color}" *ngIf="showMore == true">
+    <strong [ngStyle]="{'color': color}" (click)="viewMore()">Ver mas reportes</strong>
+  </ion-label>
+  <!-- <button (click)="viewMore()" *ngIf="showMore == true" [ngStyle]="{'background-color': color}" ion-button>
+      Ver mas reportes
+    </button>   -->
+  <button [ngStyle]="{'background-color': color}" full ion-button (click)="generateReport()">Generar reporte</button>
+</ion-content>

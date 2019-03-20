@@ -1,0 +1,75 @@
+import { Component, OnChanges, OnInit, Input } from '@angular/core';
+import { Response } from '@angular/http';
+
+import { Layer } from '../../entities/layer';
+
+import { LayerProvider } from '../../providers/layer/layer';
+
+const LayerLevels = {
+    Layer: 'CAPA'
+  , Category: 'CATEGORIA'
+};
+
+@Component({
+    selector: 'layer-manager',
+    templateUrl: 'layer-manager.html'
+})
+
+export class LayerManagerComponent implements OnChanges, OnInit {
+
+    @Input() layerLevel: string;
+    @Input() layerId: number;
+
+    private layers: Layer[];
+    private currentLayerLevel: string;
+
+    constructor(private layerProvider: LayerProvider) {
+
+    }
+
+    ngOnChanges(): void {
+       
+    }
+
+    ngOnInit(): void {
+        this.loadLayers(this.layerLevel, this.layerId);
+        this.currentLayerLevel = this.layerLevel;
+    }
+
+    loadLayers(layerLevel: string, id: number): void {
+        this.layerProvider.getNLayer(layerLevel, id).subscribe(
+            (response: Response) => {
+                console.log('getNLayer ' + JSON.stringify(response));
+                this.layers = Layer.parse(response.json(), layerLevel);
+                this.layers.unshift(this.getBackLayer(layerLevel));
+            },
+            (error) => console.log('getNLayer error ' + JSON.stringify(error))
+        );
+    }
+
+    onTapLayer(layer: Layer): void {
+        if (layer.layerType == 'BACK') {
+            if (layer.layerLevel == 'CATEGORIA') {
+                this.loadLayers('CAPA', layer.id);
+                this.currentLayerLevel = 'CAPA';
+            }
+            else {
+                //load apps menu
+            }
+        }
+        else {
+            this.loadLayers('CATEGORIA', layer.id);
+            this.currentLayerLevel = 'CATEGORIA';
+        }
+    }
+    
+    getBackLayer(layerLevel: string): Layer {
+        let layer: Layer = new Layer();
+        layer.id = this.layerId;
+        layer.layerLevel = layerLevel;
+        layer.name = 'Atrás';
+        layer.idIconLayer = 0;
+        layer.layerType = 'BACK';
+        return layer;
+    }
+}

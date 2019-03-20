@@ -1,0 +1,77 @@
+story-detail {
+    .card-md,
+    .card-ios {
+        border-radius: 0px;
+        font-size: 1.4rem;
+        background-color: #efefef;
+        box-shadow: none;
+        padding: 5px;
+        .label.label {
+            margin: 0;
+            text-align: right;
+        }
+        small {
+            color: map-get($colors, gray);
+            padding: 0;
+        }
+        hr {
+            width: 95%;
+            margin: 0 auto;
+        }
+        p {
+            padding: 5px;
+            font-size: 1.4rem;
+            span {
+                text-transform: lowercase;
+                font-size: 1.2rem;
+                display: inline-block;
+            }
+            span:first-child {
+                font-size: 1.4rem;
+                font-weight: bold;
+            }
+            span:first-letter {
+                text-transform: uppercase;
+            }
+        }
+        .span {
+            display: block;
+        }
+        .social-button {
+            font-size: 2rem;
+            vertical-align: middle;
+        }
+        ion-grid {
+            .row:first-child {
+                .col:first-child {
+                    span:first-child {
+                        font-weight: bold;
+                    }
+                    small {
+                        display: block;
+                    }
+                }
+            }
+            .row:last-child {
+                .col:last-child {
+                    text-align: right;
+                    padding: 0;
+                }
+            }
+        }
+        [col-4] {
+            .label.label {
+                text-align: left;
+            }
+        }
+    }
+    .toolbar-background {
+        background: inherit;
+    }
+    .toolbar-title {
+        color: map-get($colors, light);
+    }
+    .bar-button {
+        color: map-get($colors, light);
+    }
+}

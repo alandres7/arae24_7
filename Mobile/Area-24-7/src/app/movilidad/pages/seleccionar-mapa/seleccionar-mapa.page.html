@@ -1,0 +1,21 @@
+<ion-header>
+        <menu-modal [titulo]="titulo" [viewCtrl]="viewCtrl"></menu-modal>
+    </ion-header>
+
+<ion-content mapa>
+    <div contenido-mapa>
+        <div #contenedor id="contenedor-buscar-ubicacion-mapa" style="height: 100%; width: 100%;">
+            <div class="over_map_center">
+                <!-- <button  ion-button class="btnSelect"> <ion-icon  item-right><img src="assets/movilidad/iconos/marcadorMap.png" style="width:10px; float: left;
+            margin-right: 5px;" ></ion-icon>Guardar la ubicación seleccionada</button> -->
+            </div>
+        </div>
+    </div>
+
+     <!-- Boton -->
+     <div class="btn-buscar">
+        <button ion-fab mini right (click)="clickAceptar()">
+            <ion-icon name="checkmark"></ion-icon>
+        </button>
+    </div>
+</ion-content>

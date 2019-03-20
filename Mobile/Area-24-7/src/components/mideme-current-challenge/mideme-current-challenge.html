@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar [ngStyle]="{'background': color}">
+      <ion-title>RETO ACTUAL</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="center">
+  <div>
+    <p>Te mostramos al detalle el reto que estás cumpliendo, puedes cancelarlo desde acá o en el listado anterior dando click al botón cancelar.</p>
+  </div>
+  <br>
+
+  <div>
+    <h1>Personal</h1>
+    <p>Descripción reto.</p>
+  </div>
+  <div class="wrap">
+    <div [ngClass]="progressdias" class="progress-radial">
+      <div class="overlay"></div>
+    </div>
+    <h1 class="dcolor" [ngStyle]="{'color': color, 'border-bottom-color': color}">Día {{dias}} de 21</h1>
+  </div>
+  <div class="inline">
+    <h1 class="green">Cumplido<br/><span>7 días</span></h1>
+    <h1 class="red">No cumplido<br/><span>10 días</span></h1>
+  </div>
+  <div>
+  <button ion-button (click)="cancelChallenge()">Cancelar reto</button>
+  </div>
+</ion-content>

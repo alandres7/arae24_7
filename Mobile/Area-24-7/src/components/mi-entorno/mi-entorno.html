@@ -1,0 +1,8 @@
+<!-- <ion-fab (click)="mostrarClima()" center middle width="100px" style="width: 50px; height: 50px; background: #C43444;" ></ion-fab> -->
+<layer-manager [app]="app"></layer-manager>
+
+<my-location [color]="app.color" 
+             [actionRadius]="app.radius"
+             (clickPedestrian)="onClickPedestrian($event)" 
+             (clickMyLocationButton)="onClickMyLocationButton($event)" 
+             (dragendPedestrian)="onDragendPedestrian($event)"></my-location>

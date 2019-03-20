@@ -1,0 +1,1134 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head></head>
+
+
+<body>
+
+
+	<div th:fragment="quarter-section1-view">
+		<div class="ribbon-quarter-tittle" align="center"
+			th:style="'width:50%; position: relative; background-color: ' + ${colorApp} + ';'">
+			<a href="#"> <span
+				style="color: #FFFFFF; font-size: 1.7vh; font-size: 1.7vw">Notificaciones</span>
+			</a>
+		</div>
+		<br/>
+		<div class="col-md-12">
+			<strong style="color: #9FC418;">Filtrar por fecha</strong>
+		</div>
+			
+		<div class="row margin-reset" >
+			<div class="col-xs-5 col-sm-5 col-md-1 lblFecha">
+				<p style="color: #9FC418;">Desde</p>
+			</div>
+			<div class="col-xs-5 col-sm-5 col-md-4" style="padding: 0px 0px 0px 20px;">
+				<input type="date" id="fechaIni1" name="fechaIni1" class="form-control fechas1" th:value="${fechaIni}"></input>
+			</div>
+			<div class="col-xs-5 col-sm-5 col-md-1 lblFecha">
+				<p style="color: #9FC418;">Hasta</p>
+			</div>
+			<div class="col-xs-5 col-sm-5 col-md-4" style="padding: 0px 0px 0px 20px;">
+				<input type="date" id="fechaFin1" name="fechaFin1" class="form-control fechas1" th:value="${fechaFin}"></input>
+			</div>
+			<div class="col-xs-1 col-sm-1 col-md-1" style="height:34px">
+				<input type="checkbox" id="fechaTodos1" name="fechaTodos1" value="true" onclick="comentarFechas1(this)" style="height: 34px;margin: 0px;"></input>
+			</div>
+			<div class="col-xs-1 col-sm-1 col-md-1 lblFecha" style="margin-left: -15px;padding-left: 0px;">
+				<p style="color: #9FC418;">Todos</p>
+			</div>
+		</div>
+		<div class="col-md-12" style="margin-top:5px">
+			<strong style="color: #9FC418;">Filtrar por estado</strong>
+		</div>
+		<div class="row margin-reset">
+			<div class="col-xs-12 col-sm-12 col-md-12"
+				style="overflow-x: auto; overflow-y: auto;height: 3.4vw">
+				<div class="row margin-reset">
+				
+					<div class="col-xs-4 col-sm-4 col-md-4" style="float: right;">
+						<div class="row rowStatus" style="background-color: #559839;">
+							<div class="col-xs-2 col-sm-2 col-md-2 col-md-offset-1 chkStatus">
+								<input type="checkbox" id="checkApr1" name="checkApr1" value="true" checked="true"></input>
+							</div>
+							<div class="col-xs-8x col-sm-8 col-md-8 status">
+								<p>Aprobadas</p>
+							</div>
+						</div>
+						<div class="numCircle">
+							<p id="numApr1"  th:text="${numApr}" style="color: #559839;"></p>
+						</div>
+					</div>
+					
+					<div class="col-xs-4 col-sm-4 col-md-4" style="float: right;">
+						<div class="row rowStatus" style="background-color: #B2B2B2;">
+							<div class="col-xs-2 col-sm-2 col-md-2 col-md-offset-1 chkStatus">
+								<input type="checkbox" id="checkPen1" name="checkPen1" value="true" checked="true"></input>
+							</div>
+							<div class="col-xs-8x col-sm-8 col-md-8 status">
+								<p>Pendientes</p>
+							</div>
+						</div>
+						<div class="numCircle">
+							<p id="numPen1" style="color: #B2B2B2;" th:text="${numPen}"></p>
+						</div>
+					</div>
+					
+					<div class="col-xs-4 col-sm-4 col-md-4" style="float: right;">
+						<div class="row rowStatus" style="background-color: #B22D2C;">
+							<div class="col-xs-2 col-sm-2 col-md-2 col-md-offset-1 chkStatus">
+								<input type="checkbox" id="checkRec1" name="checkRec1" value="true" checked="true"></input>
+							</div>
+							<div class="col-xs-6 col-sm-6 col-md-6 status">
+								<p>Rechazadas</p>
+							</div>
+						</div>
+						<div class="numCircle">
+							<p id="numRec1" style="color: #B22D2C" th:text="${numRec}"></p>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<strong style="color: #9FC418;">Filtrar por pendientes</strong>
+		</div>
+		<div class="row margin-reset">
+			<div class="col-xs-1 col-sm-1 col-md-1">
+			    <input type="checkbox" id="soloComHis1" name="soloComHis1" value="true"></input>
+			</div>
+			<div class="col-xs-5 col-sm-5 col-md-5" style="padding-left: 0px;">
+			    <p style="color: #000000;">Comentarios</p>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-6">			    
+			</div>
+		</div>
+		<p id="validacionFechas" style="text-align: center; color: #FB0101"></p>
+
+		<div class="row margin-reset">
+		 	<input type="hidden" id="pestana1" th:value="${idCapaSel}+'-0'"></input>
+			<a id="botonFiltrar1" class="btn btnAplicarFiltro" onclick="presionarBotonFiltar1()">
+				<span style="color: #FFFFFF;">Aplicar Filtro</span>
+			</a>
+		</div>
+
+		<div class="row margin-reset">
+			<div class="col-xs-12 col-sm-12 col-md-12"
+				style="overflow-x: auto; overflow-y: auto;">
+
+				<style>
+				/*.sub-menu:hover .dropdown-menu {
+					display: block;
+					background-color: #9FC418;
+				}*/
+				
+				@media screen and (min-width: 2000px) {
+				  p {
+				     font-size: 20px;
+				  }
+				}
+				.numCircle{
+					background-color: white;
+					border-radius: 50%;
+					border-style: solid;
+					right:-5px;
+					top: calc(1.6vw - 1.6vw);
+					position:absolute;
+					display: flex;
+					justify-content: center;
+					width: 3.2vw;
+					height: 3.2vw;
+					padding-top: 0.8vw;
+				}
+				.numCircle p {
+					font-size: 0.9vw;
+				}
+				.status{
+					margin-left:-20px;
+					height: 1.6vw;
+				}
+				.status p {
+					color: #FFFFFF;
+					height: 1.6vw;
+					margin:0px;
+					margin-left: -5px;
+				}
+				.rowStatus{
+					border-radius: 0px 50px 50px 0px; 
+					margin-top:calc(1.6vw - 0.8vw);
+					height:1.6vw;
+				}
+				.rowStatus .chkStatus{
+					padding:0px	
+				}
+				.rowStatus .chkStatus input {
+					height: 1.6vw;
+					margin:0px;
+					position: absolute;
+				}
+				.lblFecha{
+				    margin-top: calc(17px - 0.7vw);
+				    height: 1.5vw;
+				}
+				.btnAplicarFiltro{
+					background-color: #9FC418;
+				    float: right;
+				    margin-right: 5vw;
+				    font-size: 1.2vw;
+				}
+				</style>
+				
+				<ul class="nav nav-tabs">
+					<li class="sub-menu" th:each="capaNavTab : ${capasNavTabs}"
+							th:style="${capaNavTab.id == idCapaSel} ? 'background-color:'+${colorApp}+'' : 'background-color: #9FC418'">
+						<a href="#" data-toggle="dropdown" class="menuNaveVigia1"
+								th:id="${capaNavTab.id} + '-0'"> 
+							<span style="color: #FFFFFF;" th:text="${capaNavTab.nombre}"></span>
+						</a>
+					</li>
+				</ul>
+
+				<script th:inline="javascript"> 
+                        /*<![CDATA[*/ 					    					
+                        $('.menuNaveVigia1').off().click(function() {                       	
+                            var idComplete = $(this).attr('id'); 
+                            refrescarVistaTablaVigias1(idComplete); 
+                        });
+						
+						function presionarBotonFiltar1(){
+						    var idComplete = $('#pestana1').val();						    
+						    refrescarVistaTablaVigias1(idComplete);
+						};
+						
+						function refrescarVistaTablaVigias1(idComplete) {
+						    $('#pestana1').val(idComplete);
+							$('#pestana2').val(idComplete);
+                            var listaIds = idComplete.split("-");
+                                                                                   
+                            var idCapa = listaIds[0];
+                            var idCategoria = listaIds[1];
+							
+							var fechaIni = $('#fechaIni1').val(); 
+                            var fechaFin = $('#fechaFin1').val();
+						    
+						    if ((document.getElementById('fechaTodos1')).checked == true){
+                                fechaIni = "2000-01-01";
+                                fechaFin = [[${fechaFin}]];
+                            }
+						    
+						    var idApp = [[${idApp}]];                        	
+                    	    var colorApp = [[${colorApp}]];
+                    	    var numColorApp = [[${numColorApp}]];
+						    
+						    var checkApr = (document.getElementById('checkApr1')).checked;
+                            var checkPen = (document.getElementById('checkPen1')).checked;
+                            var checkRec = (document.getElementById('checkRec1')).checked;
+						    var estadosList = crearStringEstadosVigia(checkApr,checkPen,checkRec);	
+						    
+						    var soloComHis = (document.getElementById('soloComHis1')).checked;
+						    var conComenDeHis = (document.getElementById('conComenDeHis1')).checked;
+							
+							pintarTablaVigias(idComplete,idCapa,idCategoria,fechaIni,fechaFin,
+									                 estadosList,soloComHis,conComenDeHis,idApp,colorApp,numColorApp);
+							
+                        };
+
+                        function comentarFechas1(checkbox) {
+                            if (checkbox.checked) {
+                                $('.fechas1').attr("readonly",true);
+                            }else {
+                                $('.fechas1').attr("readonly",false);
+                            }
+                        }
+                        
+						/*]]>*/	
+                    </script>
+				<div th:replace="area247/adminVigias/pantallasVigias :: tableVigias"></div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<div th:fragment="quarter-section1-modal">
+		<div class="ribbon-quarter-tittle" align="center"
+			th:style="'width:50%; position: relative; background-color: ' + ${colorApp} + ';'">
+			<a href="#"> <span style="color: #FFFFFF; font-size: 1.7vh; font-size: 1.7vw">Notificaciones</span>
+			</a>
+		</div>
+		<br />
+		<div class="col-md-12">
+			<strong style="color: #9FC418;">Filtrar por fecha</strong>
+		</div>
+		<div class="row margin-reset">
+			<div class="col-xs-1 col-sm-1 col-md-1 lblFecha">
+				<p style="color: #9FC418;">Desde</p>
+			</div>
+			<div class="col-xs-4 col-sm-4 col-md-4" style="padding: 0px 0px 0px 20px;">
+				<input type="date" id="fechaIni2" name="fechaIni2" class="form-control fechas2" th:value="${fechaIni}"></input>
+			</div>
+			<div class="col-xs-1 col-sm-1 col-md-1 lblFecha">
+				<p style="color: #9FC418;">Hasta</p>
+			</div>
+			<div class="col-xs-4 col-sm-4 col-md-4" style="padding: 0px 0px 0px 20px;">
+				<input type="date" id="fechaFin2" name="fechaFin2" class="form-control fechas2" th:value="${fechaFin}"></input>
+			</div>
+			<div class="col-xs-1 col-sm-1 col-md-1" style="height:34px">
+				<input type="checkbox" id="fechaTodos2" name="fechaTodos2" value="true" onclick="comentarFechas2(this)" style="height: 34px;margin: 0px;"></input>
+			</div>
+			<div class="col-xs-1 col-sm-1 col-md-1 lblFecha" style="margin-left: -15px;padding-left: 0px;">
+				<p style="color: #9FC418;">Todos</p>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<strong style="color: #9FC418;">Filtrar por estado</strong>
+		</div>
+		<div class="row margin-reset">
+			<div class="col-xs-12 col-sm-12 col-md-12" style="overflow-x: auto; overflow-y: auto; height: 3.4vw">
+				<div class="row margin-reset">
+				
+					<div class="col-xs-4 col-sm-4 col-md-4" style="float: right;">
+						<div class="row rowStatus" style="background-color: #559839;">
+							<div class="col-xs-2 col-sm-2 col-md-2 col-md-offset-1 chkStatus">
+								<input type="checkbox" id="checkApr2" name="checkApr2" value="true" checked="true"></input>
+							</div>
+							<div class="col-xs-8x col-sm-8 col-md-8 status">
+								<p>Aprobadas</p>
+							</div>
+						</div>
+						<div class="numCircle">
+							<p id="numApr2" style="color: #559839;" th:text="${numApr}"></p>
+						</div>
+					</div>
+					
+					<div class="col-xs-4 col-sm-4 col-md-4" style="float: right;">
+						<div class="row rowStatus" style="background-color: #B2B2B2;">
+							<div class="col-xs-2 col-sm-2 col-md-2 col-md-offset-1 chkStatus">
+								<input type="checkbox" id="checkPen2" name="checkPen2" value="true" checked="true"></input>
+							</div>
+							<div class="col-xs-8x col-sm-8 col-md-8 status">
+								<p>Pendientes</p>
+							</div>
+						</div>
+						<div class="numCircle">
+							<p id="numPen2" style="color: #B2B2B2;" th:text="${numPen}"></p>
+						</div>
+					</div>
+					<div class="col-xs-4 col-sm-4 col-md-4" style="float: right;">
+						<div class="row rowStatus" style="background-color: #B22D2C;">
+							<div class="col-xs-2 col-sm-2 col-md-2 col-md-offset-1 chkStatus">
+								<input type="checkbox" id="checkRec2" name="checkRec2" value="true" checked="true"></input>
+							</div>
+							<div class="col-xs-8x col-sm-8 col-md-8 status">
+								<p>Rechazadas</p>
+							</div>
+						</div>
+						<div class="numCircle">
+							<p id="numRec2" style="color: #B22D2C;" th:text="${numRec}"></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<strong style="color: #9FC418;">Filtrar por pendientes</strong>
+		</div>
+		<div class="row margin-reset">
+			<div class="col-xs-1 col-sm-1 col-md-1">
+			    <input type="checkbox" id="soloComHis2" name="soloComHis2" value="true"></input>
+			</div>
+			<div class="col-xs-5 col-sm-5 col-md-5" style="padding-left: 0px;">
+			    <p style="color: #000000;">Comentarios</p>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-6">
+			</div>
+		</div>
+		
+		<p id="validacionFechas" style="text-align: center; color: #FB0101"></p>
+
+		<div class="row margin-reset">
+			<input type="hidden" id="pestana2" th:value="${idCapaSel}+'-0'"></input>
+			<a id="botonFiltrar2" class="btn btnAplicarFiltro" onclick="presionarBotonFiltar2()">
+				<span style="color: #FFFFFF;">Aplicar Filtro</span>
+			</a>
+		</div>
+
+		<div class="row margin-reset">
+			<div class="col-xs-12 col-sm-12 col-md-12"
+				style="overflow-x: auto; overflow-y: auto;">
+
+				<style>
+				/*.sub-menu:hover .dropdown-menu {
+					display: block;
+					background-color: #9FC418;
+				}*/
+				</style>
+
+				<ul class="nav nav-tabs">
+					<li class="sub-menu" th:each="capaNavTab : ${capasNavTabs}"
+						th:style="${capaNavTab.id == idCapaSel} ? 'background-color:'+${colorApp}+'' : 'background-color: #9FC418'">
+						<a href="#" data-toggle="dropdown" class="menuNaveVigia2"
+						th:id="${capaNavTab.id} + '-0'"> <span style="color: #FFFFFF;"
+							th:text="${capaNavTab.nombre}"></span>
+					</a>
+						<ul class="dropdown-menu"
+							th:if="(${capaNavTab.categorias} != null)">
+							<li class="menuNaveVigia2"
+								th:each="categoria : ${capaNavTab.categorias}"
+								th:id="${capaNavTab.id} + '-' + ${categoria.idCategoria}">
+								<a th:text="${categoria.nombre}"></a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+
+				<script th:inline="javascript"> 
+                        /*<![CDATA[*/ 		
+                        $('.menuNaveVigia2').off().click(function() {                       	
+                            var idComplete = $(this).attr('id'); 
+                            refrescarVistaTablaVigias2(idComplete); 
+                        });
+						
+						function presionarBotonFiltar2(){
+						    var idComplete = $('#pestana2').val(); 
+						    refrescarVistaTablaVigias2(idComplete);
+						};
+						
+						function refrescarVistaTablaVigias2(idComplete) {
+						    $('#pestana1').val(idComplete);
+						    $('#pestana2').val(idComplete);
+                            var listaIds = idComplete.split("-");
+                            
+                            var idCapa = listaIds[0];
+                            var idCategoria = listaIds[1];
+							
+							var fechaIni = $('#fechaIni2').val(); 
+                            var fechaFin = $('#fechaFin2').val();
+						    
+						    if ((document.getElementById('fechaTodos2')).checked == true){
+                                fechaIni = "2000-01-01";
+                                fechaFin = [[${fechaFin}]];
+                            }
+						    
+						    var idApp = [[${idApp}]];                        	
+                    	    var colorApp = [[${colorApp}]];
+                    	    var numColorApp = [[${numColorApp}]];
+						    
+						    var checkApr = (document.getElementById('checkApr2')).checked;
+                            var checkPen = (document.getElementById('checkPen2')).checked;
+                            var checkRec = (document.getElementById('checkRec2')).checked;
+						    var estadosList = crearStringEstadosVigia(checkApr,checkPen,checkRec);
+						    
+						    var soloComHis = (document.getElementById('soloComHis2')).checked;
+						    var conComenDeHis = (document.getElementById('conComenDeHis2')).checked;
+							
+							pintarTablaVigias(idComplete,idCapa,idCategoria,fechaIni,fechaFin,
+									estadosList,soloComHis,conComenDeHis,idApp,colorApp,numColorApp); 
+						};
+                        
+                        function comentarFechas2(checkbox) {
+                            if (checkbox.checked) {
+                                $('.fechas2').attr("readonly",true);
+                            }else {
+                                $('.fechas2').attr("readonly",false);
+                            }
+                        }
+						/*]]>*/	
+                    </script>
+				<div th:replace="area247/adminVigias/pantallasVigias :: tableVigias"></div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<div id="tableVigiaFragmento" th:fragment="tableVigias">
+		<table id="tableVigias"
+			class="table table-striped table-bordered paginated" cellspacing="0"
+			style="width: 100%; background-color: #E5E5E5; font-size: 0.7vh; font-size: 0.7vw">
+			<thead>
+				<tr th:style="'color: #' + ${numColorApp} + ';'">
+					<th>ID</th>
+					<th>Descripcion</th>
+					<th>Fecha Creaci&oacute;n</th>
+					<th>Estado</th>
+					<th></th>
+				</tr>
+			</thead>
+
+		</table>
+	</div>
+
+
+
+
+	<div id="vigiaDetalle" th:fragment="quarter-section2">
+		<div class="ribbon-quarter-tittle" align="center" th:style="'width:50%; position: relative; background-color: #' + ${numColorApp} + ';'">
+			<a href="#"> <span
+				style="color: #FFFFFF; font-size: 1.7vh; font-size: 1.7vw">Visualizaci&oacute;n</span>
+			</a>
+		</div>
+		<div style="margin: 5%;">
+			<div class="row margin-reset"
+				style="padding: 0px; background-color: #E7E7E7;">
+				<div class="col-xs-12 col-sm-5 col-md-5" align="center"
+					th:style="'heigh:100% ;padding: 0px; -webkit-box-shadow: 7px 0px 28px -8px rgba(0,0,0,0.75); -moz-box-shadow: 7px 0px 28px -8px rgba(0,0,0,0.75); box-shadow: 7px 0px 28px -8px rgba(0,0,0,0.75);'">
+					<div
+						th:style="'width:100%;background-color: #' + ${numColorApp} + ';'">
+						<img th:src="${rutaIconoMarcador}" th:style="'width:20%;'"></img>
+					</div>
+					<div style="margin: 5%; height: 100%">
+						<img
+							th:src="${(rutaImagen != null) ? rutaImagen : 'assets/images/E7E7E7.png'}"
+							style="width: 100%;" class="img-fluid rounded d-block m-l-none" />
+					</div>
+				</div>
+
+				<div class="col-xs-12 col-sm-7 col-md-7"
+					style="padding: 0px; font-size: 1.2vh; font-size: 1.2vw">
+
+					<div class="row margin-reset">
+
+						<h3 align="center" th:style="'color: #' + ${numColorApp} + ';'">
+							<span type="text" style="font-weight: 800; font-size: 1.6vh; font-size: 1.6vw"
+								th:text="${(nombre != null ? nombre : 'Nombre')}"></span> <span
+								type="text" th:text="' | '"></span> <span type="text" style="font-size: 1.3vh; font-size: 1.3vw"
+								th:text="${(nombreCientifico != null) ? nombreCientifico : 'Nombre Cientifico'}"></span>
+						</h3>
+
+						<h4 align="center" th:style="'color: #' + ${numColorApp} + ';'">
+							<span th:text="'Cod. ' "></span> <span th:text="${id}"></span>
+						</h4>
+						<br />
+
+						<p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">
+							<span type="text" th:text="${descripcion}"
+								style="color: #777575; border-radius: 0px;"></span>
+						</p>
+
+						<p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">
+							<span class="glyphicon glyphicon-calendar"></span> Fecha: <span
+								type="text" th:text="${fechaCreacion}"
+								style="color: #777575; border-radius: 0px;"></span>
+						</p>
+
+						<p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">
+							<span class="glyphicon glyphicon-user"></span> Usuario: <span
+								type="text" th:text="${username}"
+								style="color: #777575; border-radius: 0px;"></span>
+						</p>
+						<br />
+
+						<div th:style="'display: ' + ${vigiaCargado} + ';'">
+
+							<a id="verComenVigia"
+								class="btn btn-default"
+								style="height: 32px; background-color: #569837; border: none; margin-left: 1em;"
+								th:onclick="'visualizarComentariosVigia(' + ${id} + ');'">
+								<span style="color: #FFFFFF;">Ver Comentarios</span>
+							</a> <br /> <br />
+							<div th:style="'display: ' + ${aproRecVigia} + ';'"
+								class="row margin-reset" style="text-align: center;">
+								<a id="aproVigia" class="btn btn-default aproButtonVigia"
+									style="height: 32px; background-color: #569837; border: none; margin-left: 1em;"
+									th:onclick="'visualizarAprobarVigia(' + ${id} + ',\'' + ${numColorApp} + '\');'">
+									<span style="color: #FFFFFF;">Aprobar</span>
+								</a> <a id="rechVigia" class="btn btn-default rechaButtonVigia"
+									style="height: 32px; background-color: #FF0000; border: none; margin-left: 1em;"
+									th:onclick="'rechazarVigia(' + ${id} + ',\'' + ${numColorApp} + '\');'">
+									<span style="color: #FFFFFF;">Rechazar</span>
+								</a> <br /> <br />
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<div th:fragment="quarter-section3-view">
+
+		<div class="ribbon-quarter-tittle" align="center"
+			th:style="'width:50%; position: relative; background-color: #' + ${numColorApp} + ';'">
+			<a href="#"> <span
+				style="color: #FFFFFF; font-size: 1.7vh; font-size: 1.7vw">Monitoreo</span>
+			</a>
+		</div>
+		
+		<br />
+		<div class="row margin-reset">
+			<div class="col-md-5">
+				<p style="color: #9FC418;">Fecha Inicio</p>
+			</div>
+			<div class="col-md-5">
+				<p style="color: #9FC418;">Fecha Fin</p>
+			</div>
+			<div class="col-xs-1 col-sm-1 col-md-1">
+				<p style="color: #9FC418;">Todos</p>
+			</div>
+			<div class="col-xs-1 col-sm-1 col-md-1">
+				<input type="checkbox" id="fechaTodosEst1" name="fechaTodosEst1" value="true" onclick="comentarFechasEst1(this)"></input>
+			</div>
+			<div class="col-xs-5 col-sm-5 col-md-5">
+				<input type="date" id="fechaIniEst1" name="fechaIniEst1" class="form-control fechasEst1" style="border-radius: 0px;" th:value="${fechaIni}"></input>
+			</div>
+			<div class="col-xs-5 col-sm-5 col-md-5">
+				<input type="date" id="fechaFinEst1" name="fechaFinEst1" class="form-control fechasEst1" style="border-radius: 0px;" th:value="${fechaFin}"></input>
+			</div>
+			<div class="col-xs-2 col-sm-2 col-md-2">
+				<input type="hidden" id="pestanaEst1" th:value="${idGrafEst}"></input>
+				<a id="botonFiltrarEst1" class="btn"
+					onclick="presionarBotonFiltarEst1()"
+					style="background-color: #9FC418; border: 1px solid; border-color: #D0D0D0; border-radius: 3px; float: right;">
+					<span style="color: #FFFFFF;">Filtrar</span>
+				</a>
+			</div>
+		</div>
+
+		<br />
+		<p id="validacionFechasEst" style="text-align: center; color: #FB0101"></p>
+
+		<div class="row margin-reset">
+			<div class="col-xs-12 col-sm-12 col-md-12"
+				style="overflow-x: auto; overflow-y: auto;">
+
+				<ul class="nav nav-tabs">
+					<li class="sub-menu"
+						th:style="'background-color: #' + ${numColorApp} + ';'"><a
+						href="#" data-toggle="dropdown" id="usuario"
+						class="menuNaveVigiaEst1"> <span style="color: #FFFFFF;">Usuario</span>
+					</a></li>
+					<li class="sub-menu" th:style="'background-color: #9FC418'"><a
+						href="#" data-toggle="dropdown" id="municipio"
+						class="menuNaveVigiaEst1"> <span style="color: #FFFFFF;">Municipio</span>
+					</a></li>
+				</ul>
+
+				<script th:inline="javascript">                     
+                        $('.menuNaveVigiaEst1').off().click(function() {                       	
+                            var id = $(this).attr('id');
+                            refrescarVistaGraficoEstadistico1(id); 
+                        });
+					
+					    function presionarBotonFiltarEst1(){
+					        var id = $('#pestanaEst1').val();
+					        refrescarVistaGraficoEstadistico1(id);
+					    };
+					
+					    function refrescarVistaGraficoEstadistico1(id) {
+						    $('#pestanaEst1').val(id);
+							$('#pestanaEst2').val(id);
+							
+							var fechaIni = $('#fechaIniEst1').val(); 
+                            var fechaFin = $('#fechaFinEst1').val();
+                            
+                            if ((document.getElementById('fechaTodosEst1')).checked == true){
+                            	fechaIni = "2000-01-01";
+                            	fechaFin = [[${fechaFin}]];
+                            }
+                            
+                            var colorApp = [[${colorApp}]];                           
+                            var filtroCapa = [[${filtroCapasEspadis}]];
+                            var filtroCateg = [[${filtroCategEspadis}]];
+                            
+                            drawGraficoEstadistico(fechaIni,fechaFin,id,colorApp,filtroCapa,filtroCateg,false) 						
+					    };
+                                       
+                        function comentarFechasEst1(checkbox) {
+                            if (checkbox.checked) {
+                                $('.fechasEst1').attr("readonly",true);
+                            }else {
+                                $('.fechasEst1').attr("readonly",false);
+                            }
+                        }
+                    </script>
+
+			</div>
+		</div>
+	</div>
+
+
+
+	<div th:fragment="quarter-section3-modal">
+
+		<div class="ribbon-quarter-tittle" align="center"
+			th:style="'width:50%; position: relative; background-color: #' + ${numColorApp} + ';'">
+			<a href="#"> <span style="color: #FFFFFF;  font-size: 1.7vh; font-size: 1.7vw">Monitoreo</span>
+			</a>
+		</div>
+
+		<br />
+		<div class="row margin-reset">
+		
+		<div class="col-md-5">
+				<p style="color: #9FC418;">Fecha Inicio</p>
+			</div>
+			<div class="col-md-5">
+				<p style="color: #9FC418;">Fecha Fin</p>
+			</div>
+			<div class="col-xs-1 col-sm-1 col-md-1">
+				<p style="color: #9FC418;">Todos</p>
+			</div>
+			<div class="col-xs-1 col-sm-1 col-md-1">
+				<input type="checkbox" id="fechaTodosEst2" name="fechaTodosEst2" value="true" onclick="comentarFechasEst2(this)"></input>
+			</div>
+			<div class="col-xs-5 col-sm-5 col-md-5">
+				<input type="date" id="fechaIniEst2" name="fechaIniEst2" class="form-control fechasEst2" style="border-radius: 0px;" th:value="${fechaIni}"></input>			</div>
+			<div class="col-xs-5 col-sm-5 col-md-5">
+				<input type="date" id="fechaFinEst2" name="fechaFinEst2" class="form-control fechasEst2" style="border-radius: 0px;" th:value="${fechaFin}"></input>
+			</div>
+			<div class="col-xs-2 col-sm-2 col-md-2">
+				<input type="hidden" id="pestanaEst2" th:value="${idGrafEst}"></input>
+				<a id="botonFiltrarEst2" class="btn" onclick="presionarBotonFiltarEst2()" style="background-color: #9FC418;">
+					<span style="color: #FFFFFF;">Filtrar</span>
+				</a>
+			</div>
+		
+		</div>
+
+		<p id="validacionFechasEst" style="text-align: center; color: #FB0101"></p>
+
+		<div class="row margin-reset">
+			<div class="col-xs-12 col-sm-12 col-md-12"
+				style="overflow-x: auto; overflow-y: auto;">
+
+				<ul class="nav nav-tabs">
+					<li class="sub-menu"
+						th:style="'background-color: #' + ${numColorApp} + ';'"><a
+						href="#" data-toggle="dropdown" id="usuario"
+						class="menuNaveVigiaEst2"> <span style="color: #FFFFFF;">Usuario</span>
+					</a></li>
+					<li class="sub-menu" th:style="'background-color: #9FC418'"><a
+						href="#" data-toggle="dropdown" id="municipio"
+						class="menuNaveVigiaEst2"> <span style="color: #FFFFFF;">Municipio</span>
+					</a></li>
+				</ul>
+
+				<script th:inline="javascript"> 
+                        $('.menuNaveVigiaEst2').off().click(function() {                       	
+                            var id = $(this).attr('id');
+                            refrescarVistaGraficoEstadistico2(id); 
+                        });
+					
+					    function presionarBotonFiltarEst2(){
+					        var id = $('#pestanaEst2').val(); 
+					        refrescarVistaGraficoEstadistico2(id);
+					    };
+					
+					    function refrescarVistaGraficoEstadistico2(id) {
+						    $('#pestanaEst1').val(id);
+							$('#pestanaEst2').val(id);
+							
+							var fechaIni = $('#fechaIniEst2').val(); 
+                            var fechaFin = $('#fechaFinEst2').val();
+                            
+                            if ((document.getElementById('fechaTodosEst2')).checked == true){
+                            	fechaIni = "2000-01-01";
+                            	fechaFin = [[${fechaFin}]];
+                            }
+                            
+                            var colorApp = [[${colorApp}]];                            
+                            var filtroCapa = [[${filtroCapasEspadis}]];
+                            var filtroCateg = [[${filtroCategEspadis}]];
+                            
+                            drawGraficoEstadistico(fechaIni,fechaFin,id,colorApp,filtroCapa,filtroCateg,false); 
+                        };							 
+                        
+                        function comentarFechasEst2(checkbox) {
+                            if (checkbox.checked) {
+                                $('.fechasEst2').attr("readonly",true);
+                            }else {
+                                $('.fechasEst2').attr("readonly",false);
+                            }
+                        }
+                    </script>
+
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<div id="modalComenVigia" th:fragment="modalComenVigia">
+		<div id="modalComenVigia" class="modal"
+			th:style="'display: ' + ${despliegeModalComenVigia}">
+			<div class="contenido">
+
+				<button onclick="closeModalComenVigia()" class="btn btn-default"
+					style="background-color: #FB0101; float: right;">
+					<span class="glyphicon glyphicon-remove"
+						style="float: right; color: #FFFFFF;"></span>
+				</button>
+
+				<h1 style="background-color: #9FC418; color: #FFFFFF; width: 600px;">Listado
+					de Comentarios</h1>
+
+				<div
+					style="border: 25px solid; border-color: transparent; background-color: rgba(0, 0, 0, 0.8);">
+
+					<table id="tableComenVigia"
+						class="table table-striped table-bordered" cellspacing="0"
+						style="width: 100%; background-color: #E5E5E5; font-size: 0.9vw;">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Comentarios</th>
+								<th>Aceptar/Rechazar</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<tr th:each="comenVigia : ${comenVigiaList}">
+								<td th:text="${comenVigia.id}"></td>
+								<td>
+									<div class="row margin-reset">
+										<span th:text="${comenVigia.descripcion}"></span>
+									</div>
+									
+									<hr style="margin: 5px 0px 5px 0px; border-top: 1px solid #d7d7d7;"/>
+									
+									<div class="row margin-reset">
+										<div class="col-xs-10 col-sm-10 col-md-10">
+											<div class="col-xs-5 col-sm-5 col-md-5" style="padding-left: 0px;">
+												<strong>Usuario: </strong><span th:text="${comenVigia.username}"></span>
+											</div>
+											<div class="col-xs-5 col-sm-5 col-md-5">
+												<strong>Creaci&oacute;n: </strong><span th:text="${comenVigia.fechaCreacion}"></span>
+											</div>
+										</div>
+										<div class="col-xs-2 col-sm-2 col-md-2">
+											<div 	th:id="'estadocomenHisto_' + ${comenVigia.id}"
+													th:style="'background-color: ' + ${comenVigia.colorEstado} + ';float:right;width: 6vw;text-align: center;'">
+												<span style="color: #FFFFFF;" th:text="${comenVigia.nombreEstado}"></span>
+											</div>
+										</div>
+									</div>
+									
+								</td>
+								<td style="text-align: center;">
+									<button th:if="${comenVigia.estadoPublicacion==2}"
+										th:id="'aproComenVigia-' + ${comenVigia.id}"
+										style="background-color: #569837; border: none;"
+										class="aproButtonComenVigia btn">
+										<span style="color: #FFFFFF;" class="glyphicon glyphicon-ok"></span>
+									</button>
+									<button th:if="${comenVigia.estadoPublicacion==2}"
+										th:id="'rechComenVigia-' + ${comenVigia.id}"
+										style="background-color: #B22D2C; border: none;"
+										class="rechaButtonComenVigia btn">
+										<span style="color: #FFFFFF;"  class="glyphicon glyphicon-remove"></span>
+									</button>
+								</td>
+								
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<script th:inline="javascript"> 
+                    $('.aproButtonComenVigia').off().click(function() {
+                        var idComplete = $(this).attr('id');  
+                        var id = idComplete.substring(15);
+                        $.ajax({
+                            url: "/cambiarEstadoComenVigia/" + id + "/aprobado",
+                            method: "GET",
+                        }).success(function(response) {
+                        	$('#estadocomenVigia_' + id).text("APROBADO"); 
+                            $('#estadocomenVigia_' + id).css('background-color',"#559839");
+                        	$('#aproComenVigia-' + id).hide(); 
+                        	$('#rechComenVigia-' + id).hide();   
+                        	alert(response);
+                        });                               
+                    });  
+                    
+                    $('.rechaButtonComenVigia').off().click(function() {
+                    	var idComplete = $(this).attr('id');  
+                        var id = idComplete.substring(15);           
+                        $.ajax({
+                            url: "/cambiarEstadoComenVigia/" + id + "/rechazado",
+                            method: "GET",
+                        }).success(function(response) {
+                        	$('#estadocomenVigia_' + id).text("RECHAZADO"); 
+                            $('#estadocomenVigia_' + id).css('background-color',"#B22D2C");
+                        	$('#aproComenVigia-' + id).hide(); 
+                        	$('#rechComenVigia-' + id).hide();
+                        	alert(response);	
+                        });                               
+                    }); 
+                    
+                    function closeModalComenVigia() {
+                        document.getElementById('modalComenVigia').style.display = "none";
+                    }  
+                </script>
+		</div>
+	</div>
+
+
+
+
+	<div id="modalAproVigia" th:fragment="modalAproVigia">
+		<div id="modalAproVigia" class="modal"
+			th:style="'display: ' + ${despliegeModalAproVigia}">
+			<div style="position: relative; margin: auto; top: 10%; width: 30%;">
+				<button onclick="closeModalAproVigia()" class="btn btn-default"
+					style="background-color: #FB0101; float: right;">
+					<span class="glyphicon glyphicon-remove"
+						style="float: right; color: #FFFFFF;"></span>
+				</button>
+
+				<h1 style="background-color: #9FC418; color: #FFFFFF; width: 450px;">Aprobar
+					Vigia</h1>
+
+				<div
+					style="border: 25px solid; border-color: transparent; background-color: rgba(0, 0, 0, 0.8);">
+					<div style="width: 100%; background-color: #E5E5E5;">
+						<div class="row margin-reset">
+							<br />
+							<p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">
+								C&oacute;digo: <span id="idVigiaApr" th:text="${idVigiaApr}"
+									style="color: #777575;"></span>
+							</p>
+
+							<p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">
+								Nombre Com&uacute;n: <input id="nombreApr" type="text"
+									th:value="${nombreApr}"
+									style="color: #777575; border-radius: 0px; width: 95%;"></input>
+							<p id="validNombreApr" style="color: #FF0000; margin-left: 1em;"></p>
+							</p>
+
+							<p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">
+								Descripci&oacute;n: <input id="descripApr" type="text"
+									th:value="${descripApr}"
+									style="color: #777575; border-radius: 0px; width: 95%;"></input>
+							</p>
+
+							<p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">
+								Nombre Cient&iacute;fico: <input id="nomCienApr" type="text"
+									th:value="${nomCienApr}"
+									style="color: #777575; border-radius: 0px; width: 95%;"></input>
+							</p>
+							<br />
+							<p
+								th:style="'color:#FF0000; margin-left:1em; display: ' + ${showSelectApr} + ';'">
+								Debe asignarle una especie a su avistamiento</p>
+
+							<p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">
+								Tipo Avistamiento: <span th:text="${tipoAvistApr}"
+									style="color: #777575;"></span>
+							</p>
+
+							<div th:style="'display: ' + ${showSelectApr} + ';'">
+								<p style="color: #569837; margin-left: 1em;">
+									Tipo Especie: <select id="tipoEspApr">
+										<option th:each="esp : ${listEspecieApr}" th:value="${esp.id}"
+											th:text="${esp.nombre}"></option>
+									</select>
+								</p>
+							</div>
+							<br /> <br /> <a id="confAproVigia"
+								class="btn btn-default confAproVigia"
+								style="height: 32px; background-color: #569837; border: none; margin-left: 1em;"
+								th:onclick="'confirmarAprovacionVigia(' + ${idVigiaApr} + ',\''  + ${numColorApp} + '\');'">
+								<span style="color: #FFFFFF;">Confirmar</span>
+							</a> <a id="confRechVigia" class="btn btn-default confRechVigia"
+								style="height: 32px; background-color: #FF0000; border: none; margin-left: 1em;"
+								onclick="closeModalAproVigia()"> <span
+								style="color: #FFFFFF;">Cancelar</span>
+							</a> <br /> <br />
+						</div>
+					</div>
+				</div>
+			</div>
+			<script th:inline="javascript"> 
+                    function confirmarAprovacionVigia(id,numColorApp) { 
+                        var nombre = $('#nombreApr').val();                       						
+						if(nombre!=""){
+						    var descrip = $('#descripApr').val();
+                            var nomCien = $('#nomCienApr').val();
+                            var tipoEsp = $('#tipoEspApr').val();
+                            
+                            if(nomCien==""){  nomCien = "0"  }
+                                                       
+                            $.ajax({
+                                url: "/confirmarAprobacionVigia/" + id + "/" + nombre + "/" + descrip + "/" 
+                                                                         + nomCien + "/" + tipoEsp + "/" + numColorApp + "",
+                                method: "GET",
+                                beforeSend: function() {
+                                	$('vigiaDetalle').remove();
+                                },
+                                success: function(html) { 
+                                	$('#vigiaDetalle').replaceWith(html);
+                                    $('#modalFourViews').find('#vigiaDetalle').replaceWith(html);
+                                    $('#estadoVigia_' + id).text("Aprobado"); 
+                                    $('#estadoVigia_' + id).css('color',"#559839");                	
+                                    $('#modalFourViews').find('#estadoVigia_'+id).text("Aprobado");
+                                    $('#modalFourViews').find('#estadoVigia_'+id).css('color',"#559839"); 
+                                    
+                                    $.ajax({
+                                        url: "/getMarcadorVigia/" + id,
+                                        method: "GET",
+                                    }).success(function(paquete) {
+                                        /*<![CDATA[*/                            
+                                            initMap(paquete);
+            		                    /*]]>*/	                                	
+                                    }); 
+                                }  
+                            });
+                            document.getElementById('modalAproVigia').style.display = "none";
+						}else{
+						    document.getElementById('validNombreApr').innerHTML = "Debe colocar un nombre";
+						}												
+                    }; 
+                    
+                    function closeModalAproVigia() {
+                        document.getElementById('modalAproVigia').style.display = "none";
+                    };  
+                </script>
+		</div>
+	</div>
+
+
+
+
+	<div th:fragment="quarter-section1-mini">
+		<div class="ribbon-quarter-tittle" align="center"
+			th:style="'width:50%; position: relative; background-color: ' + ${colorApp} + ';'">
+			<a href="#"> <span style="color: #FFFFFF; font-size: 1.7vh; font-size: 1.7vw">Notificaciones</span>
+			</a>
+		</div>
+		<br /> <img src="assets/imagesAdminVigia/filtrosTabla.jpg"
+			style="width: 100%;"></img> <br />
+		<div class="row margin-reset">
+			<ul class="nav nav-tabs">
+				<li class="sub-menu" th:each="capaNavTab : ${capasNavTabs}"
+					th:style="${capaNavTab.id == idCapaSel} ? 'background-color:'+${colorApp}+'' : 'background-color: #9FC418'">
+					<a href="#" data-toggle="dropdown" class="menuNaveVigia3"
+					th:id="${capaNavTab.id} + '-0'"> <span style="color: #FFFFFF;"
+						th:text="${capaNavTab.nombre}"></span>
+				</a>
+				</li>
+			</ul>
+		</div>
+		<img
+			src="assets/imagesAdminVigia/adminVigia_vistaListadoVigia.jpg"
+			style="width: 100%;"></img>
+	</div>
+	
+	
+	
+    <div id="vigiaDetalle-mini" th:fragment="quarter-section2-mini">
+		<div class="ribbon-quarter-tittle" align="center" th:style="'width:50%; position: relative; background-color: #' + ${numColorApp} + ';'">
+			<a href="#"> <span
+				style="color: #FFFFFF; font-size: 1.1vh; font-size: 1.1vw">Visualizaci&oacute;n</span>
+			</a>
+		</div>
+		<div style="margin: 5%;">
+			<div class="row margin-reset"
+				style="padding: 0px; background-color: #E7E7E7;">
+				<div class="col-xs-12 col-sm-5 col-md-5" align="center"
+					th:style="'heigh:100% ;padding: 0px; -webkit-box-shadow: 7px 0px 28px -8px rgba(0,0,0,0.75); -moz-box-shadow: 7px 0px 28px -8px rgba(0,0,0,0.75); box-shadow: 7px 0px 28px -8px rgba(0,0,0,0.75);'">
+					<div
+						th:style="'width:100%;background-color: #' + ${numColorApp} + ';'">
+						<img th:src="${rutaIconoMarcador}" th:style="'width:20%;'"></img>
+					</div>
+					<div style="margin: 5%; height: 100%">
+						<img
+							th:src="${(rutaImagen != null) ? rutaImagen : 'assets/images/E7E7E7.png'}"
+							style="width: 100%;" class="img-fluid rounded d-block m-l-none" />
+					</div>
+				</div>
+
+				<div class="col-xs-12 col-sm-7 col-md-7"
+					style="padding: 0px; font-size: 0.8vh; font-size: 0.8vw">
+
+					<div class="row margin-reset">
+
+						<h3 align="center" th:style="'color: #' + ${numColorApp} + ';'">
+							<span type="text" style="font-weight: 800; font-size: 0.9vh; font-size: 0.9vw"
+								th:text="${(nombre != null ? nombre : 'Nombre')}"></span> <span
+								type="text" th:text="' | '"></span> <span type="text" style="font-size: 1.2vh; font-size: 1.2vw"
+								th:text="${(nombreCientifico != null) ? nombreCientifico : 'Nombre Cientifico'}"></span>
+						</h3>
+
+						<h4 align="center" th:style="'color: #' + ${numColorApp} + ';'">
+							<span th:text="'Cod. ' "></span> <span th:text="${id}"></span>
+						</h4>
+						<br />
+
+						<p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">
+							<span type="text" th:text="${descripcion}"
+								style="color: #777575; border-radius: 0px;"></span>
+						</p>
+
+						<p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">
+							<span class="glyphicon glyphicon-calendar"></span> Fecha: <span
+								type="text" th:text="${fechaCreacion}"
+								style="color: #777575; border-radius: 0px;"></span>
+						</p>
+
+						<p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">
+							<span class="glyphicon glyphicon-user"></span> Usuario: <span
+								type="text" th:text="${username}"
+								style="color: #777575; border-radius: 0px;"></span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<div th:fragment="quarter-section3-mini">
+		<div class="ribbon-quarter-tittle" align="center"
+			th:style="'width:50%; position: relative; background-color: #' + ${numColorApp} + ';'">
+			<a href="#"> <span style="color: #FFFFFF;  font-size: 1.7vh; font-size: 1.7vw">Monitoreo</span>
+			</a>
+		</div>
+		<br /> <img src="assets/imagesAdminVigia/filtrosEst.jpg"
+			style="width: 100%;"></img> <br />
+		<p id="validacionFechasEst" style="text-align: center; color: #FB0101"></p>
+		<ul class="nav nav-tabs">
+			<li class="sub-menu"
+				th:style="'background-color: #' + ${numColorApp} + ';'"><a
+				href="#" data-toggle="dropdown" id="usuario"
+				class="menuNaveVigiaEst3"> <span style="color: #FFFFFF;">Usuario</span>
+			</a></li>
+			<li class="sub-menu" th:style="'background-color: #9FC418'"><a
+				href="#" data-toggle="dropdown" id="municipio"
+				class="menuNaveVigiaEst3"> <span style="color: #FFFFFF;">Municipio</span>
+			</a></li>
+		</ul>
+		<div id="chart_div_user3">
+			<img
+				src="assets/imagesAdminVigia/adminVigia_esatdisticaUsuario.jpg"
+				style="width: 100%;"></img>
+		</div>
+		<div id="chart_div_muni3">
+			<img
+				src="assets/imagesAdminVigia/adminVigia_esatdisticaMunicipio.jpg"
+				style="width: 100%;"></img>
+		</div>
+		<h1
+			th:style="'text-align:center; color: #' + ${numColorApp} + '; margin-left:1em;font-size: 3vw; font-size: 3vh;'">
+			Total vigias: <span id="totalVigiaEst3"
+				th:text="${totalVigias}" style="color: #777575;">0</span>
+		</h1>
+	</div>
+
+
+
+</body>
+
+</html>

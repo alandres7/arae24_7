@@ -1,0 +1,83 @@
+import { Injectable } from '@angular/core';
+
+import { CONFIG_ENV } from './const-env';
+
+@Injectable()
+export class ConfigEnvService {
+
+
+  public static setEnvironment(env: number) {
+    //urlServidor:string = "http://201.184.243.195:8095"; // publica
+    //urlServidor:string = "http://172.16.0.20:8095";
+    switch (env) {
+      case 0://Ambiente Desarrollo
+        CONFIG_ENV.REST_BASE_URL = 'http://172.16.0.20:8095';
+        CONFIG_ENV.ONESIGNAL_APPLICATION_ID = 'd76f447f-86e3-470a-97c4-8823cf440aa9';
+        CONFIG_ENV.ONESIGNAL_SENDER_ID = '406029628587';
+        console.log('Enviroment Dev');
+        break;
+      case 1://Ambiente Pruebas
+        //CONFIG_ENV.REST_BASE_URL = 'http://201.184.243.195:8095';
+        //CONFIG_ENV.REST_BASE_URL = 'http://201.184.243.195:9095';
+        CONFIG_ENV.REST_BASE_URL = 'http://localhost:9090';
+     // CONFIG_ENV.REST_BASE_URL = 'http://apptest.quipux.com/amva';
+        // CONFIG_ENV.REST_BASE_URL = 'http://10.125.30.27:9090';
+
+        CONFIG_ENV.ONESIGNAL_APPLICATION_ID = 'd76f447f-86e3-470a-97c4-8823cf440aa9';
+        CONFIG_ENV.ONESIGNAL_SENDER_ID = '406029628587';
+        console.log('Enviroment Pruebas');
+        break;
+
+      case 2://Ambiente Amva
+        CONFIG_ENV.REST_BASE_URL = 'http://webservices.metropol.gov.co:9095';
+        CONFIG_ENV.ONESIGNAL_APPLICATION_ID = 'd76f447f-86e3-470a-97c4-8823cf440aa9';
+        CONFIG_ENV.ONESIGNAL_SENDER_ID = '406029628587';;
+        console.log('Ambiente Amva');
+        break;
+
+      case 3://Ambiente interno desarrollo Pruebas
+        CONFIG_ENV.REST_BASE_URL = 'http://172.16.0.20:9095';
+        CONFIG_ENV.ONESIGNAL_APPLICATION_ID = 'd76f447f-86e3-470a-97c4-8823cf440aa9';
+        CONFIG_ENV.ONESIGNAL_SENDER_ID = '406029628587';
+        console.log('Enviroment interno desarrollo');
+        break;
+
+      case 4://Ambiente desarrollo  equipo lucho
+        CONFIG_ENV.REST_BASE_URL = 'http://172.16.201.36:9095';
+        CONFIG_ENV.ONESIGNAL_APPLICATION_ID = 'd76f447f-86e3-470a-97c4-8823cf440aa9';
+        CONFIG_ENV.ONESIGNAL_SENDER_ID = '406029628587';
+        console.log('Enviroment equipo lucho');
+        break;
+
+      case 5://Ambiente desarrollo ip Publica
+        CONFIG_ENV.REST_BASE_URL = 'http://201.184.243.195:9095';
+        CONFIG_ENV.ONESIGNAL_APPLICATION_ID = 'd76f447f-86e3-470a-97c4-8823cf440aa9';
+        CONFIG_ENV.ONESIGNAL_SENDER_ID = '406029628587';
+        console.log('Enviroment desarrollo ip Publica');
+        break;
+
+      case 6://Ambiente desarrollo ip local
+        CONFIG_ENV.REST_BASE_URL = 'http://127.0.0.1:9095';
+        CONFIG_ENV.ONESIGNAL_APPLICATION_ID = 'd76f447f-86e3-470a-97c4-8823cf440aa9';
+        CONFIG_ENV.ONESIGNAL_SENDER_ID = '406029628587';
+        console.log('Enviroment desarrollo maquina local');
+        break;
+
+      case 7://Ambiente desarrollo virtual
+        CONFIG_ENV.REST_BASE_URL = 'http://169.254.188.11:9095';
+        CONFIG_ENV.ONESIGNAL_APPLICATION_ID = 'd76f447f-86e3-470a-97c4-8823cf440aa9';
+        CONFIG_ENV.ONESIGNAL_SENDER_ID = '406029628587';
+        console.log('Enviroment desarrollo maquina local');
+        break;
+    }
+
+  }
+
+
+  public static getEnvironment() {
+
+    return CONFIG_ENV;
+
+  }
+
+}

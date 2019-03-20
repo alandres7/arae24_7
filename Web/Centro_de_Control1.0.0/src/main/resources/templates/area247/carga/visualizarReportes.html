@@ -1,0 +1,252 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title th:text="'' + ${title}"></title>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <div th:replace="fragments/frameMaps :: header-contend"></div>
+    <div th:replace="fragments/powerbi :: header-contend"></div>
+    <div th:replace="fragments/frameMaps :: header-contend"></div>
+<div th:replace="fragments/enviarMensajePush :: mensajes-push-header"></div>
+</head>
+
+
+    <style>    
+		body{
+			background-color: rgba(177,178,174,.3);
+		}
+		
+		
+		#title_cards{
+			width:100%;
+		}
+		
+		#title_div{
+			width:350px;
+			margin: 0px auto;
+		}
+		
+		#titulo_reportes{
+			text-transform: capitalize;
+			font-size: 3.5rem;
+		}
+		
+		.card{
+		    display: inline-block;
+		    cursor: pointer;
+		    background-color: #fff;
+		    padding: 25px;
+		    width: 240px;
+		    text-align: left;
+		    height: 260px;
+		    position: relative;
+		    box-shadow: 2px 2px 10px #c8c8c8;
+		    vertical-align: top;
+		    margin-right: 2.5em;
+		    margin-top: 2em;
+	    }
+	    
+	    
+	    #row-cards{
+	    	width:100%;
+	    	height: auto;
+	    }
+	    
+	    #container-cards{
+	    	margin: 5rem auto;
+	    	width: 100%;	
+	    	align-items: center;
+	   	}
+	   	
+	   	.reportTitle{
+	   	    font-size: 20px;
+		    font-weight: 400;
+		    color: #333;
+		    margin: 0 0 10px 0;
+		    text-transform: capitalize;
+    	}
+    	
+    	.reportDesc{
+   			font-family: 'Segoe UI',wf_segoe-ui_normal,helvetica,arial,sans-serif;
+		    color: #666;
+		    margin-top: 10px;
+		    font-size: 13px;
+		    line-height: 25px;
+	    }
+	    
+	    .btn{
+	    	border: solid 1px black;
+	    	background-color: green;
+	    	position: absolute;
+	    	bottom:2.7rem;
+	    	left:2rem;
+	    	font-weight: bold;
+	    	color:white;
+	    }
+	    
+	    .tileContent h3{
+	    	margin-bottom:1em;
+	    	height: 2em;
+	    	
+	    }
+	    
+	    
+    </style>
+
+
+<body>
+
+	<div th:replace="fragments/frameMaps :: sideBar-Left-App"></div>
+
+	<section id="main-content">
+		<div class="container-fluid" style="margin:2.5rem 0px">
+			<div class="row" id="title_cards">
+					<div id="title_div">
+						<h2 id="titulo_reportes">Reportes graficos </h2>
+					</div>
+			</div>
+		
+			<div class="row" id="row-cards" style="margin-left: 10px">
+				   <div id="container-cards" > 
+					
+					
+					<div class="col-md-3 card">
+						<div class="tileContent">
+							<h3 class="reportTitle">Edad parque automotor</h3>
+							<span class="reportDesc">Reporte de cantidad de vehículos de carga registrados en el RUNT </span>
+							<a class="btn" th:href="@{/archivos/reporte/vehiculos}">Abrir</a>
+						</div>
+					</div>
+					
+					<div class="col-md-3 card">
+						<div class="tileContent">
+							<h3 class="reportTitle">Fotodetecciones</h3>
+							<span class="reportDesc">Reporte de cantidad de vehículos de carga circulando por cada secretaría</span>
+							<a class="btn" th:href="@{/archivos/reporte/fotodetecciones}">Abrir</a>
+						</div>
+					</div>
+					
+					<div class="col-md-3 card">
+						<div class="tileContent">
+							<h3 class="reportTitle">Mapa fotodetecciones</h3>
+							<span class="reportDesc">Reporte de la cantidad de vehículos por cámara en cada secretaría</span>
+							<a class="btn" th:href="@{/archivos/reporte/mapafotodetecciones}">Abrir</a>
+						</div>
+					</div>
+					
+					<div class="col-md-3 card">
+						<div class="tileContent">
+							<h3 class="reportTitle">Distancia mínima recorrida</h3>
+							<span class="reportDesc">Reporte diario de la distancia mínima recorrida entre dos o más cámaras en la ciudad</span>
+							<a class="btn" th:href="@{/archivos/reporte/minimarecorrida}">Abrir</a>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			</div>
+	</section>
+	
+	<div th:replace="fragments/frameMaps :: header-degra"></div>
+	<div id="modalFourViews" class="modal">
+		<div class="modal-content center" style="width: 80%; left: 10%; top: 10%;">
+			<div class="row margin-reset">
+				<div class="col-xs-12 col-sm-12 col-md-9" style="padding: 0px; border: 2px solid; border-color: #9FC418; height: 100%;">
+
+					<a href="#" onclick="closeModal()"> <span
+						class="glyphicon glyphicon-remove" style="float: right;"></span>
+					</a>
+
+					<div class="mySlides">
+						<div th:replace="fragments/quarterReportes :: quarter-section1" style="width: 100%"></div>
+					</div>
+
+					<div class="mySlides">
+						<div th:replace="fragments/quarterReportes :: quarter-section2" style="width: 100%"></div>
+					</div>
+
+					<div class="mySlides">
+						<div th:replace="fragments/quarterReportes :: quarter-section3" style="width: 100%"></div>
+					</div>
+
+					<div class="mySlides" style="height: 100%;">
+						<div th:replace="fragments/quarterReportes :: quarter-section4" style="width: 100%"></div>												
+					</div>
+
+				</div>
+
+				<div class="col-xs-12 col-sm-12 col-md-3" style="padding: 0px; border: 2px solid; border-color: #9FC418;">
+
+					<div id="demoSmall1" class="row margin-reset" onclick="currentSlide(1)" style="border: 2px solid; border-color: #9FC418; font-size: 0.8vw; font-size: 0.8vh;">
+						<div class="demo cursor" th:replace="fragments/quarterReportes :: quarter-section1"></div>
+					</div>
+
+					<div id="demoSmall2" class="row margin-reset" onclick="currentSlide(2)" style="border: 2px solid; border-color: #9FC418; font-size: 0.8vw; font-size: 0.8vh;">
+						<div class="demo cursor" th:replace="fragments/quarterReportes :: quarter-section2"></div>
+					</div>
+
+					<div id="demoSmall3" class="row margin-reset" onclick="currentSlide(3)" style="border: 2px solid; border-color: #9FC418; font-size: 0.8vw; font-size: 0.8vh;">
+						<div class="demo cursor" th:replace="fragments/quarterReportes :: quarter-section3"></div>
+					</div>
+
+					<div id="demoSmall4" class="row margin-reset" onclick="currentSlide(4)" style="border: 2px solid; border-color: #9FC418;">
+						<div class="demo cursor" th:replace="fragments/quarterReportes :: quarter-section4"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    
+	<script>  
+        /*<![CDATA[*/
+        function openModal() {
+            document.getElementById('modalFourViews').style.display = "block";
+        }
+        
+        function closeModal() {
+            document.getElementById('modalFourViews').style.display = "none";
+        }
+        
+        var slideIndex = 1;
+        showSlides(slideIndex);
+        
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+        
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+        
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("demo");
+                                          
+            var captionText = document.getElementById("caption");
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}               
+            
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            } 
+
+            for (i = 1; i <= 4; i++) {
+                if(i==slideIndex){
+                    document.getElementById('demoSmall'+i).style.display = "none";
+                }else{
+                	document.getElementById('demoSmall'+i).style.display = "block";
+                }
+            } 
+                                               
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace("active", "");
+            }
+                                        
+            slides[slideIndex-1].style.display = "block"; 
+            
+        }
+        /*]]>*/
+    </script>
+</body>
+</html>

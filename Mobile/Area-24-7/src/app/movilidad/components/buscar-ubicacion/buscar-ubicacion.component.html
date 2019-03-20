@@ -1,0 +1,44 @@
+<div id="container-busqueda">
+    <ion-grid style="width:99vw;">
+        <ion-row style="width:100%;">
+            <ion-col class="col-btn-busqueda" col-1 *ngIf="botonAtras">
+                <ion-icon style="margin-left: 4px;" class="btn-busquedas" name="ios-arrow-back"></ion-icon>
+            </ion-col>
+            <ion-col class="colsearch"> 
+                <ion-searchbar id="sbDireccion" (click)="setEmpty($event)"  (keydown)="buscarDireccion($event)" [(ngModel)]="ubicacion.descripcion" (ionInput)="updateSearch()" type="text" mode="md" animated="true" placeholder="{{ubicacion.txtPlaceholder}}" *ngIf="editable">
+                </ion-searchbar>
+                <div class="btn-search" (click)="search($event)" ></div>
+
+                <div deshabilitar-searchbar>
+                    <ion-searchbar [(ngModel)]="ubicacion.descripcion" (ionInput)="updateSearch()" id="searchbarDirecciones" type="text" mode="md" animated="true" placeholder="{{ubicacion.txtPlaceholder}}" *ngIf="!editable">
+                    </ion-searchbar>
+                </div>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <ion-card *ngIf="showSeleccionarEnMapa && (ubicacion.descripcion=='' || !ubicacion.descripcion)" class="selecMapa">
+        <div class="btnSelMapa" (click)="seleccionarUbicacionMapa()">
+
+            <ion-grid style="padding:0px;">
+                <ion-row>
+                    <ion-col col-3>
+                        <img src="assets/movilidad/iconos/marcadorMap.png" style="width:10px; float:right">
+                    </ion-col>
+                    <ion-col col-9>
+                        Seleccionar en el mapa
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+
+    </ion-card>
+
+    <ion-list [ngSwitch]="ubicacion.modoBusqueda" class="listaDir">
+        <div *ngSwitchCase="modos.PREDICCION_GOOGLE">
+            <ion-item *ngFor="let item of autocompleteItems" (click)="seleccionarPrediccion(item)" style="border-bottom: 1px solid #ccc;">
+                <span class="labelLisDir"><img src="assets/movilidad/iconos/marcadorMap.png" style="width:10px; float:Left; margin-left: 5px" > {{ item.description }}</span>
+            </ion-item>
+        </div>
+    </ion-list>
+</div>

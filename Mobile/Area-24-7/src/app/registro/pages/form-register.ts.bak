@@ -1,0 +1,142 @@
+﻿import { CONFIG_ENV } from './../../shared/config-env-service/const-env';
+import { Common } from './../../shared/utilidades/common';
+import { WebServiceRegistro } from './../provider/wsRegistro.provider';
+import { UsuarioModel } from './../../Models/usuario.model';
+import { Component } from '@angular/core';
+import { NavController, NavParams, App, ViewController } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LoginPage } from "../../login/pages/login-page/login-page";
+
+@Component({
+    selector: 'page-form-register',
+    templateUrl: 'form-register.html',
+    styles: ['form-register.scss']
+})
+export class FormRegister {
+  nav: any;
+
+  myForm: FormGroup;
+  mostrarDepartamentos: boolean;
+  listaPaises: any = [];
+  listaDepartamentos: any = [];
+  listaMunicipios: any = [];
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, private wsRegistro: WebServiceRegistro, private utilidad: Common,
+    private app: App, public view: ViewController) {
+    this.myForm = this.createMyForm();
+    this.nav = this.app.getRootNav();
+    this.mostrarDepartamentos = false;
+    this.cargarPaises();
+
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad FormRegister');
+
+  }
+
+  saveData() {
+    var date = new Date(this.myForm.value.fechaNacimiento)
+    console.log(date.toUTCString());
+    console.log("MYFORM Value" + JSON.stringify(this.myForm.value));
+  }
+
+  goBack(): void {
+    this.view.dismiss();
+  }
+
+  goToLogin() {
+
+    var date = new Date(this.myForm.value.fechaNacimiento);
+    this.myForm.value.fechaNacimiento = date.toISOString();
+    this.myForm.value.nickname = this.myForm.value.username;
+    this.myForm.value.contrasena = this.myForm.value.passwordRetry.contrasena;
+    console.log("MYFORM USUARIO MODEL" + JSON.stringify(<UsuarioModel>this.myForm.value));
+    this.wsRegistro.registrar(CONFIG_ENV.REST_BASE_URL + "/api/registro", <UsuarioModel>this.myForm.value)
+      .then(respuesta => {
+        if (respuesta == 'exitoso') {
+          this.view.dismiss();
+        }
+      })
+
+    //this.navCtrl.push('Login');
+  }
+
+  goToLogin2() {
+    this.view.dismiss();
+    // this.nav.push(LoginPage);
+  }
+
+  private createMyForm() {
+    return this.formBuilder.group({
+      nombre: ['', Validators.required],
+      apellido: ['', Validators.required],
+      nivelEducativo: ['', Validators.required],
+      pais: ['', Validators.required],
+      departamento: ['', Validators.required],
+      municipio: ['', Validators.required],
+      fuenteRegistro: 'AP',
+      username: ['', [Validators.required, Validators.pattern(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/)]],
+      fechaNacimiento: ['', Validators.required],
+      // contrasena: ['', Validators.required],
+      passwordRetry: this.formBuilder.group({
+        contrasena: ['', [Validators.required]],
+        passwordConfirmation: ['', [Validators.required]]
+      }, { 'validator': this.matchingPasswords('contrasena', 'passwordConfirmation') }),
+      tokenDispositivo: 'null',
+      genero: ['', Validators.required],
+
+    });
+  }
+
+  matchingPasswords(passwordKey: string, confirmPasswordKey: string) {
+    return (group: FormGroup): { [key: string]: any } => {
+      let password = group.controls[passwordKey];
+      let confirmPassword = group.controls[confirmPasswordKey];
+
+      if (password.value !== confirmPassword.value) {
+        return {
+          mismatchedPasswords: true
+        };
+      }
+    }
+  }
+
+  seleccionPais() {
+    let pais = this.myForm.value.pais;
+    if (pais == 'COLOMBIA') {
+      this.listaPaises.forEach(element => {
+        if (element.nombre == 'COLOMBIA') {
+          this.listaDepartamentos = element.departamentos;
+        }
+      });
+      this.mostrarDepartamentos = true;
+    } else {
+      this.mostrarDepartamentos = false;
+    }
+  }
+
+  seleccionDepartamento() {
+    let departamento = this.myForm.value.departamento;
+    this.listaDepartamentos.forEach(element => {
+      if (element.nombre == departamento) {
+        this.listaMunicipios = element.municipios;
+      }
+    });
+  }
+
+  cargarPaises() {
+    this.wsRegistro.obtenerTodoslosPaises().then((response: any) => {
+      var respuesta = JSON.parse(response._body);
+      this.listaPaises = respuesta;
+      console.log("paises", this.listaPaises);
+
+    },
+      (error) => {
+
+      });
+
+  }
+
+
+
+}

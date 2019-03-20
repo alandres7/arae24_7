@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${asunto}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 48px;
+            color: transparent;
+        }
+    </style>
+</head>
+<body style="margin: 0; padding: 0;">
+
+    <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse;">
+        <tr>
+            <td style="color:#86cd13;text-align:center;">
+                <p style="margin:0;font-size:30px;">Bienvenido/a a tu cuenta <b>Área 24/7</b></p>
+                <p style="margin:0;font-size:24px;">Sabemos que quieres restablecer tu contraseña.</p>
+                <p style="margin:0;font-size:30px;">Esta es tu <b>nueva contraseña:</b></p>
+            </td>
+        </tr> 
+        <tr>
+            <td style="color:white;text-align:center;padding:20px 20px 20px 20px;">
+                <p style="margin:0;font-size:36px;"><b><span style="background-color:#86cd13;padding:5px 100px;" th:text="${contrasena}"></span></b></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                    <img src="imgs/imgRestPass.jpg" alt="Logo del Área Metropolitana" style="display: block;" />
+            </td>
+            
+        </tr>
+        <tr>
+            <td style="color:#86cd13;text-align:center;">
+                <p style="margin:0;font-size:24px;">Para cambiarla ingresa a la App.</p>
+                <p style="margin:0;font-size:24px;"><b>Busca el logo de configuración y en la opción Cambiar contraseña podrás personalizarla.</b></p>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

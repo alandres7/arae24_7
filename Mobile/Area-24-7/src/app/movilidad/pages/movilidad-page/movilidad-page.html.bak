@@ -1,0 +1,35 @@
+
+ <div id="over_map_center" >
+
+    <busqueda-viajes id="busquedaComponent" [modo]="modoBusquedaViaje" [hidden]="busquedaViajes && utilidad.submenu.sMovilidad"></busqueda-viajes>
+
+        </div>
+
+
+<!-- <div *ngIf="utilidad.submenu.sMovilidad">
+	<ion-fab left bottom #fabMovilidad>
+		<button ion-fab color="movilidad"><img src="assets/menu/ic_movilidad.svg"/></button>
+		<ion-fab-list side="top">
+			<button ion-fab color="movilidad" (click)="menuAnterior()"><img src="assets/movilidad/menu/atras.svg"></button>
+			<button ion-fab (click)="mostraBusquedaViajes(3,fabMovilidad)" color="movilidad"><img src="assets/movilidad/menu/lineasyrutas.svg"></button>
+			<button ion-fab (click)="mostraBusquedaViajes(2,fabMovilidad)" color="movilidad"><img src="assets/movilidad/menu/rutascercanas.svg"></button>
+			<button ion-fab (click)="mostraBusquedaViajes(1,fabMovilidad)" color="movilidad"><img src="assets/movilidad/menu/viajes.svg"> </button>
+		</ion-fab-list>
+	</ion-fab>
+
+</div> -->
+
+
+  <ng-template ngFor let-option [ngForOf]="pmenuService.listaMenu" let-i="index">
+    <ion-fab  left bottom *ngIf="option.id == 1 && utilidad.submenu['s'+option.nombre]" #fabMovilidad>
+      <button ion-fab color="{{option.codigoToggle | lowercase}}"><img src="{{option.rutaIcono}}"/></button>
+      <ion-fab-list side="top" id="submenu-amva">
+        <button ion-fab color="{{option.codigoToggle | lowercase}}" (click)="menuAnterior()"><ion-icon name="arrow-back"></ion-icon></button>
+        <ng-template ngFor let-item [ngForOf]="option.capas" let-indice="index">
+        <button ion-fab color="{{option.codigoToggle | lowercase}}" *ngIf="option.capas && option.capas.length > 0 && utilidad.menuPreferencias[option.id]['capas'][item.id]"
+          (click)="mostraBusquedaViajes(indice+1,fabMovilidad)"><img src="{{item.icono}}" ></button>
+      </ng-template>
+      </ion-fab-list>
+    </ion-fab>
+  </ng-template>
+

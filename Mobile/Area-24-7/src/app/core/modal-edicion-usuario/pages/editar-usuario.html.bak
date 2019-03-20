@@ -1,0 +1,130 @@
+﻿<ion-header>
+    <ion-navbar color="cAmva">
+        <ion-title>Perfil</ion-title>
+        <ion-buttons end>
+            <button  ion-button button-toogle end (click)="closeModal()"><ion-icon color="light" name="arrow-back"></ion-icon></button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <form [formGroup]="myForm" (ngSubmit)="saveData()" novalidate>
+        <ion-list>
+            <ion-item>
+                <ion-icon name="person" item-left></ion-icon>
+                <ion-label stacked>Nombres:</ion-label>
+                <ion-input formControlName="nombre" type="text" placeholder="Nombre" ></ion-input>
+            </ion-item>
+           
+            <ion-item *ngIf="myForm.get('nombre').errors && myForm.get('nombre').dirty">
+                <p *ngIf="myForm.get('nombre').hasError('required')">Campo es requerido</p>
+            </ion-item>
+
+            <ion-item>
+                <ion-icon name="" item-left></ion-icon>
+                <ion-label stacked>Apellidos:</ion-label>
+                <ion-input formControlName="apellido" type="text" placeholder="Apellidos"></ion-input>
+            </ion-item>
+           
+            <ion-item *ngIf="myForm.get('apellido').errors && myForm.get('apellido').dirty">
+                <p *ngIf="myForm.get('apellido').hasError('required')">Campo es requerido</p>
+            </ion-item>
+
+            <ion-item>
+                <ion-icon name="mail" item-left></ion-icon>
+                <ion-label stacked>Username:</ion-label>
+                <ion-input formControlName="username" type="email" placeholder="Correo electrónico" disabled=true></ion-input>
+            </ion-item>
+            
+            <ion-item *ngIf="myForm.get('username').errors && myForm.get('username').dirty">
+                <p *ngIf="myForm.get('username').hasError('required')">Campo es requerido</p>
+                <p *ngIf="myForm.get('username').hasError('minlength')">Min de 5 caracteres</p>
+                <p *ngIf="myForm.get('username').hasError('maxlength')">Max de 10 caracteres</p>
+            </ion-item>
+
+            <!-- <ion-item>
+                <ion-icon name="eye" item-left></ion-icon>
+                <ion-label stacked>Contraseña:</ion-label>
+                <ion-input formControlName="contrasena" type="password" placeholder="Contraseña"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="myForm.get('contrasena').errors && myForm.get('contrasena').dirty">
+                <p *ngIf="myForm.get('contrasena').hasError('required')">Campo es requerido</p>
+                <p *ngIf="myForm.get('contrasena').hasError('minlength')">Min de 5 caracteres</p>
+                <p *ngIf="myForm.get('contrasena').hasError('maxlength')">Max de 10 caracteres</p>
+            </ion-item> -->
+
+            <ion-item>
+                <ion-icon name="calendar" item-left></ion-icon>
+                <ion-label stacked>Fecha de nacimiento:</ion-label>
+                <ion-datetime formControlName="fechaNacimiento" displayFormat="DD/MM/YYYY" placeholder="DD/MM/YYYY"></ion-datetime>
+            </ion-item>
+
+            <ion-row radio-group formControlName="genero">
+                <ion-grid>
+                <ion-row>
+                    <ion-col>
+                    <ion-item>
+                        <ion-icon name="woman" item-left></ion-icon>
+                        <ion-label>Femenino</ion-label>
+                        <ion-radio value="F"></ion-radio>
+                    </ion-item>
+                    </ion-col>
+                    <ion-col>
+                    <ion-item>
+                        <ion-icon name="man" item-left></ion-icon>
+                        <ion-label>Masculino</ion-label>
+                        <ion-radio value="M" selected="true"></ion-radio>
+                    </ion-item>
+                    </ion-col>
+
+                </ion-row>
+                </ion-grid>
+            </ion-row>
+
+            <ion-item>
+                <ion-icon name="" item-left></ion-icon>
+                <ion-label stacked>Nivel Educativo:</ion-label>
+                <ion-select formControlName="nivelEducativo" placeholder="Seleccionar">
+                <ion-option value="Ninguno">Ninguno</ion-option>
+                <ion-option value="Primaria" selected="true">Educación Básica</ion-option>
+                <ion-option value="Secundaria">Educación Media</ion-option>
+                <ion-option value="Profesional">Educación Universitaria</ion-option>
+                </ion-select>
+            </ion-item>
+
+
+
+
+            <ion-item>
+                <ion-icon ios="ios-globe" md="md-globe" item-left></ion-icon>
+                <ion-label stacked>País:</ion-label>
+                <ion-input formControlName="pais" type="text" placeholder="País"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="myForm.get('pais').errors && myForm.get('pais').dirty">
+                <p *ngIf="myForm.get('pais').hasError('required')">Campo es requerido</p>
+            </ion-item>
+
+            <ion-item>
+                <ion-icon name="" item-left></ion-icon>
+                <ion-label stacked>Departamento:</ion-label>
+                <ion-input formControlName="departamento" type="text" placeholder="Departamento"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="myForm.get('departamento').errors && myForm.get('departamento').dirty">
+                <p *ngIf="myForm.get('departamento').hasError('required')">Campo es requerido</p>
+            </ion-item>
+
+            <ion-item>
+                <ion-icon name="" item-left></ion-icon>
+                <ion-label stacked>Municipio:</ion-label>
+                <ion-input formControlName="municipio" type="text" placeholder="Municipio"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="myForm.get('municipio').errors && myForm.get('municipio').dirty">
+                <p *ngIf="myForm.get('municipio').hasError('required')">Campo es requerido</p>
+            </ion-item>
+        </ion-list>
+
+        <div padding>
+            <button (click)="actualizar()" ion-button block type="submit" [disabled]="!myForm.valid" color="btnLogin">Guardar</button>
+        </div>
+    </form>
+</ion-content>

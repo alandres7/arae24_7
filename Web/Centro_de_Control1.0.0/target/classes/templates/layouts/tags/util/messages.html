@@ -1,0 +1,18 @@
+<div th:fragment="messages" th:remove="tag">
+    <div class="note note-success note-shadow" th:if="${successMsg}">
+        <button type="button" class="close" data-dismiss="alert"></button>
+        <p class="resCarga" th:utext="${successMsg}"></p>
+    </div>
+    <div class="alert alert-block alert-danger fade in" th:if="${errorMsg}">
+        <button type="button" class="close" data-dismiss="alert"></button>
+        <p class="resCarga" th:utext="${errorMsg}"></p>
+    </div>
+    <div class="alert alert-block alert-info fade in" th:if="${infoMsg}">
+        <button type="button" class="close" data-dismiss="alert"></button>
+        <p class="resCarga" th:utext="${infoMsg}"></p>
+    </div>
+    <div class="alert alert-block alert-warning fade in" th:if="${warningMsg}">
+        <button type="button" class="close" data-dismiss="alert"></button>
+        <p class="resCarga" th:utext="${warningMsg}"></p>
+    </div>
+</div>

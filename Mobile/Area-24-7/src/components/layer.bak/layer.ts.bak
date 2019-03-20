@@ -1,0 +1,67 @@
+import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
+import { Response } from '@angular/http';
+
+import { Layer } from '../../entities/layer';
+
+import { LayerProvider } from '../../providers/layer/layer';
+import { MapaComponent } from '../../app/core/mapa/mapa';
+
+@Component({
+    selector: 'layer',
+    templateUrl: 'layer.html'
+})
+export class LayerComponent implements OnInit {
+
+    @Input() layer: Layer;
+
+    @Output() tapLayer = new EventEmitter<{}>();
+
+    private markers: google.maps.Marker[];
+    private polylines: google.maps.Polyline[];
+    private polygons: google.maps.Polygon[];    
+
+    constructor(private layerProvider: LayerProvider) {}
+
+    ngOnInit(): void {}
+
+    onTapLayer(): void {
+        if ((this.layer.layerLevel == 'CAPA' && this.layer.idIconMarker == undefined) 
+           || this.layer.layerType == 'BACK') 
+        {
+            this.tapLayer.emit(this.layer);            
+        }
+        else if (this.layer.active) {
+            this.layer.active = false;
+            this.setVisible(false);
+        }
+        else if (this.markers == undefined && this.polylines == undefined && this.polygons == undefined) { 
+            this.layer.active = true;
+            this.getAndShowInMap(this.layer.id);
+        }
+        else {
+            this.layer.active = true;
+            this.setVisible(true);
+        }
+    }
+
+    getAndShowInMap(layerId: number): void {
+        this.markers = new Array();
+        let marker = new google.maps.Marker({
+            map: MapaComponent.mapa,
+            position: new google.maps.LatLng(6.263527, -75.5559108),
+        });
+        this.markers.push(marker);
+      /*  this.layerProvider.getGeometries(layerId).subscribe(
+            (response: Response) => {
+                this.markers = response.json().puntos.map(punto => new google.maps.Marker())
+            }, 
+            (error: any) => { console.log('getAndShowInMap error ' + JSON.stringify(error)); }
+        );*/
+    }
+
+    setVisible(visible: boolean): void {
+        if (this.markers != undefined) this.markers.forEach((marker: google.maps.Marker) => marker.setVisible(visible));
+        if (this.polylines != undefined) this.polylines.forEach((polyline: google.maps.Polyline) => polyline.setVisible(visible));
+        if (this.polygons != undefined) this.polygons.forEach((polygon: google.maps.Polygon) => polygon.setVisible(visible));
+    } 
+}

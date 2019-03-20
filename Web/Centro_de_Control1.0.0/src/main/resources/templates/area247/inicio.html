@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head lang="en">
+<title th:text="'' + ${title}"></title>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<div th:replace="fragments/frameMaps :: header-contend"></div>
+<div th:replace="fragments/enviarMensajePush :: mensajes-push-header"></div>
+</head>
+
+
+<body>
+	<div th:replace="fragments/frameMaps :: sideBar-Left-App"></div>
+
+	<section id="main-content">
+
+		<div id="mapa" style="height: 100%"></div>
+
+		<div th:replace="fragments/frameMaps :: ribbon-List"></div>
+
+		<div th:replace="fragments/frameMaps :: notification-List"></div>
+
+		<div th:replace="fragments/enviarMensajePush :: mensajes-push-chat"></div>
+		<div th:replace="fragments/enviarMensajePush :: modalNotificaHisto"></div>
+		
+	</section>
+		
+	<div th:replace="fragments/printMap :: printMap"></div>
+	
+</body>
+
+</html>

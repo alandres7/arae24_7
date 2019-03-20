@@ -1,0 +1,951 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" >
+
+	<head></head>
+
+
+    <body>
+    
+          
+        <div th:fragment="quarter-section1"> 
+			
+			<div class="ribbon-quarter-tittle" 
+			 th:style="'width:20%; position: relative; background-color: ' + ${colorApp} + ';'">
+                <a href="#">
+			        <span style="color:#FFFFFF;">Notificaciones</span>
+			    </a>          
+            </div>
+            
+            <br/>
+            <div class="row margin-reset"> 
+				<div class="col-xs-2 col-sm-2 col-md-2">
+				    <p style="color:#9FC418;">Fecha Inicio</p>
+				</div>								  
+				<div class="col-xs-3 col-sm-3 col-md-3">
+					<input type="date" id="fechaIni" name="fechaIni" class="form-control" style="border-radius: 0px;"
+					 th:value="${fechaIni}"></input>
+				</div>	
+				<div class="col-xs-2 col-sm-2 col-md-2">
+					<p style="color:#9FC418;">Fecha Fin</p>
+				</div>								  
+				<div class="col-xs-3 col-sm-3 col-md-3">
+					<input type="date" id="fechaFin" name="fechaFin" class="form-control" style="border-radius: 0px;"
+					 th:value="${fechaFin}"></input>
+				</div>
+				<div class="col-xs-1 col-sm-1 col-md-1">
+					<p style="color:#9FC418;">Todos</p>
+				</div>
+				<div class="col-xs-1 col-sm-1 col-md-1">	
+				    <input type="checkbox" id="fechaTodos" name="fechaTodos" value="true"></input>	
+			    </div>						
+			</div>	
+			
+			<br/>
+            <div class="row margin-reset"> 
+                <div class="col-xs-1 col-sm-1 col-md-1"></div>
+				<div class="col-xs-3 col-sm-3 col-md-3" style="background-color: #559839">	
+				    <div class="col-xs-6 col-sm-6 col-md-6">
+					    <p style="color:#FFFFFF;">Aprobadas</p>
+				    </div>
+				    <div class="col-xs-3 col-sm-3 col-md-3">
+					    <p id="numApr" style="color:#FFFFFF;" th:text="${numApr}"></p>
+				    </div>
+				    <div class="col-xs-3 col-sm-3 col-md-3">	
+				        <input type="checkbox" id="checkApr" name="checkApr" value="true" checked="true"></input>
+			        </div>	
+			    </div>	
+				<div class="col-xs-3 col-sm-3 col-md-3" style="background-color: #B2B2B2">
+				    <div class="col-xs-6 col-sm-6 col-md-6">
+					    <p style="color:#FFFFFF;">Pendientes</p>
+				    </div>
+				    <div class="col-xs-3 col-sm-3 col-md-3">
+					    <p id="numPen" style="color:#FFFFFF;" th:text="${numPen}"></p>
+				    </div>
+				    <div class="col-xs-3 col-sm-3 col-md-3">	
+				        <input type="checkbox" id="checkPen" name="checkPen" value="true" checked="true"></input>
+			        </div>					    	
+			    </div>
+				<div class="col-xs-3 col-sm-3 col-md-3" style="background-color: #B22D2C">
+				    <div class="col-xs-6 col-sm-6 col-md-6">
+					    <p style="color:#FFFFFF;">Rechazadas</p>
+				    </div>
+				    <div class="col-xs-3 col-sm-3 col-md-3">
+					    <p id="numRec" style="color:#FFFFFF;" th:text="${numRec}"></p>
+				    </div>
+				    <div class="col-xs-3 col-sm-3 col-md-3">	
+				        <input type="checkbox" id="checkRec" name="checkRec" value="true" checked="true"></input>
+			        </div>	
+			    </div>	
+			    <div class="col-xs-2 col-sm-2 col-md-2"></div>					
+			</div>	
+			
+			<p id="validacionFechas" style="text-align:center; color: #FB0101"></p>
+			
+			<div class="row margin-reset">
+                <div class="col-xs-12 col-sm-12 col-md-12" style="overflow-x:auto; overflow-y:auto;">  
+                
+                    <style>.sub-menu:hover .dropdown-menu {display: block; background-color: #9FC418;}</style>
+                    
+                    <ul class="nav nav-tabs">
+                        <li class="sub-menu" th:each="capaNavTab : ${capasNavTabs}"                          
+                         th:style="${capaNavTab.id == idCapaSel} ? 'background-color:'+${colorApp}+'' : 'background-color: #9FC418'">
+				            <a href="#" data-toggle="dropdown" class="menuNaveAvist" th:id="${capaNavTab.id} + '-0'" >
+				                <span style="color:#FFFFFF;" th:text="${capaNavTab.nombre}"></span>
+				            </a> 
+				            <ul class="dropdown-menu" th:if="(${capaNavTab.categorias} != null)">
+							    <li class="menuNaveAvist" th:each="categoria : ${capaNavTab.categorias}"
+							     th:id="${capaNavTab.id} + '-' + ${categoria.idCategoria}">
+							        <a th:text="${categoria.nombre}"></a>
+							    </li>													
+						    </ul>                       
+                        </li> 
+                    </ul> 
+                    
+                    <script th:inline="javascript"> 
+                        $('.menuNaveAvist').off().click(function() {                       	
+                            var idComplete = $(this).attr('id');                             
+                            var listaIds = idComplete.split("-");
+                            
+                            var idCapa = listaIds[0];
+                            var idCategoria = listaIds[1];
+                            
+                            var fechaIni = $('#fechaIni').val(); 
+                            var fechaFin = $('#fechaFin').val();
+                            
+                            if ((document.getElementById('fechaTodos')).checked == true){
+                            	fechaIni = "2000-01-01";
+                            	fechaFin = [[${fechaFin}]];
+                            }
+                                                       
+                            var idApp = [[${idApp}]];                        	
+                    	    var colorApp = [[${colorApp}]];
+                    	    var numColorApp = [[${numColorApp}]];
+                    	    var listIdTipoCapa = [[${listIdTipoCapa}]]; 
+                            
+                            $.ajax({
+                                url: "/compararFechas/" + fechaIni + "/" + fechaFin + "",
+                                method: "GET",
+                            }).success(function(response) {
+                                if(response){
+                                	document.getElementById('validacionFechas').innerHTML = "";                                 	
+                                	$.ajax({
+                                        url: "/refrescarTablaAvistamientos/" + numColorApp,
+                                        method: "GET",
+                                        beforeSend: function() {
+                                        	$('table_avistamiento_tipo').remove();
+                                        },
+                                        success: function(html) {
+                                        	$('.menuNaveAvist').css("background-color","#9FC418");
+                                        	$('#'+idComplete).css("background-color",colorApp); 
+                                        	
+                                        	$('#modalFourViews').find('.menuNaveAvist').css("background-color","#9FC418");
+                                        	$('#modalFourViews').find('#'+idComplete).css("background-color",colorApp); 
+                                        	
+                                        	$('#table_avistamiento_tipo').replaceWith(html); 
+                                        	$('#modalFourViews').find('#table_avistamiento_tipo').replaceWith(html);
+                                        	
+                                        	var checkApr = (document.getElementById('checkApr')).checked;
+                                            var checkPen = (document.getElementById('checkPen')).checked;
+                                            var checkRec = (document.getElementById('checkRec')).checked;
+                                            var estadosList = crearStringEstadosAvist(checkApr,checkPen,checkRec);
+                                            
+                                            var tabla = $('#tableAvistamientos');
+                                        	imprimirTablaPorPagina(tabla,fechaIni,fechaFin,idApp,idCapa,idCategoria,estadosList);
+                                        	
+                                        	var tablaModal = $('#modalFourViews').find('#tableAvistamientos');
+                                        	imprimirTablaPorPagina(tablaModal,fechaIni,fechaFin,idApp,idCapa,idCategoria,estadosList);
+                                        	                                         	
+                                        	borrarAvistamientoVista(numColorApp);
+                                        	ponerCantidadesAvistamientos(fechaIni,fechaFin,idCapa,idCategoria);
+                                        }
+                                    }); 
+                                }else{
+                                	document.getElementById('validacionFechas').innerHTML = "La fecha final es menor que la inicial";
+                                }                          	
+                            });    
+                        });   
+                    </script> 
+                    <div th:replace="area247/adminAvistamientos/pantallasAvistamiento :: tableAvistamientos"></div>	                          						
+                </div>			
+            </div>                      			                     
+        </div> 
+
+
+
+
+        <div id="table_avistamiento_tipo" th:fragment="tableAvistamientos" > 
+            <table id="tableAvistamientos" class="table table-striped table-bordered paginated" cellspacing="0" 
+             style="width: 100%; background-color: #E5E5E5;">
+       	        <thead>
+       	            <tr th:style="'color: #' + ${numColorApp} + ';'"> 
+       	                <th>ID</th>                                  
+                        <th>Nombre Com&uacute;n</th>
+                        <th>Descripci&oacute;n</th>
+                        <th>Tipo</th>
+                        <th>Especie</th>  
+                        <th>Fecha Creaci&oacute;n</th> 
+                        <th>Estado</th>                            
+                        <th></th>                                             
+                    </tr>
+                </thead>    
+
+            </table>                             
+        </div> 		 
+		
+
+
+        
+        <div id="avistamientoDetalle" th:fragment="quarter-section2">
+            			
+			<div class="ribbon-quarter-tittle" 
+			 th:style="'width:20%; position: relative; background-color: #' + ${numColorApp} + ';'">
+                <a href="#">
+			        <span style="color:#FFFFFF;">Visualizaci&oacute;n</span>
+			    </a>          
+            </div>
+					          
+			<div class="row margin-reset" style="padding: 0px; background-color:#FFFFFF;">
+			
+                <div class="col-xs-12 col-sm-5 col-md-5" align="center"
+                    th:style="'padding: 0px; background-color: #' + ${numColorApp} + ';'">
+                    <img th:src="${rutaIconoMarcador}" th:style="'width:20%;'"></img>
+                    <img th:src="${rutaImagen}" style="width: 100%; "></img>                   				  						
+                </div>
+                                			 
+                <div class="col-xs-12 col-sm-7 col-md-7" style="padding: 0px; background-color:#E8E8E8;"> 
+                
+                    <div class="row margin-reset">	                     
+                        <p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">C&oacute;digo
+                            <span th:text="${id}" style="color:#777575;"></span>
+                        </p>
+                          
+                        <p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">Nombre Com&uacute;n:
+                            <span type="text" th:text="${nombre}"   
+                             style="color:#777575; border-radius: 0px;"></span>
+                        </p>
+                        
+                        <p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">Descripci&oacute;n:
+                            <span type="text" th:text="${descripcion}" 
+                             style="color:#777575; border-radius: 0px;"></span>
+                        </p>
+                        
+                        <p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">Nombre Cient&iacute;fico:
+                            <span type="text" th:text="${nombreCientifico}" 
+                             style="color:#777575; border-radius: 0px;"></span>
+                        </p>
+                        
+                        <p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">Usuario:
+                            <span type="text" th:text="${username}" 
+                             style="color:#777575; border-radius: 0px;"></span>
+                        </p>
+                        
+                        <p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">Estado:
+                        <span th:text="${nombreEstado}" th:style="'color:#FFFFFF; background-color: ' + ${colorEstado}"></span></p>
+                        
+                        <p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">Tipo Avistamiento:
+                        <span th:text="${tipoAvistamiento}" style="color:#777575;"></span></p>
+                        
+                        <p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">Tipo Especie:
+                        <span th:text="${tipoEspecieTexto}" style="color:#777575;"></span></p>
+                        
+                        <div th:style="'display: ' + ${avistamientoCargado} + ';'" >                        
+                            <div th:style="'display: ' + ${aproRecAvist} + ';'" >
+                                <p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">Editar:
+					            <a id="editAvist" style="background-color: #9FC418;" class="btn btn-default"
+					                th:onclick="'visualizarEditarAvistamiento(' + ${id} + ',\'' + ${numColorApp} + '\');'">
+						            <span style="color: #FFFFFF;" class="glyphicon glyphicon-pencil"></span>
+						        </a></p>
+					        </div>
+					        <br/>
+                                                       
+                            <a id="verHistoAvist" th:if="${tieneHistoria}" 
+                               class="btn btn-default" style="height:32px; 
+                               background-color: #569837; border:none; margin-left:1em;"
+                               th:onclick="'visualizarHistoriasAvistamiento(' + ${id} + ');'">
+					            <span style="color: #FFFFFF;">Ver Historias</span>
+					        </a>					
+					        <a id="verComenAvist" th:if="!${tieneHistoria}"
+					           class="btn btn-default" style="height:32px; 
+                               background-color: #569837; border:none; margin-left:1em;"
+                               th:onclick="'visualizarComentariosAvistamiento(' + ${id} + ');'">
+					            <span style="color: #FFFFFF;">Ver Comentarios</span>
+					        </a>
+							<br/>
+                            <br/> 														
+					        <div th:style="'display: ' + ${aproRecAvist} + ';'" class="row margin-reset" style="text-align: center;">	
+					            <a id="aproAvist" class="btn btn-default aproButtonAvist" 
+					               style="height:32px; background-color: #569837; border:none; margin-left:1em;"
+					        	   th:onclick="'visualizarAprobarAvistamiento(' + ${id} + ',\'' + ${numColorApp} + '\');'">
+					                <span style="color: #FFFFFF;">Aprobar</span>
+					            </a>
+					        	
+					        	<a id="rechAvist" class="btn btn-default rechaButtonAvist" 
+					        	   style="height:32px; background-color: #FF0000; border:none; margin-left:1em;"
+                                   th:onclick="'rechazarAvistamiento(' + ${id} + ',\'' + ${numColorApp} + '\');'">
+					                <span style="color: #FFFFFF;">Rechazar</span>
+					            </a>
+					            <br/>
+                                <br/>						
+					        </div> 														
+					    </div>	
+						
+					</div>											
+                </div>	 		
+            </div> 			
+        </div>
+        
+        
+
+
+
+        <div id="tableEstadistica" th:fragment="quarter-section3"> 
+            
+			<div class="ribbon-quarter-tittle" 
+			 th:style="'width:20%; position: relative; background-color: #' + ${numColorApp} + ';'">
+                <a href="#">
+			        <span style="color:#FFFFFF;">Monitoreo</span>
+			    </a>          
+            </div>
+					            
+			<br/>
+            <div class="row margin-reset"> 
+				<div class="col-xs-2 col-sm-2 col-md-2">
+				    <p style="color:#9FC418;">Fecha Inicio</p>
+				</div>								  
+				<div class="col-xs-3 col-sm-3 col-md-3">
+					<input type="date" id="fechaIniEst" name="fechaIniEst" class="form-control" style="border-radius: 0px;"
+					 th:value="${fechaIni}"></input>
+				</div>	
+				<div class="col-xs-2 col-sm-2 col-md-2">
+					<p style="color:#9FC418;">Fecha Fin</p>
+				</div>								  
+				<div class="col-xs-3 col-sm-3 col-md-3">
+					<input type="date" id="fechaFinEst" name="fechaFinEst" class="form-control" style="border-radius: 0px;"
+					 th:value="${fechaFin}"></input>
+				</div>
+				<div class="col-xs-1 col-sm-1 col-md-1">
+					<p style="color:#9FC418;">Todos</p>
+				</div>
+				<div class="col-xs-1 col-sm-1 col-md-1">	
+				    <input type="checkbox" id="fechaTodosEst" name="fechaTodosEst" value="true"></input>	
+			    </div>						
+			</div> 
+			
+			<br/>
+			<p id="validacionFechasEst" style="text-align:center; color: #FB0101"></p>
+						
+			<div class="row margin-reset">
+                <div class="col-xs-12 col-sm-12 col-md-12" style="overflow-x:auto; overflow-y:auto;">  
+
+                    <ul class="nav nav-tabs">
+                        <li class="sub-menu" style="background-color: #9FC418">
+				            <a href="#" data-toggle="dropdown" id="usuario" class="menuNaveAvistEst">
+				                <span style="color:#FFFFFF;">Usuario</span>
+				            </a>                      
+                        </li>                         
+                        <li class="sub-menu" style="background-color: #9FC418">
+				            <a href="#" data-toggle="dropdown" id="municipio" class="menuNaveAvistEst">
+				                <span style="color:#FFFFFF;">Municipio</span>
+				            </a>                      
+                        </li>
+                    </ul> 
+                    
+                    <script th:inline="javascript"> 
+                        $('.menuNaveAvistEst').off().click(function() {                       	
+                            var id = $(this).attr('id');  
+                            
+                            var fechaIni = $('#fechaIniEst').val(); 
+                            var fechaFin = $('#fechaFinEst').val();
+                            
+                            if ((document.getElementById('fechaTodosEst')).checked == true){
+                            	fechaIni = "2000-01-01";
+                            	fechaFin = [[${fechaFin}]];
+                            }
+                            
+                            var numColorApp = [[${numColorApp}]];
+                            
+                            $.ajax({
+                                url: "/compararFechas/" + fechaIni + "/" + fechaFin + "",
+                                method: "GET",
+                            }).success(function(response) {
+                                if(response){
+                                	document.getElementById('validacionFechasEst').innerHTML = "";                                  	
+                                	if(id=="usuario"){                               		
+                                		drawGraficoUsuarios(fechaIni,fechaFin);
+                                	}else{
+                                		if(id=="municipio"){                                			
+                                    		drawGraficoMunicipios(fechaIni,fechaFin);
+                                		}                                		
+                                	}
+                                	
+                                	$.ajax({
+                                        url: "/getCantidadTotalAvistamientos/" + fechaIni + "/" + fechaFin + "",
+                                        method: "GET",
+                                	}).success(function(response) { 
+                                		document.getElementById('totalAvistEst1').innerHTML = response
+                                		document.getElementById('totalAvistEst2').innerHTML = response
+                                		document.getElementById('totalAvistEst3').innerHTML = response
+                                    });
+                                }else{
+                                	document.getElementById('validacionFechasEst').innerHTML = "La fecha final es menor que la inicial";
+                                }                                                                                                  
+                            });    
+                        });   
+                    </script>                     
+                                                             						
+                </div>			
+            </div> 	                             
+        </div> 
+            
+        
+                       
+        
+        <div id="modalHistorias" th:fragment="modalHistorias">            
+			<div class="modal" th:style="'display: ' + ${despliegeModalHistorias}">    
+                <div class="contenido" >
+                		        
+                    <button onclick="closeModalHistorias()" class="btn btn-default" style="background-color: #FB0101; float: right;">
+                        <span class="glyphicon glyphicon-remove" style="float: right; color: #FFFFFF;"></span> 
+                    </button>
+            		
+                    <h1 style="background-color: #9FC418; color:#FFFFFF; width:600px;">Listado de Historias</h1>
+                		        			        	
+                	<div style="border: 25px solid; border-color: transparent; background-color: rgba(0,0,0,0.8);">
+                    	  
+                   	    <table id="tableHistorias" class="table table-striped table-bordered" cellspacing="0" 
+                         style="width: 100%; background-color: #E5E5E5; font-size: 0.9vw;">
+                       	        <thead>
+                       	            <tr> 
+                       	                <th>ID</th>
+                                        <th>Historia</th>                           
+                                        <th></th> 
+                                        <th></th>                                            
+                                    </tr>
+                                </thead>  
+
+                                <tbody>                   
+                                    <tr th:each="historia : ${historiaList}">                                                                        
+                                        <td th:text="${historia.id}"></td> 
+                                        <td>                                          
+                                            <table>
+											    <thead>
+                       	                            <tr> 
+                       	                                <th th:text="${historia.titulo}"></th>                                                                        
+                                                    </tr>
+                                                </thead> 
+                                                <tbody>                   
+                                                    <tr >
+                                                        <td th:text="${historia.texto}"></td>
+                                                    </tr>
+                                                </tbody>  
+								            </table>                                                                                  
+                                            <table style="width: 100%;">
+                                                <tbody>                   
+                                                    <tr>
+                                                        <td style="width: 33%;">
+                                                            <span th:text="'Usuario: ' + ${historia.username}"></span>
+                                                        </td>
+                                                        <td style="width: 34%;">
+                                                            <span th:text="'Creaci&oacute;n: ' + ${historia.fechaCreacion}"></span>
+                                                        </td>
+                                                        <td th:id="'estadoHist_' + ${historia.id}" 
+                                                            th:style="'width: 33%; background-color: ' + ${historia.colorEstado}">
+                                                            <span style="color: #FFFFFF;" th:text="'Estado: ' + ${historia.nombreEstado}"></span> 
+                                                        </td>
+                                                    </tr>
+                                                </tbody>  
+								            </table>                                                                                 
+                                        </td>                                         
+                                        <td>
+                                            <button th:if="${historia.estadoPublicacion==2}" th:id="'aproHist-' + ${historia.id}" 
+                                             style="background-color: #569837; border:none;" class="aproButtonHist">
+        									    <span style="color: #FFFFFF;">Aprobar</span>
+        									</button>
+                                            <br/><br/>
+                                            <button th:if="${historia.estadoPublicacion==2}" th:id="'rechHist-' + ${historia.id}" 
+                                             style="background-color: #B2B2B2; border:none;" class="rechaButtonHist">
+        									    <span style="color: #FFFFFF;">Rechazar</span>
+        									</button>
+                                        </td> 
+                                        <td>
+                                            <a id="verComenHisto" class="btn btn-default" 
+                                               style="font-size: 0.9vw; background-color: #569837; border:none; margin-left:1em;"
+											   th:onclick="'visualizarComentariosHistoria(' + ${historia.id} + ');'">
+        					                    <span style="color: #FFFFFF;">Ver Comentarios</span>
+        					                </a>
+                                        </td>  											
+                                    </tr>  	
+                                </tbody>								
+                        </table>                           				
+                    </div>          
+                </div>  
+        
+                <script th:inline="javascript"> 
+                    $('.aproButtonHist').off().click(function() {
+                        var idComplete = $(this).attr('id');  
+                        var id = idComplete.substring(9);
+                        $.ajax({
+                            url: "/cambiarEstadoHistoria/" + id + "/aprobado",
+                            method: "GET",
+                        }).success(function(response) {
+                        	$('#estadoHist_' + id).text("APROBADO"); 
+                            $('#estadoHist_' + id).css('background-color',"#559839");
+                        	$('#aproHist-' + id).hide(); 
+                        	$('#rechHist-' + id).hide();   
+                        	alert(response);
+                        });                               
+                    });  
+                    
+                    $('.rechaButtonHist').off().click(function() {
+                    	var idComplete = $(this).attr('id');  
+                        var id = idComplete.substring(9);
+                        $.ajax({
+                            url: "/cambiarEstadoHistoria/" + id + "/rechazado",
+                            method: "GET",
+                        }).success(function(response) {
+                        	$('#estadoHist_' + id).text("RECHAZADO"); 
+                            $('#estadoHist_' + id).css('background-color',"#B22D2C");
+                        	$('#aproHist-' + id).hide(); 
+                        	$('#rechHist-' + id).hide();
+                        	alert(response);	
+                        });                               
+                    });   
+                    
+                    function closeModalHistorias() {
+                        document.getElementById('modalHistorias').style.display = "none";
+                    }  
+                                        
+                </script>                     
+            </div>                   
+        </div> 
+		
+		
+		
+		
+		<div id="modalComenHisto" th:fragment="modalComenHisto"> 
+            <div id="modalComenHisto" class="modal" th:style="'display: ' + ${despliegeModalComenHisto}">    
+                <div style="position: relative; margin: auto; top: 10%; width: 80%;">
+                		        
+                    <button onclick="closeModalComenHisto()" class="btn btn-default" style="background-color: #FB0101; float: right;">
+                        <span class="glyphicon glyphicon-remove" style="float: right; color: #FFFFFF;"></span> 
+                    </button>
+            		
+                    <h1 style="background-color: #9FC418; color:#FFFFFF; width:600px;">Listado de Comentarios</h1>
+                		        			        	
+                	<div style="border: 25px solid; border-color: transparent; background-color: rgba(0,0,0,0.8);">
+                    	  
+                   	    <table id="tableComenHisto" class="table table-striped table-bordered" cellspacing="0" 
+                         style="width: 100%; background-color: #E5E5E5; font-size: 0.9vw;">
+                       	        <thead>
+                       	            <tr> 
+                       	                <th>ID</th>
+                                        <th>Comentario</th>                           
+                                        <th></th>                                             
+                                    </tr>
+                                </thead>  
+        
+                                <tbody>                   
+                                    <tr th:each="comenHisto : ${comenHistoList}">                                                                        
+                                        <td th:text="${comenHisto.id}"></td> 
+                                        <td>                                          
+                                            <table>
+                                                <tbody>                   
+                                                    <tr >
+                                                        <td th:text="${comenHisto.descripcion}"></td>
+                                                    </tr>
+                                                </tbody>  
+								            </table>                                                                                  
+                                            <table style="width: 100%;">
+                                                <tbody>                   
+                                                    <tr>
+                                                        <td style="width: 33%;">
+                                                            <span th:text="'Usuario: ' + ${comenHisto.username}"></span>
+                                                        </td>
+                                                        <td style="width: 34%;">
+                                                            <span th:text="'Creaci&oacute;n: ' + ${comenHisto.fechaCreacion}"></span>
+                                                        </td>
+                                                        <td th:id="'estadocomenHisto_' + ${comenHisto.id}" 
+                                                            th:style="'width: 33%; background-color: ' + ${comenHisto.colorEstado}">
+                                                            <span style="color: #FFFFFF;" th:text="'Estado: ' + ${comenHisto.nombreEstado}"></span> 
+                                                        </td>
+                                                    </tr>
+                                                </tbody>  
+								            </table>                                                                                 
+                                        </td>                                         
+                                        <td>
+                                            <button th:if="${comenHisto.estadoPublicacion==2}" th:id="'aproComenHisto-' + ${comenHisto.id}" 
+                                             style="background-color: #569837; border:none;" class="aproButtonComenHisto">
+        									    <span style="color: #FFFFFF;">Aprobar</span>
+        									</button>
+                                            <br/><br/>
+                                            <button th:if="${comenHisto.estadoPublicacion==2}" th:id="'rechComenHisto-' + ${comenHisto.id}" 
+                                             style="background-color: #B2B2B2; border:none;" class="rechaButtonComenHisto">
+        									    <span style="color: #FFFFFF;">Rechazar</span>
+        									</button>
+                                        </td>                   
+                                    </tr>                                                                                                     
+                                </tbody>								
+																
+                        </table>                           				
+                    </div>          
+                </div>  
+                
+                <script th:inline="javascript"> 
+                    $('.aproButtonComenHisto').off().click(function() {
+                        var idComplete = $(this).attr('id');  
+                        var id = idComplete.substring(15);
+                        $.ajax({
+                            url: "/cambiarEstadoComenHistoria/" + id + "/aprobado",
+                            method: "GET",
+                        }).success(function(response) {
+                        	$('#estadocomenHisto_' + id).text("APROBADO"); 
+                            $('#estadocomenHisto_' + id).css('background-color',"#559839");
+                        	$('#aproComenHisto-' + id).hide(); 
+                        	$('#rechComenHisto-' + id).hide();   
+                        	alert(response);
+                        });                               
+                    });  
+                    
+                    $('.rechaButtonComenHisto').off().click(function() {
+                    	var idComplete = $(this).attr('id');  
+                        var id = idComplete.substring(15);
+                        $.ajax({
+                            url: "/cambiarEstadoComenHistoria/" + id + "/rechazado",
+                            method: "GET",
+                        }).success(function(response) {
+                        	$('#estadocomenHisto_' + id).text("RECHAZADO"); 
+                            $('#estadocomenHisto_' + id).css('background-color',"#B22D2C");
+                        	$('#aproComenHisto-' + id).hide(); 
+                        	$('#rechComenHisto-' + id).hide();
+                        	alert(response);	
+                        });                               
+                    }); 
+                    
+                    function closeModalComenHisto() {
+                        document.getElementById('modalComenHisto').style.display = "none";
+                    }  
+                </script>                  
+            </div> 		
+        </div> 
+        
+                 
+
+				 
+        <div id="modalComenAvist" th:fragment="modalComenAvist">            
+			<div id="modalComenAvist" class="modal" th:style="'display: ' + ${despliegeModalComenAvist}">    
+                <div class="contenido" >
+                		        
+                    <button onclick="closeModalComenAvist()" class="btn btn-default" style="background-color: #FB0101; float: right;">
+                        <span class="glyphicon glyphicon-remove" style="float: right; color: #FFFFFF;"></span> 
+                    </button>
+    	        	
+                    <h1 style="background-color: #9FC418; color:#FFFFFF; width:600px;">Listado de Comentarios</h1>
+                		        			        	
+                	<div style="border: 25px solid; border-color: transparent; background-color: rgba(0,0,0,0.8);">
+                    	  
+                   	    <table id="tableComenAvist" class="table table-striped table-bordered" cellspacing="0" 
+                         style="width: 100%; background-color: #E5E5E5; font-size: 0.9vw;">
+                       	        <thead>
+                       	            <tr> 
+                       	                <th>ID</th>
+                                        <th>Comentarios</th> 
+                                        <th></th>                                                                                  
+                                    </tr>
+                                </thead>  
+                
+                                <tbody>                   
+                                    <tr th:each="comenAvist : ${comenAvistList}">                                                                        
+                                        <td th:text="${comenAvist.id}"></td> 
+                                        <td>                                          
+                                            <table>
+                                                <tbody>                   
+                                                    <tr >
+                                                        <td th:text="${comenAvist.descripcion}"></td>
+                                                    </tr>
+                                                </tbody>  
+								            </table>                                                                                  
+                                            <table style="width: 100%;">
+                                                <tbody>                   
+                                                    <tr>
+                                                        <td style="width: 33%;">
+                                                            <span th:text="'Usuario: ' + ${comenAvist.username}"></span>
+                                                        </td>
+                                                        <td style="width: 34%;">
+                                                            <span th:text="'Creaci&oacute;n: ' + ${comenAvist.fechaCreacion}"></span>
+                                                        </td>
+                                                        <td th:id="'estadocomenAvist_' + ${comenAvist.id}" 
+                                                            th:style="'width: 33%; background-color: ' + ${comenAvist.colorEstado}">
+                                                            <span style="color: #FFFFFF;" th:text="'Estado: ' + ${comenAvist.nombreEstado}"></span> 
+                                                        </td>
+                                                    </tr>
+                                                </tbody>  
+								            </table>                                                                                 
+                                        </td>                                         
+                                        <td>
+                                            <button th:if="${comenAvist.estadoPublicacion==2}" th:id="'aproComenAvist-' + ${comenAvist.id}" 
+                                             style="background-color: #569837; border:none;" class="aproButtonComenAvist">
+		        							    <span style="color: #FFFFFF;">Aprobar</span>
+		        							</button>
+                                            <br/><br/>
+                                            <button th:if="${comenAvist.estadoPublicacion==2}" th:id="'rechComenAvist-' + ${comenAvist.id}" 
+                                             style="background-color: #B2B2B2; border:none;" class="rechaButtonComenAvist">
+		        							    <span style="color: #FFFFFF;">Rechazar</span>
+		        							</button>
+                                        </td>                   
+                                    </tr>                                                                                                     
+                                </tbody>
+                        </table>                           				
+                    </div>          
+                </div>  
+                
+                <script th:inline="javascript"> 
+                    $('.aproButtonComenAvist').off().click(function() {
+                        var idComplete = $(this).attr('id');  
+                        var id = idComplete.substring(15);
+                        $.ajax({
+                            url: "/cambiarEstadoComenAvistamiento/" + id + "/aprobado",
+                            method: "GET",
+                        }).success(function(response) {
+                        	$('#estadocomenAvist_' + id).text("APROBADO"); 
+                            $('#estadocomenAvist_' + id).css('background-color',"#559839");
+                        	$('#aproComenAvist-' + id).hide(); 
+                        	$('#rechComenAvist-' + id).hide();   
+                        	alert(response);
+                        });                               
+                    });  
+                    
+                    $('.rechaButtonComenAvist').off().click(function() {
+                    	var idComplete = $(this).attr('id');  
+                        var id = idComplete.substring(15);           
+                        $.ajax({
+                            url: "/cambiarEstadoComenAvistamiento/" + id + "/rechazado",
+                            method: "GET",
+                        }).success(function(response) {
+                        	$('#estadocomenAvist_' + id).text("RECHAZADO"); 
+                            $('#estadocomenAvist_' + id).css('background-color',"#B22D2C");
+                        	$('#aproComenAvist-' + id).hide(); 
+                        	$('#rechComenAvist-' + id).hide();
+                        	alert(response);	
+                        });                               
+                    }); 
+                    
+                    function closeModalComenAvist() {
+                        document.getElementById('modalComenAvist').style.display = "none";
+                    }  
+                </script>                  
+            </div>                 
+        </div> 
+        
+        
+        
+
+		<div id="modalEditAvist" th:fragment="modalEditAvist">            
+			<div id="modalEditAvist" class="modal" th:style="'display: ' + ${despliegeModalEditAvist}"> 			       
+                <div style="position: relative; margin: auto; top: 10%; width: 30%;">               		        
+                    <button onclick="closeModalEditAvist()" class="btn btn-default" style="background-color: #FB0101; float: right;">
+                        <span class="glyphicon glyphicon-remove" style="float: right; color: #FFFFFF;"></span> 
+                    </button>
+    	        	
+                    <h1 style="background-color: #9FC418; color:#FFFFFF; width:450px;">Editar Avistamiento</h1>
+                	 	        			        	
+                	<div style="border: 25px solid; border-color: transparent; background-color: rgba(0,0,0,0.8);">					
+					    <div style="width: 100%; background-color: #E5E5E5;">                    	  
+                   	        <div class="row margin-reset">
+                   	            <br/>	
+                                <p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">C&oacute;digo:
+                                <span id="idAvistEdit" th:text="${idAvistEdit}" style="color:#777575;"></span></p>
+                                  
+                                <p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">Nombre Com&uacute;n:
+                                    <input id="nombreEdit" type="text" th:value="${nombreEdit}"   
+                                     style="color:#777575; border-radius: 0px; width:95%;"></input>
+									 <p id="validNombreEdit" style="color:#FF0000; margin-left:1em;"></p>
+                                </p>
+                                
+                                <p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">Descripci&oacute;n:
+                                    <input id="descripEdit" type="text" th:value="${descripEdit}" 
+                                     style="color:#777575; border-radius: 0px; width:95%;"></input>
+                                </p>
+                                
+                                <p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">Nombre Cient&iacute;fico:
+                                    <input id="nomCienEdit" type="text" th:value="${nomCienEdit}" 
+                                     style="color:#777575; border-radius: 0px; width:95%;"></input>
+                                </p>
+                                
+                                <p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">Tipo Avistamiento:
+                                <span th:text="${tipoAvistEdit}" style="color:#777575;"></span></p>
+                                					
+					            <br/>
+                                <br/> 
+						        
+						        <a id="guardaAvist" class="btn btn-default guardaAvist" 
+						            style="height:32px; background-color: #569837; border:none; margin-left:1em;"
+						            th:onclick="'guardarAvistamiento(' + ${idAvistEdit} + ',\'' + ${numColorApp} + '\');'">
+                                    <span style="color: #FFFFFF;">Guardar</span>
+                                </a>
+    					        
+					            <a id="cancelAvist" class="btn btn-default cancelAvist" 
+						           style="height:32px; background-color: #FF0000; border:none; margin-left:1em;"
+						           onclick="closeModalEditAvist()">
+					                <span style="color: #FFFFFF;">Cancelar</span>
+					            </a>
+					            <br/>
+                                <br/> 
+					        </div> 
+                        </div> 						
+                    </div>        
+                </div>                  
+                <script th:inline="javascript"> 
+                    function guardarAvistamiento(id,numColorApp) { 
+                        var nombre = $('#nombreEdit').val();                        											
+						if(nombre!=""){
+						    var descrip = $('#descripEdit').val();
+                            var nomCien = $('#nomCienEdit').val();
+                            
+                            var tipoEsp = "0"; 
+                            if(nomCien==""){  nomCien = "0"  }
+                            
+                            $.ajax({
+                                url: "/editarAvistamiento/"
+                                	 + id + "/" + nombre + "/" + descrip + "/" + nomCien + "/" + tipoEsp + "/" + numColorApp + "",
+                                method: "GET",
+                                beforeSend: function() {
+                                	$('avistamientoDetalle').remove();
+                                },
+                                success: function(html) { 
+                                	$('#avistamientoDetalle').replaceWith(html);
+                                	$('#modalFourViews').find('#avistamientoDetalle').replaceWith(html);
+                                } 
+                            });
+                            document.getElementById('modalEditAvist').style.display = "none";
+						}else{
+						    document.getElementById('validNombreEdit').innerHTML = "Debe colocar un nombre";
+						}												
+                    }; 
+					
+                    function closeModalEditAvist() {
+                        document.getElementById('modalEditAvist').style.display = "none";
+                    };  
+                </script>                                  
+            </div>                 
+        </div> 
+
+
+
+
+		<div id="modalAproAvist" th:fragment="modalAproAvist">            
+			<div id="modalAproAvist" class="modal" th:style="'display: ' + ${despliegeModalAproAvist}"> 			       
+                <div style="position: relative; margin: auto; top: 10%; width: 30%;">               		        
+                    <button onclick="closeModalAproAvist()" class="btn btn-default" style="background-color: #FB0101; float: right;">
+                        <span class="glyphicon glyphicon-remove" style="float: right; color: #FFFFFF;"></span> 
+                    </button>
+    	        	
+                    <h1 style="background-color: #9FC418; color:#FFFFFF; width:450px;">Aprobar Avistamiento</h1>
+                	 	        			        	
+                	<div style="border: 25px solid; border-color: transparent; background-color: rgba(0,0,0,0.8);">					
+					    <div style="width: 100%; background-color: #E5E5E5;">                    	  
+                   	        <div class="row margin-reset">
+                   	            <br/>	
+                                <p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">C&oacute;digo:
+                                <span id="idAvistApr" th:text="${idAvistApr}" style="color:#777575;"></span></p>
+                                  
+                                <p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">Nombre Com&uacute;n:
+                                    <input id="nombreApr" type="text" th:value="${nombreApr}"   
+                                     style="color:#777575; border-radius: 0px; width:95%;"></input>
+									<p id="validNombreApr" style="color:#FF0000; margin-left:1em;"></p>
+                                </p>
+                                
+                                <p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">Descripci&oacute;n:
+                                    <input id="descripApr" type="text" th:value="${descripApr}" 
+                                     style="color:#777575; border-radius: 0px; width:95%;"></input>
+                                </p>
+                                
+                                <p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">Nombre Cient&iacute;fico:
+                                    <input id="nomCienApr" type="text" th:value="${nomCienApr}" 
+                                     style="color:#777575; border-radius: 0px; width:95%;"></input>
+                                </p>
+                                <br/>
+                                <p th:style="'color:#FF0000; margin-left:1em; display: ' + ${showSelectApr} + ';'">
+                                    Debe asignarle una especie a su avistamiento</p>
+                                
+                                <p th:style="'color: #' + ${numColorApp} + '; margin-left:1em;'">Tipo Avistamiento:
+                                <span th:text="${tipoAvistApr}" style="color:#777575;"></span></p>
+                                
+                                <div th:style="'display: ' + ${showSelectApr} + ';'" >
+                                    <p style="color:#569837; margin-left:1em;">Tipo Especie:
+                                    <select id="tipoEspApr">
+                                        <option th:each="esp : ${listEspecieApr}" th:value="${esp.id}" th:text="${esp.nombre}"></option>
+                                    </select></p>
+                                </div>    					
+					            <br/>
+                                <br/>                                 						        
+						        <a id="confAproAvist" class="btn btn-default confAproAvist" 
+						            style="height:32px; background-color: #569837; border:none; margin-left:1em;"
+						            th:onclick="'confirmarAprovacionAvist(' + ${idAvistApr} + ',\''  + ${numColorApp} + '\');'">
+                                    <span style="color: #FFFFFF;">Confirmar</span>
+                                </a>
+    					        
+					            <a id="confRechAvist" class="btn btn-default confRechAvist" 
+						           style="height:32px; background-color: #FF0000; border:none; margin-left:1em;"
+						           onclick="closeModalAproAvist()">
+					                <span style="color: #FFFFFF;">Cancelar</span>
+					            </a>
+					            <br/>
+                                <br/> 
+					        </div> 
+                        </div> 						
+                    </div>        
+                </div>                  
+                <script th:inline="javascript"> 
+                    function confirmarAprovacionAvist(id,numColorApp) { 
+                        var nombre = $('#nombreApr').val();                       						
+						if(nombre!=""){
+						    var descrip = $('#descripApr').val();
+                            var nomCien = $('#nomCienApr').val();
+                            var tipoEsp = $('#tipoEspApr').val();
+                            
+                            if(nomCien==""){  nomCien = "0"  }
+                                                       
+                            $.ajax({
+                                url: "/confirmarAprobacionAvistamiento/" + id + "/" + nombre + "/" + descrip + "/" 
+                                                                         + nomCien + "/" + tipoEsp + "/" + numColorApp + "",
+                                method: "GET",
+                                beforeSend: function() {
+                                	$('avistamientoDetalle').remove();
+                                },
+                                success: function(html) { 
+                                	$('#avistamientoDetalle').replaceWith(html);
+                                    $('#modalFourViews').find('#avistamientoDetalle').replaceWith(html);
+                                    $('#estadoAvist_' + id).text("Aprobado"); 
+                                    $('#estadoAvist_' + id).css('background-color',"#559839");                	
+                                    $('#modalFourViews').find('#estadoAvist_'+id).text("Aprobado");
+                                    $('#modalFourViews').find('#estadoAvist_'+id).css('background-color',"#559839"); 
+                                    
+                                    $.ajax({
+                                        url: "/getMarcadorAvistamiento/" + id,
+                                        method: "GET",
+                                    }).success(function(paquete) {
+                                        /*<![CDATA[*/                            
+                                            initMap(paquete);
+            		                    /*]]>*/	                                	
+                                    }); 
+                                }  
+                            });
+                            document.getElementById('modalAproAvist').style.display = "none";
+						}else{
+						    document.getElementById('validNombreApr').innerHTML = "Debe colocar un nombre";
+						}												
+                    }; 
+                    
+                    function closeModalAproAvist() {
+                        document.getElementById('modalAproAvist').style.display = "none";
+                    };  
+                </script>                                  
+            </div>                 
+        </div>           
+
+		
+		
+
+    </body>
+	
+</html>

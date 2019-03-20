@@ -1,0 +1,13 @@
+import { Component } from '@angular/core';
+
+@Component({
+    selector: 'menu-apps',
+    templateUrl: 'menu-apps.html'
+})
+export class MenuAppsComponent {
+
+    constructor() {
+        console.log('Hello MenuAppsComponent Component');
+    }
+
+}

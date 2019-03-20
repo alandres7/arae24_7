@@ -1,0 +1,12 @@
+<button *ngIf="layerLevel=='CAPA'" class="vertical-divider" style="border-radius:0;display: inline" ion-fab
+    (click)="onTapLayer()" [color]="color">
+
+    <img *ngIf="layer.layerType=='REPORTE' || layer.layerType=='ARBOL' || layer.layerType=='ENCUESTA'" style="height: auto; width: 3rem;" [src]="layer.urlIcon" />
+    <label *ngIf="layer.layerType=='REPORTE' || layer.layerType=='ARBOL' || layer.layerType=='ENCUESTA'" class="fab-label">{{layer.name}}</label>
+
+    <ion-icon *ngIf="layer.layerType=='BACK'" name="ios-arrow-back"></ion-icon>
+
+    <img *ngIf="layer.layerType=='FILTRO'" [src]="layer.urlIcon" />
+
+    <!--  <div *ngIf="layer.layerType!='BACK'">{{layer.name}}</div>-->
+</button>

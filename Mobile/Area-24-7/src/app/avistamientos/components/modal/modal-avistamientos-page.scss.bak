@@ -1,0 +1,133 @@
+
+.containerAvistamiento {
+    margin-top: 20%;
+    margin-left: auto;
+    margin-right: auto;
+    border: .3px solid gray;
+    width: 85%;
+    height: 85%;
+    max-height: 100%;
+    background-color: #fff;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+
+ 
+}
+
+.barAvistamiento{
+    height: 4rem;
+    width: 100%;
+    border-radius: 5px;
+    background-color: #009A37;
+    box-shadow: -1px 2px 16px 0px rgba(59,57,59,1);
+    z-index: 5;
+
+}
+
+.image {
+            max-width: 6.5rem;
+            max-height: 6.2rem;
+            border-radius: 50%;
+            position: relative;
+            top: -1rem;
+            border: 4px solid #1b5e20;
+            border-radius: 50%;
+            margin-left: auto;
+            margin-right: auto;
+}
+
+   
+.img {
+            max-width: 6.5rem;
+            max-height: 6.2rem;
+            border-radius: 50%;
+            position: relative;
+            top: -5.5rem;
+            border: 4px solid #1b5e20;
+            border-radius: 50%;
+            margin-left: auto;
+            margin-right: auto;
+            background-color:  #009A37;
+ }
+
+ .imagePrincipal {
+            height: 98%;
+            width: 90%;
+            position: relative;
+            max-width: 90%;
+            max-height: 98%;
+            margin-left: 2%;
+            margin-right: 2%;
+
+ }
+
+#izquierda{
+        top:15%;
+        height:30%; 
+        width:30%;  
+        padding: 5px;
+        margin: 5px;
+}  
+#derecha{  
+        top:15%;
+        height:30%;  
+        width:30%;  
+        padding: 5px;
+        margin: 5px;
+}  
+
+#center{  
+         top:15%;
+        height:30%;
+        width:30%; 
+        padding: 5px;
+        margin: 5px; 
+}  
+
+.padre {
+    display: flex;
+    justify-content: center;
+}
+
+.imgEspecie {
+            max-width: 6.5rem;
+            max-height: 6.2rem;
+            border-radius: 50%;
+            border: 4px solid #1b5e20;
+            margin-left: auto;
+            margin-right: auto;
+ }
+
+ .titulo {
+     color: #009A37;
+     text-align: center;
+ }
+
+ .imgEspecie:hover{
+     border: 4px solid #fff;
+     background-color:#a0ffc2;
+ }
+
+ .select-md .select-icon,.select-ios.select-icon {
+    position: absolute;
+    width: 35px;
+    height: 30px;
+    top: 0px;
+    left: 80%;
+    background-color: #009A37;
+}
+
+.select-md .select-icon .select-icon-inner {
+    border-top: 12px solid;
+    border-right: 12px solid transparent;
+    border-left: 12px solid transparent;
+    color: white;
+
+}
+
+.item-md ion-thumbnail ion-img, .item-md ion-thumbnail img {
+    width: 140px;
+    height: 140px;
+}
+

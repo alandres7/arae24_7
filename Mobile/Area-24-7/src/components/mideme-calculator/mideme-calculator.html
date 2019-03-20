@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar [ngStyle]="{'background': color}">
+      <ion-title>CALCULADORA</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="center">
+    <div class="colu">
+      <span class="bold">Responde estas preguntas</span>
+      <p class="grayText">Cálcula el consumo de agua en tu hogar con este formulario. Obtendrás un listado con tus resultados</p>
+    </div>
+    <br>
+
+    <dynamic-form #dynamicForm="dynamicForm" [controls]="controls" [form]="form"></dynamic-form>
+    <button ion-button icon-right (click)="submitForm($event)">
+      Submit
+      <ion-icon name="send"></ion-icon>
+    </button>
+    <div>
+      <button ion-button [ngStyle]="{'background': color}" (click)="goToResult()">Calcular consumo</button>
+    </div>
+</ion-content>

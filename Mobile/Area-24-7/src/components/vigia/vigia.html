@@ -1,0 +1,14 @@
+<layer-manager [app]="app"></layer-manager>
+
+
+<!-- <fusion-layer style="visibility: hidden; width: 0; height: 0;"
+              [layer]="layerSearch"
+              [layerLevel]="'CAPA'"
+              [color]="app.color"
+              [fixedActionRadius]="getNumberMaxValue()"></fusion-layer>     -->
+
+<my-location [color]="app.color" 
+             [actionRadius]="app.radius" 
+             (clickPedestrian)="onClickPedestrian($event)" 
+             (clickMyLocationButton)="onClickMyLocationButton($event)" 
+             (dragendPedestrian)="onDragendPedestrian($event)"></my-location>

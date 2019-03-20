@@ -1,0 +1,129 @@
+modal-vigias-page{
+
+
+.containerVigias {
+    margin-top: 20%;
+    margin-left: auto;
+    margin-right: auto;
+    border: .3px solid gray;
+    width: 85%;
+    height: 85%;
+    max-height: 100%;
+    background-color: #fff;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+
+ 
+}
+
+.barVigias{
+    height: 4rem;
+    width: 100%;
+    border-radius: 5px;
+    background-color: #71338A;
+    box-shadow: -1px 2px 16px 0px rgba(59,57,59,1);
+    z-index: 5;
+    
+
+}
+
+.titulo {
+     color: #71338A;
+     text-align: center;
+ }
+
+ .textarea {
+    width: 85%;
+ }
+
+ .img {
+            max-width: 6.5rem;
+            max-height: 6.2rem;
+            border-radius: 50%;
+            position: relative;
+            top: -5.5rem;
+            border: 4px solid #71338A;
+            border-radius: 50%;
+            margin-left: 40%;
+            margin-right: 40%;
+            background-color:  #71338A;
+            
+ }
+
+ 
+ .imagePrincipal {
+            height: 100%;
+            width: 90%;
+            position: relative;
+            max-width: 100%;
+            max-height: 100%;
+            margin-left: 100%;
+
+ }
+ .imagePrincipal2 {
+    height: 100%;
+    width: 90%;
+    position: relative;
+
+}
+
+@import url(https://fonts.googleapis.com/css?family=Comfortaa:400,700,300);
+
+.svg{
+  width: 100px;
+  height: 100px;
+  margin: 20px;
+  display:inline-block;
+}
+
+.select-md .select-icon,.select-ios.select-icon {
+    position: absolute;
+    width: 35px;
+    height: 30px;
+    top: 0px;
+    left: 80%;
+    background-color: #71338A;
+}
+
+.select-md .select-icon .select-icon-inner {
+    border-top: 12px solid;
+    border-right: 12px solid transparent;
+    border-left: 12px solid transparent;
+    color: white;
+    
+
+}
+
+.input-wrapper{
+    width: 100%;
+    height: 100%;
+}
+
+ion-slides {
+    width: 100%;
+    height: 100%;
+    display: block;
+    margin-top: -20%;
+    
+}
+
+.item-md ion-thumbnail ion-img, .item-md ion-thumbnail img {
+    width: 140px;
+    height: 140px;
+}
+
+.padre {
+    display: flex;
+    justify-content: center;
+    
+}
+ion-item.item-ios, ion-item.item-md, ion-item.item-wp {
+    padding-left: 15%;
+    padding-right: 15%;
+    min-height: 100%;
+}
+
+
+
+}

@@ -1,0 +1,100 @@
+busqueda-viajes {
+
+  .card-rutas{
+    background: #006FAC;
+    color: white;
+    width: 90px;
+    height: 30px;
+  }
+
+  #header {
+    background-color: #006fac;
+    color: white;
+  }
+
+  .circle{
+    height:50px;
+    width: 50px;
+    border-radius:200px;
+    border-style: solid;
+    border-color: #006fac;
+    border-width: 2px;
+    background-color: #006fac;
+    float: left;
+  }
+
+  .iconsDiv{
+    height: 80px;
+    width: 200px;
+  }
+
+  .iconsViajes {
+    width:1.88rem;
+    vertical-align: middle;
+  }
+
+  .divFlecha{
+    margin-top: 5px;
+
+  }
+
+  .iconFlecha {
+    width: 0.8rem;
+    vertical-align: middle;
+  }
+
+  .labelCircle {
+    color:#ffffff;
+    font-size: 11px;
+    position: relative;
+    top: 14px;
+    left:5px;
+    font-weight: bold;
+  }
+
+  .pInforV{
+    color:black;
+    font-size: 11px;
+
+
+  }
+
+  .btnBor{
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #006fac;
+      padding-left: 0px;
+
+
+  }
+
+  .labelNumRL{
+    color: black;
+    font-size: 11px;
+  }
+
+  .AvaInfo{
+    margin-left: 0 !important;
+    margin-right: 5px !important;
+    margin-top: 8px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .headerViaSug{
+    background-color: #006fac;
+    color: white;
+    text-align: center;
+    height: 40px;
+  }
+  .vertical-center {
+    position:absolute;
+    top:44%;
+    width:100%;
+    text-align:center;
+  }
+
+  .cardViajes{
+    padding-left: 10px;
+    padding-right:10px;
+  }
+}

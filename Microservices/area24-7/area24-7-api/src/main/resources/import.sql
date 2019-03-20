@@ -1,0 +1,2 @@
+INSERT INTO `d247seg_rol` (`id`, `s_activo`, `s_descripcion`, `s_nombre`) VALUES (NULL, '1', 'Rol para administradores de la aplicación', 'ADMIN');
+INSERT INTO `d247seg_rol` (`id`, `s_activo`, `s_descripcion`, `s_nombre`) VALUES (NULL, '1', 'Rol para usuarios de la aplicación', 'USER');

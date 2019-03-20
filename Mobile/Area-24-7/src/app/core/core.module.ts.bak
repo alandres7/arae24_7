@@ -1,0 +1,14 @@
+import { ModalPage } from './modal-page/modal-page';
+import { MapaComponent } from './mapa/mapa';
+import {NgModule} from '@angular/core';
+import { IonicModule, IonicPageModule } from 'ionic-angular';
+import { BarraNavegabilidad } from './barra-navegabilidad/barra-navegabilidad.component';
+
+@NgModule({
+  imports: [IonicPageModule.forChild(ModalPage)],
+  declarations: [ModalPage,MapaComponent, BarraNavegabilidad],
+  providers: [],
+  exports: [IonicModule,MapaComponent, BarraNavegabilidad]
+})
+export class CoreModule {
+}

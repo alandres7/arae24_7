@@ -1,0 +1,58 @@
+story-list {
+    .toolbar-background {
+        background: inherit;
+    }
+    .toolbar-title {
+        color: map-get($colors, light);
+    }
+    .bar-button {
+        color: map-get($colors, light);
+    }
+    .row {
+        .col {
+            .label.label {
+                margin: 0;
+                text-align: right;
+            }
+            .card-md,
+            .card-ios {
+                border-radius: 0px;
+                font-size: 1.4rem;
+                background-color: #efefef;
+                box-shadow: none;
+                padding: 5px;
+                small {
+                    color: map-get($colors, gray);
+                    padding: 0;
+                }
+                hr {
+                    width: 95%;
+                    margin: 0 auto;
+                }
+                p {
+                    padding: 5px;
+                    font-size: 1.4rem;
+                    span {
+                        text-transform: lowercase;
+                        font-size: 1.2rem;
+                        display: inline-block;
+                    }
+                    span:first-child {
+                        font-size: 1.4rem;
+                        font-weight: bold;
+                    }
+                    span:first-letter {
+                        text-transform: uppercase;
+                    }
+                }
+                .row {
+                    .col {
+                        span {
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

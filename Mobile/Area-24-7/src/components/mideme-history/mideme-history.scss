@@ -1,0 +1,65 @@
+mideme-history {
+    font-size:1.7rem;
+    .scroll-content {
+        .arriba {
+            margin-top:-30px!important;
+        }
+    }
+    .cont {
+        margin: 40px auto;
+        width: 100%;
+        position:relative;
+        .redLabel {
+          border-radius:8px;
+          padding:5px 10px 15px;
+          position:absolute;
+          top:-30px;
+          right:0;
+          color:#ffffff;
+          font-size:1.4rem;
+        }
+        p {
+          border:1px solid map-get($colors , light-gray );
+          border-radius:8px;
+          padding:10px;
+          position:relative;
+          background:#fff;
+          font-size:1.7rem;
+          span{
+            float:right;
+            font-weight:bold;
+          }
+        }
+        i {
+            font-size:2rem;
+        }
+        &.good {   
+            color:map-get($colors, btnGreen);
+            .redLabel {
+                background:map-get($colors, btnGreen);
+            }
+            .fas::before {
+                content: "\f5b8";
+            }
+        }
+        &.meh {
+            color:map-get($colors, huellas);
+            .redLabel {
+                background:map-get($colors, huellas);
+            }
+            .fas::before {
+                content: "\f11a";
+            }
+        }
+        &.bad {
+            color:map-get($colors, btnRed);
+            .redLabel {
+                background:map-get($colors, btnRed);
+            }
+            .fas::before {
+                content: "\f5b4";
+            }
+        }
+    }
+
+}

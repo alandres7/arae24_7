@@ -1,0 +1,7 @@
+<!-- <ion-searchbar color="clear" (ionInput)="getItems($event)" *ngIf="this.listaEquipamentos"></ion-searchbar> -->
+<div  id="search" class="search-input-keyword">
+    <ion-searchbar class="ion-searchtext" id="ion-searchtext" (ionInput)="getItems($event)" *ngIf="this.listaEquipamentos"
+       placeholder="Buscar objetos del mapa"
+      debounce="1"></ion-searchbar>
+  </div>
+<lista-objetos-mapa [listaObjetosMapa] = "this.nuevaListaMapa"></lista-objetos-mapa>

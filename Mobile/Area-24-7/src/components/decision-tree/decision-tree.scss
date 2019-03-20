@@ -1,0 +1,130 @@
+decision-tree {
+    .toolbar-background {
+        background: inherit;
+    }
+    .title-up, .text-up {
+        text-align:center;
+    }
+    .title-up{
+        font-weight:400;
+    }
+    .text-up {
+        color:#777777;
+    }
+    .toolbar-title,
+    .back-button .button-inner {
+        color: map-get($colors, light);
+    }
+    .banner {
+        text-align: center;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        height: 4rem;
+    }
+    .round-icon {
+        margin: -4rem auto 0;
+        width: 6rem;
+        height: 5rem;
+        border-radius: 100%;
+        text-align: center;
+        img {
+            width: 4.5rem;
+        }
+    }
+    .swiper-slide {
+        img {
+            width: 30rem;
+            height: auto;
+        }
+    }
+    .swiper-pagination-bullet-active{
+        background: map-get($colors, primary);
+    }
+    /*test display image claudia ariza*/
+
+
+    .arbol-cont {
+    
+        .ionic-button {
+            display:inline-block;
+            padding:0px;
+            border-style:solid;
+            border-width: 4px;
+            border-radius: 4px;
+            margin:5px 4px;
+            color: #ffffff;
+            width: calc(50% - 11px);
+            font-weight:bold;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            text-align: center;
+            img {
+                width:100%;
+                height:45vw;
+                background:#ffffff;
+            }
+            p {
+                color:#ffffff;
+                overflow: hidden;
+                max-width: 100%;
+                width:100%;
+                /*height: 27px;*/
+                text-overflow: ellipsis;
+                white-space: nowrap!important;
+                margin-left:5px;
+            }
+        }
+    }
+    .atras-link {
+        height: 25px;
+        margin-top: -7px;
+        p{
+            padding:0;
+            font-weight:bold;
+            text-decoration: underline;
+            text-align:left;
+            color:#222222;
+        }
+    }
+    h4.titulo {
+        color:map-get($colors, Asómbrate);
+        font-weight:400;
+    }
+    .nombre-cien {
+        color:#777777;
+        font-style:italic;
+    }
+
+
+
+    .last-specie, .last-specie.ionic-button{
+        width: 300px;
+        margin:5px;
+        margin-left: calc(50vw - 165px);
+        background: transparent;
+        border:none;
+        position:relative;
+        img, audio, video {
+            width:100%;
+        }
+        p {    
+            color:#999;
+            text-align:left;
+            margin:15px 0;
+        }
+        button{
+            padding: 10px;
+            position: absolute;
+            right: 0;
+            top: 11px;
+            border-radius: 4px;
+            color: #fff;
+            font-weight: 600;
+        }
+        .titulo {
+            font-weight:bold;
+            color:map-get($colors, Asómbrate);
+        }
+    }   
+}

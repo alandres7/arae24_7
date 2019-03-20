@@ -1,0 +1,97 @@
+<ion-content padding>
+  <div style="float: right">
+    <ion-icon name="close" (click)="closeModal()"></ion-icon>
+  </div>
+  <!-- Si esta dentro del area metropolitana y es un reporte que le compete a la AMVA -->
+  <div *ngIf="validateZone == true">
+    <h5 [ngStyle]="{'color': color}">Se enviarán los siguientes datos</h5>
+
+    <ion-slides pager>
+      <ion-slide *ngFor="let picture of pictures">
+        <img [src]="picture.url" alt="" *ngIf="picture.tipo == 'image'">
+        <video controls="controls" preload="metadata" webkit-playsinline="webkit-playsinline"
+          *ngIf="picture.tipo == 'video'">
+          <source [src]="picture.url" type="video/mp4" />
+        </video>
+        <audio controls *ngIf="picture.tipo == 'audio'" style="width: 210px;height: 130px;">
+          <source [src]="picture.url" type="audio/ogg">
+        </audio>
+      </ion-slide>
+    </ion-slides>
+    <h6 [ngStyle]="{'color': color}"><strong>Autoridad competente:</strong>
+        <span class="normalText">{{autoridad.nombre}}-{{autoridad.municipio}}</span>
+      </h6>
+    <h6 [ngStyle]="{'color': color}"><strong>Dirección:</strong><span
+        class="normalText">{{infoReport.locationFormCtrl.value}}</span></h6>
+    <h6 class="cuadro" [ngStyle]="{'color': color}"><strong>Descripción:</strong> <span
+        class="normalText">{{infoReport.descriptionFormCtrl.value}}</span></h6>
+    <p></p>
+    <div>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-6>
+            <button class="red" ion-button (click)="closeModal()">Regresar</button>
+          </ion-col>
+          <ion-col col-6>
+            <button class="green" ion-button (click)="generateReport('AMVA')">Aceptar</button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+
+
+  <!-- Si esta fuera del area metropolitana y es un reporte que NO le compete a la AMVA -->
+  <div *ngIf="validateZone == false">
+    <div text-center class="success">
+    </div>
+    <h5 [ngStyle]="{'color': color}">Tu reporte ha sido registrado</h5>
+    <p class="text-center">Estas afectaciones son juridicción de otra entidad por lo tanto no generamos número de
+      radicado.</p>
+    <div>
+      <ion-slides pager>
+        <ion-slide *ngFor="let picture of pictures">
+          <img [src]="picture.url" alt="" *ngIf="picture.tipo == 'image'">
+          <video controls="controls" preload="metadata" webkit-playsinline="webkit-playsinline"
+            *ngIf="picture.tipo == 'video'">
+            <source [src]="picture.url" type="video/mp4" />
+          </video>
+          <audio controls *ngIf="picture.tipo == 'audio'" style="width: 210px;height: 130px;">
+            <source [src]="picture.url" type="audio/ogg">
+          </audio>
+        </ion-slide>
+      </ion-slides>
+    </div>
+    <h6 [ngStyle]="{'color': color}"><strong>Autoridad competente</strong><br />
+      <span class="normalText">{{autoridad?.nombre}}</span>
+    </h6>
+    <h6 [ngStyle]="{'color': color}"><strong>Descripción:</strong><br />
+      <span class="normalText">{{infoReport.descriptionFormCtrl.value}}</span>
+    </h6>
+    <h6 [ngStyle]="{'color': color}"><strong>Dirección reporte:</strong><br />
+      <span class="normalText">{{infoReport.locationFormCtrl.value}}</span>
+    </h6>
+    <h6 [ngStyle]="{'color': color}"><strong>Teléfono:</strong><br />
+      <span class="normalText">{{autoridad?.telefono}}</span>
+    </h6>
+    <h6 [ngStyle]="{'color': color}"><strong>Dirección:</strong><br />
+      <span class="normalText">{{autoridad?.direccion}}</span>
+    </h6>
+    <h6 [ngStyle]="{'color': color}" *ngIf="autoridad.correo != ' '"><strong>Correo portal:</strong><br />
+      <span class="normalText">{{autoridad?.correo}}</span>
+    </h6>
+    <h6 [ngStyle]="{'color': color}" *ngIf="autoridad.correo != ' '"><strong>Correo notificaciones judiciales:</strong><br />
+      <span class="normalText">{{autoridad?.correo}}</span>
+    </h6>
+    <!-- <ion-grid>
+      <ion-row>
+        <ion-col col-6>
+          <button class="red" ion-button (click)="closeModal()">Regresar</button>
+        </ion-col>
+        <ion-col col-6>
+          <button class="green" ion-button (click)="generateReport('NOAMVA')">Aceptar</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid> -->
+  </div>
+</ion-content>

@@ -1,0 +1,321 @@
+<div class="containerVigias">
+    <!--<div *ngIf="data.id == 1" style="height: 100%;">
+        <div id="bar-modal" class="barVigias">
+            <ion-buttons end>
+                <button color="clear" ion-button button-toogle end (click)="closeModal()"><ion-icon name="close"></ion-icon></button>
+            </ion-buttons>
+        </div>
+        <img id="img-modal" class="img" src="{{imagen}}">
+
+        <ion-slides pager="true" (ionSlideDidChange)="slideChanged()">
+            <ion-slide>
+                <div>
+                    <h4 class="titulo">Municipio</h4>
+                </div>
+                <ion-list>
+                    <ion-item style="border-bottom: 1px solid white;">
+
+                        <ion-select [(ngModel)]="toppings1">
+                            <ion-option value="bacon">Medellin</ion-option>
+                            <ion-option value="olives">Envigado</ion-option>
+                            <ion-option value="xcheese">Sabaneta</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-list>
+
+            </ion-slide>
+            <ion-slide>
+                <div>
+                    <h4 class="titulo">Recurso</h4>
+                </div>
+                <div>
+                    <ion-row>
+                        <ion-col col-4 *ngFor="let item of recurso">
+                            <ion-item style="text-align: center;">
+
+                                <img src="{{item.src}}">
+
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                </div>
+
+
+            </ion-slide>
+            <ion-slide>
+                <div>
+                    <h4 class="titulo">Afectación</h4>
+                </div>
+                <ion-list>
+                    <ion-item style="border-bottom: 1px solid white;">
+
+                        <ion-select [(ngModel)]="toppings2">
+                            <ion-option value="bacon">Alta</ion-option>
+                            <ion-option value="olives">Media</ion-option>
+                            <ion-option value="xcheese">Baja</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-list>
+
+                <div>
+                    <h4 class="titulo">Autoridad competente</h4>
+                </div>
+                  <ion-list>
+                    <ion-item style="border-bottom: 1px solid white;">
+
+                        <ion-select [(ngModel)]="toppings3">
+                            <ion-option value="bacon">AMVA</ion-option>
+                            <ion-option value="olives">Secretaria de movilidad</ion-option>
+                            <ion-option value="xcheese">Espacio público</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-list>
+
+            </ion-slide>
+            <ion-slide>
+                <div *ngIf="tipoReporte == 1" style="height: 220px;width: 100%;margin-top:-35px">
+                    <video class="imagePrincipal" #myvideo="" controls="" autoplay="true">
+
+                    </video>
+                </div>
+                <div *ngIf="tipoReporte == 2" style="height: 220px;width: 100%;margin-top:-35px">
+                    <img class="imagePrincipal" src="{{datafile}}" />
+                </div>
+
+                <div *ngIf="tipoReporte == 3" style="height: 80px;width: 95%;">
+                    <ion-buttons>
+                        <button ion-button style="background-color: transparent;" (click)="captureAudio()">
+                        <ion-icon  style="zoom:2.0;" name="microphone" color="vigias"></ion-icon>
+                        </button>
+                        <button ion-button style="background-color: transparent;" (click)="stopAudio()">
+                          <ion-icon style="zoom:2.0;" name="mic-off" color="vigias"></ion-icon>
+                        </button>
+                        <button ion-button style="background-color: transparent;" (click)="playAudio()">
+                        <ion-icon style="zoom:2.0;" name="play" color="vigias"></ion-icon>
+                        </button>
+                        <button ion-button style="backgroundA-color: transparent;" (click)="pauseAudio()">
+                          <ion-icon style="zoom:2.0;" name="square" color="vigias"></ion-icon>
+                        </button>
+                    </ion-buttons>
+                </div>
+                <div *ngIf="grabando == 1">
+                    <svg class="svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+
+                        <rect fill="#71338A" width="3" height="100" transform="translate(0) rotate(180 3 50)">
+                            <animate attributeName="height" attributeType="XML" dur="1s" values="30; 100; 30" repeatCount="indefinite" />
+                        </rect>
+                        <rect x="17" fill="#71338A" width="3" height="100" transform="translate(0) rotate(180 20 50)">
+                            <animate attributeName="height" attributeType="XML" dur="1s" values="30; 100; 30" repeatCount="indefinite" begin="0.1s" />
+                        </rect>
+                        <rect x="40" fill="#71338A" width="3" height="100" transform="translate(0) rotate(180 40 50)">
+                            <animate attributeName="height" attributeType="XML" dur="1s" values="30; 100; 30" repeatCount="indefinite" begin="0.3s" />
+                        </rect>
+                        <rect x="60" fill="#71338A" width="3" height="100" transform="translate(0) rotate(180 58 50)">
+                            <animate attributeName="height" attributeType="XML" dur="1s" values="30; 100; 30" repeatCount="indefinite" begin="0.5s" />
+                        </rect>
+                        <rect x="80" fill="#71338A" width="3" height="100" transform="translate(0) rotate(180 76 50)">
+                            <animate attributeName="height" attributeType="XML" dur="1s" values="30; 100; 30" repeatCount="indefinite" begin="0.1s" />
+                        </rect>
+                        <rect x="100" fill="#71338A" width="3" height="100" transform="translate(0) rotate(180 94 50)">
+                            <animate attributeName="height" attributeType="XML" dur="1s" values="30; 100; 30" repeatCount="indefinite" begin="0.1s" />
+                        </rect>
+                        <rect x="120" fill="#71338A" width="3" height="100" transform="translate(0) rotate(180 110 50)">
+                            <animate attributeName="height" attributeType="XML" dur="1s" values="30; 100; 30" repeatCount="indefinite" begin="0.5s" />
+                        </rect>
+                    </svg>
+
+
+                </div>
+
+
+                <ion-row>
+                    <ion-col col-4><img (click)="captureFoto()" src="assets/vigias/foto.svg"></ion-col>
+                    <ion-col col-4><img (click)="captureVideo()" src="assets/vigias/video.svg"></ion-col>
+                    <ion-col col-4><img (click)="habilitarPanelAudio()" src="assets/vigias/audio.svg"></ion-col>
+                </ion-row>
+
+
+
+            </ion-slide>
+        </ion-slides>
+
+
+    </div>-->
+
+
+    <div *ngIf="data.id == 1" style="height: 100%;">
+
+        <div id="bar-modal" class="barVigias">
+            <ion-buttons end>
+                <button color="clear" ion-button button-toogle end (click)="closeModal()">
+                    <ion-icon name="close"></ion-icon>
+                </button>
+            </ion-buttons>
+        </div>
+        <div>
+            <img id="img-modal" class="img" src="{{imagen}}">
+
+            <div style="margin-top:-45px;">
+                <div style="display: flex;">
+                    <h4 style="padding-left: 15%;width: 80%;" class="titulo">Arbol vigias prueba</h4>
+                    <ion-icon *ngIf="navegacion" name="arrow-round-back" (click)="regresarArbolSeleccion()" style="font-size: 3em;color:#71338A;"></ion-icon>
+                </div>
+                <ion-scroll *ngIf="menuDinamico == false" scrollX="true" style="width:100%; height:100%;position:absolute;">
+
+                    <ion-row nowrap class="headerChip" style="width: 100%">
+                        <div style="width: 100%; max-width: 100%;" *ngFor="let ArbolDesicion of listaArbolDesicionFiltrada">
+
+                            <ion-item (click)="seleccionOpcionArbol(ArbolDesicion)">
+                                <ion-thumbnail style="padding-left: 20%;" *ngIf="ArbolDesicion.multimedia">
+                                    <img src="{{ArbolDesicion.multimedia.ruta}}">
+                                </ion-thumbnail>
+                                <h2 style="text-align: center;">{{ArbolDesicion.nombre}}</h2>
+                                <h3 style="width:100%;text-align: center;min-width: 100%;display: block;">{{ArbolDesicion.descripcion}}</h3>
+                                <p style="width:100%;text-align: center;min-width: 100%;display: block;">{{ArbolDesicion.descripcion}}</p>
+                            </ion-item>
+                        </div>
+                    </ion-row>
+                </ion-scroll>
+            </div>
+            <div>
+
+            </div>
+        </div>
+
+        <div *ngIf="mostrarFormulario" style="height: 100%;">
+            <div id="dinamicoFormulario"></div>
+            <ion-row>
+                <ion-col col-4>
+                    <img style="max-width: 50%;" (click)="captureFoto()" src="assets/vigias/foto.svg">
+                </ion-col>
+                <ion-col *ngIf="Video" col-4>
+                    <img style="max-width: 50%;" (click)="captureVideo()" src="assets/vigias/video.svg">
+                </ion-col>
+                <ion-col *ngIf="Audio" col-4>
+                    <img style="max-width: 50%;" (click)="habilitarPanelAudio()" src="assets/vigias/audio.svg">
+                </ion-col>
+            </ion-row>
+
+            <div *ngIf="tipoReporte == 1" style="height: 70px;width: 40%;margin-top:-35px;">
+                <video class="imagePrincipal" #myvideo="" controls="" autoplay="true">
+
+                </video>
+            </div>
+            <div *ngIf="tipoReporte == 2" style="height: 70px;width: 40%;margin-top:-35px">
+                <img class="imagePrincipal" src="{{datafile.fullPath}}" />
+            </div>
+
+            <div *ngIf="tipoReporte == 3" style="height: 80px;width: 95%;">
+                <ion-buttons>
+                    <button ion-button style="background-color: transparent;" (click)="captureAudio()">
+                        <ion-icon style="zoom:2.0;" name="microphone" color="vigias"></ion-icon>
+                    </button>
+                    <button ion-button style="background-color: transparent;" (click)="stopAudio()">
+                        <ion-icon style="zoom:2.0;" name="mic-off" color="vigias"></ion-icon>
+                    </button>
+                    <button ion-button style="background-color: transparent;" (click)="playAudio()">
+                        <ion-icon style="zoom:2.0;" name="play" color="vigias"></ion-icon>
+                    </button>
+                    <button ion-button style="background-color: transparent;" (click)="pauseAudio()">
+                        <ion-icon style="zoom:2.0;" name="square" color="vigias"></ion-icon>
+                    </button>
+                </ion-buttons>
+            </div>
+            <div *ngIf="grabando == 1">
+                <svg class="svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+
+                    <rect fill="#71338A" width="3" height="100" transform="translate(0) rotate(180 3 50)">
+                        <animate attributeName="height" attributeType="XML" dur="1s" values="30; 100; 30" repeatCount="indefinite" />
+                    </rect>
+                    <rect x="17" fill="#71338A" width="3" height="100" transform="translate(0) rotate(180 20 50)">
+                        <animate attributeName="height" attributeType="XML" dur="1s" values="30; 100; 30" repeatCount="indefinite" begin="0.1s" />
+                    </rect>
+                    <rect x="40" fill="#71338A" width="3" height="100" transform="translate(0) rotate(180 40 50)">
+                        <animate attributeName="height" attributeType="XML" dur="1s" values="30; 100; 30" repeatCount="indefinite" begin="0.3s" />
+                    </rect>
+                    <rect x="60" fill="#71338A" width="3" height="100" transform="translate(0) rotate(180 58 50)">
+                        <animate attributeName="height" attributeType="XML" dur="1s" values="30; 100; 30" repeatCount="indefinite" begin="0.5s" />
+                    </rect>
+                    <rect x="80" fill="#71338A" width="3" height="100" transform="translate(0) rotate(180 76 50)">
+                        <animate attributeName="height" attributeType="XML" dur="1s" values="30; 100; 30" repeatCount="indefinite" begin="0.1s" />
+                    </rect>
+                    <rect x="100" fill="#71338A" width="3" height="100" transform="translate(0) rotate(180 94 50)">
+                        <animate attributeName="height" attributeType="XML" dur="1s" values="30; 100; 30" repeatCount="indefinite" begin="0.1s" />
+                    </rect>
+                    <rect x="120" fill="#71338A" width="3" height="100" transform="translate(0) rotate(180 110 50)">
+                        <animate attributeName="height" attributeType="XML" dur="1s" values="30; 100; 30" repeatCount="indefinite" begin="0.5s" />
+                    </rect>
+                </svg>
+
+
+            </div>
+            <div *ngIf="menuDinamico" class="padre">
+                <div>
+                    <button (click)="closeModal()" ion-button style="background-color:#c0b5b5;color:#71338A;">Cancelar</button>
+                </div>
+                <div>
+                    <button (click)="aceptarDatos()" ion-button style="background-color:#71338A">Aceptar</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div *ngIf="!mostrarFormulario" style="height: 100%;">
+
+            <div *ngIf="tipoReporte == 1" style="height: 160px;width:100%;">
+                <video class="imagePrincipal2" #myvideo="" controls="" autoplay="true">
+
+                </video>
+            </div>
+            <div *ngIf="tipoReporte == 2" style="height: 160px;width:100%;">
+                <img class="imagePrincipal2" src="{{datafile.fullPath}}" />
+            </div>
+            <div>
+                <ion-item>
+                    <h3 class="titulo" style="text-align: left;">"</h3>
+                    <p></p>
+                    <h4 class="titulo" style="text-align: left;">Denunciar</h4>
+                </ion-item>
+
+            </div>
+
+
+
+            <div *ngIf="tipoReporte == 3" style="height: 80px;width: 95%;">
+                <ion-buttons>
+                    <button ion-button style="background-color: transparent;" (click)="captureAudio()">
+                        <ion-icon style="zoom:2.0;" name="microphone" color="vigias"></ion-icon>
+                    </button>
+                    <button ion-button style="background-color: transparent;" (click)="stopAudio()">
+                        <ion-icon style="zoom:2.0;" name="mic-off" color="vigias"></ion-icon>
+                    </button>
+                    <button ion-button style="background-color: transparent;" (click)="playAudio()">
+                        <ion-icon style="zoom:2.0;" name="play" color="vigias"></ion-icon>
+                    </button>
+                    <button ion-button style="background-color: transparent;" (click)="pauseAudio()">
+                        <ion-icon style="zoom:2.0;" name="square" color="vigias"></ion-icon>
+                    </button>
+                </ion-buttons>
+            </div>
+            <div *ngIf="menuDinamico" class="padre">
+                <div id="derecha">
+
+
+                    <button (click)="validarExistencia()" ion-button style="background-color:#71338A">Registrar</button>
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+
+
+</div>

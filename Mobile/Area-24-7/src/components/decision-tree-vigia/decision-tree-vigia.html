@@ -1,0 +1,51 @@
+<ion-header>
+    <ion-navbar [ngStyle]="{'background':color}">
+        <ion-title text-center>AFECTACIONES</ion-title>
+        <!-- <ion-title *ngIf="!decisionTree || !decisionTree.parent || !decisionTree.hasChildren">AFECTACIONES</ion-title> -->
+        <!-- <ion-title *ngIf="decisionTree && decisionTree.parent && decisionTree.hasChildren" text-center>{{decisionTree.name}}</ion-title> -->
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <div padding>
+        <h4 class="title-up" maximun="2">{{decisionTree?.instructions}}</h4>
+        <p class="text-up">{{decisionTree?.detailedInstructions}}</p>
+        <ion-list>
+            <ion-item no-lines>
+                <p (click)="presentAction()"><strong>{{dropDown}}</strong></p>
+                <ion-icon name="ios-arrow-down-outline" item-end></ion-icon>
+            </ion-item>
+        </ion-list>
+        <!-- <div class="atras-link">
+            <p *ngIf="decisionTree?.parent" (click)="previuosNode()">Volver</p>
+        </div> -->
+        <div class="arbol-cont" *ngIf="flagDropdown == false">
+            <div class="ionic-button last-specie" *ngFor="let childTree of decisionTree.children; let i = index"
+                [ngStyle]="{'color':color}">
+                <div *ngIf="decisionTree.children.length > 1">
+                    <p *ngIf="childTree.name" [ngStyle]="{'color':color}">{{childTree.name | capitalize: true}}</p>
+                    <button *ngIf="childTree.name" [ngStyle]="{'background':color}"
+                        (click)="nextNode(childTree)">Decisión</button>
+                    <!-- si la opcion es imagen -->
+                    <img [src]="childTree.urlMedia" *ngIf="childTree.formatMedia == 'Imagen'">
+                    <!-- si la opcion es video -->
+                    <div *ngIf="childTree.formatMedia == 'Video'">
+                        <video controls="controls" preload="metadata" webkit-playsinline="webkit-playsinline"
+                            [poster]="childTree.urlMedia">
+                            <source [src]="childTree.urlMedia" type="video/mp4" />
+                        </video>
+                    </div>
+                    <!-- si la opcion es audio -->
+                    <audio controls *ngIf="childTree.formatMedia == 'Audio'">
+                        <source [src]="childTree.urlMedia" type="audio/ogg">
+                    </audio>
+                    <!-- <img [src]="childTree.urlMedia"> -->
+                </div>
+                <div *ngIf="decisionTree.children.length == 1">
+                    <p *ngIf="childTree.name" [ngStyle]="{'color':color}">{{childTree.name | capitalize: true}}</p>
+                    <img [src]="childTree.urlMedia">
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>

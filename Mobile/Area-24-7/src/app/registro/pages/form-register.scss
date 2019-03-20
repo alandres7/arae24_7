@@ -1,0 +1,45 @@
+﻿page-form-register {
+    .item p {
+        color: map-get($colors, dark-red);
+    }
+    .item-input-has-focus .label[stacked],
+    .input-has-focus .label[stacked],
+    .item-input-has-focus .label[floating],
+    .input-has-focus .label[floating] {
+        color: map-get($colors, primary);
+    }
+    .list .item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus):last-child {
+        box-shadow: none;
+        border-bottom-color: map-get($colors, light-gray);
+    }
+    ion-select {
+        max-width: 100%;
+        width: 100%;
+    }
+    /// ESTILO ICONOS LISTAS DESPLEGABLES
+    .select .select-icon {
+        background-color: map-get($colors, primary);
+        width: 20px;
+        height: 20px;
+        top: auto;
+        .select-icon-inner {
+            border-top: 5px solid;
+            border-right: 5px solid transparent;
+            border-left: 5px solid transparent;
+            color: white;
+        }
+    }
+    /// ESTILO ICONOS LISTAS DESPLEGABLES
+    ion-title {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 0 90px 1px;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+    }
+    ion-icon {
+        color: map-get($colors, primary);
+    }
+}

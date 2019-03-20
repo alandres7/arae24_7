@@ -1,0 +1,51 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <ion-buttons end>
+            <button ion-button icon-only button-toogle (click)="goBack()">
+                <ion-icon color="light" name="close"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-title>T&eacute;rminos y condiciones</ion-title>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content padding text-justify>
+    <h3>Sobre las bases de datos</h3>
+    <p>
+        La totalidad de la información de la aplicación está almacenada en una base de datos, para lo cual la entidad
+        ha dispuesto una serie de validaciones de seguridad con el objetivo de que el acceso a esta sea lo más
+        restringido posible, para esto se han interpuesto barreras de fuego y software de control de contenidos con el
+        fin de filtrar cualquier ingreso no autorizado.
+    </p>
+    <h3>Sobre las claves</h3>
+    <p>
+        Todas las claves manejadas en el sistema están encriptadas en sistemas de una sola línea, por lo que es difícil
+        realizar el proceso de desencriptación de esta, por lo tanto ante la pérdida de la clave de un usuario, el
+        único método posible para volver a ingresar la clave es generar una nueva, la cual será suministrada por la
+        entidad previa revisión de la identidad del usuario.
+    </p>
+    <h3>Sobre las copias de seguridad</h3>
+    <p>
+        La entidad realiza copias periódicas de la información con el fin de evitar pérdidas de información, las cuales
+        reposarán tanto en el edificio del área como en una sede externa.
+    </p>
+    <h3>Sobre el registro de usuarios</h3>
+    <p>
+        La App 24/7 del Área Metropolitana se compromete a adoptar una política de confidencialidad y protección de
+        datos, con el objeto de proteger la privacidad de la información personal obtenida a través de su aplicación.
+        <br>
+        La información proporcionada por el usuario al registrarse en la App 24/7, estará resguardada tecnológicamente
+        y sólo podrán acceder a ella, el mismo usuario a través del código entregado.
+        <br>
+        La App 24/7 no compartirá ni revelará la información confidencial con terceros, excepto que tenga expresa
+        autorización de quienes se suscribieron, o cuando ha sido requerido por orden judicial o legal.
+    </p>
+    <small>En caso de algún inconveniente favor escribir a metropol@metropol.gov.co o al teléfono 57 (4) 3856000
+        extensión 123.</small>
+    <br>
+    <div *ngIf="acceptButtons">
+        <button ion-button block (click)="closeModal(true)">Aceptar terminos</button>
+        <button ion-button block color="light" (click)="closeModal(false)">Cancelar</button>
+    </div>
+</ion-content>

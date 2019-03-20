@@ -1,0 +1,97 @@
+﻿// Ionic Variables and Theming. For more info, please see:
+// http://ionicframework.com/docs/v2/theming/
+$font-path: '../assets/fonts';
+@import 'ionic.globals';
+// Shared Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass variables found in Ionic's source scss files.
+// To view all the possible Ionic variables, see:
+// http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
+// Named Color Variables
+// --------------------------------------------------
+// Named colors makes it easy to reuse colors on various components.
+// It's highly recommended to change the default colors
+// to match your app's branding. Ionic uses a Sass map of
+// colors so you can add, rename and remove colors as needed.
+// The "primary" color is the only required color in the map.
+$colors: (
+  primary: #96c93d,
+  secondary: #32db64,
+  danger: #f53d3d,
+  light: #f4f4f4,
+  dark: #222222,
+  btnLogin: #1b5e20,
+  clear: transparent,
+  huellas: #F58220,
+  ordenamiento: #FDB913,
+  vigias: #A3238E,
+  avistamientos: #00AB4E,
+  entorno: #97C93D,
+  movilidad: #0060B6,
+  dark-red: #bb0000,
+  light-gray: #cccccc,
+  soft-black: #333333,
+  Recórreme: #0060B6,
+  Conóceme: #FDB913,
+  Cuídame: #A3238E,
+  Mídeme: #F58220,
+  Asómbrate: #00AB4E,
+  Disfrútame: #97C93D,
+  gray: #aaaaaa,
+  texto: #808080,
+  btnRed: #f50000,
+  btnGreen: #00ab4e
+);
+// Screen size variables
+// --------------------------------------------------
+$min-portrait: 375px;
+$min-landscape: 425px;
+$max-landscape: 2048px;
+$max-portrait: 2732px;
+// $screen-size: (
+//   smaller: 720px,
+//   small:   750px,
+//   medium:  640px,
+//   large:   1080px,
+//   larger:  1440px
+// );
+// App iOS Variables
+// --------------------------------------------------
+// iOS only Sass variables can go here
+$list-ios-border-color: transparent;
+$item-ios-detail-push-color: transparent;
+$range-ios-pin-padding-start: 20px;
+$range-ios-pin-padding-end: 20px;
+$range-ios-pin-background-color: #000000;
+//$alert-ios-button-background-color: map-get($colors, cAmva);
+//$alert-ios-button-text-color: #FFFFFF;
+//$action-sheet-md-button-text-color: map-get($colors, cAmva);
+// App Material Design Variables
+// --------------------------------------------------
+// Material Design only Sass variables can go here
+$list-md-border-color: transparent;
+$range-md-pin-padding-start: 20px;
+$range-md-pin-padding-end: 20px;
+//$alert-md-button-background-color: map-get($colors, cAmva);
+//$alert-md-button-text-color: #FFFFFF;
+//$action-sheet-md-button-text-color: map-get($colors, cAmva);
+// App Windows Variables
+// --------------------------------------------------
+// Windows only Sass variables can go here
+// App Theme
+// --------------------------------------------------
+// Ionic apps can have different themes applied, which can
+// then be future customized. This import comes last
+// so that the above variables are used and Ionic's
+// default are overridden.
+@import 'ionic.theme.default';
+// Ionicons
+// --------------------------------------------------
+// The premium icon font for Ionic. For more info, please see:
+// http://ionicframework.com/docs/v2/ionicons/
+@import 'ionic.ionicons';
+// Fonts
+// --------------------------------------------------
+@import 'roboto';
+@import 'noto-sans';

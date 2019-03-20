@@ -1,0 +1,59 @@
+<ion-header>
+    <ion-navbar [ngStyle]="{'background':color}">
+        <ion-title>Avistamiento</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-spinner *ngIf="loading"></ion-spinner>
+
+    <ion-grid *ngIf="!loading">
+        <ion-row>
+            <ion-label [ngStyle]="{'color': color}" text-wrap>
+                <b> {{ avistamiento.commonName }} </b> | <i>{{ avistamiento.scientificName }}</i>
+            </ion-label>
+        </ion-row>
+        <ion-row>
+            <img [src]="avistamiento.urlMedia" [alt]="avistamiento.commonName">
+        </ion-row>
+        <ion-row>
+            <ion-label text-wrap>
+                <ion-icon name="create" [ngStyle]="{'color': color}"></ion-icon>
+                <span [ngStyle]="{'color': color}">Descripci&oacute;n:</span> {{ avistamiento.description }}
+            </ion-label>
+        </ion-row>
+        <ion-row>
+            <ion-label text-wrap>
+                <ion-icon name="calendar" [ngStyle]="{'color': color}"></ion-icon>
+                <span [ngStyle]="{'color': color}">Fecha:</span> {{ avistamiento.creationDate }}
+            </ion-label>
+        </ion-row>
+        <ion-row>
+            <ion-label text-wrap>
+                <ion-icon name="contact" [ngStyle]="{'color': color}"></ion-icon>
+                <span [ngStyle]="{'color': color}">Usuario:</span> {{ avistamiento.username }}
+            </ion-label>
+        </ion-row>
+        <ion-row *ngIf="avistamiento.publicationState==PublicationState.Published">
+            <ion-label text-wrap>
+                <ion-icon name="share" [ngStyle]="{'color': color}"></ion-icon>
+                <span [ngStyle]="{'color': color}">Compartir:</span>
+                <ion-icon class="social-button facebook-button" (click)="shareViaFacebook()" name="logo-facebook"></ion-icon>
+                <ion-icon class="social-button twitter-button" (click)="shareViaTwitter()" name="logo-twitter"></ion-icon>
+                <ion-icon class="social-button instagram-button" (click)="shareViaInstagram()" name="logo-instagram"></ion-icon>
+            </ion-label>
+        </ion-row>
+    </ion-grid>
+    <ion-grid *ngIf="!loading">
+        <ion-row>
+            <button ion-button full [ngStyle]="{'background-color': color}"
+                    *ngIf="avistamiento.publicationState==PublicationState.Published"
+                    (click)="viewStoriesOrComments()">
+                <span *ngIf="avistamiento.hasStories">Historias</span>
+                <span *ngIf="!avistamiento.hasStories">Comentarios</span>
+            </button>
+        </ion-row>
+      <!--  <ion-row>
+            <button ion-button full [ngStyle]="{'background-color': color}" (click)="viewArbol()">Aprender más...</button>
+        </ion-row> -->
+    </ion-grid>
+</ion-content>

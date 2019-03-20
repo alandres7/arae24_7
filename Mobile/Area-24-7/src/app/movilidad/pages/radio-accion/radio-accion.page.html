@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Radio de accion</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-range min="100" max="1000" pin="true" [(ngModel)]="saturation" color="royal" (ionChange)="cambiarSaturacion()">
+        <ion-label range-left>100m</ion-label>
+        <ion-label range-right>1000m</ion-label>
+      </ion-range>
+    </ion-item>
+  </ion-list>
+</ion-content>

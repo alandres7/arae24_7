@@ -1,0 +1,40 @@
+busqueda-avistamientos {
+    .container {
+        height: auto;
+        background-color: white;
+        padding-bottom: 1rem;
+    }
+    .bar{
+        border-radius: 5px 5px 0 0;
+        box-shadow: 0px 4px 5px -2px rgba(0, 0, 0, 0.58);
+        ion-icon{
+            color: white;
+        }
+        .button-ios{
+            height: 2em;
+        }
+    }
+    .item-md p {
+        color: map-get($colors, dark-red);
+        font-size: 1.2rem;
+    }
+    .tag {
+        text-align: left;
+        display: inline;
+    }
+    .item {
+        margin-top: 0.3em;
+    }
+    .select .select-icon {
+        background-color: map-get($colors, primary);
+        width: 20px;
+        height: 20px;
+        top: auto;
+        .select-icon-inner {
+            border-top: 5px solid;
+            border-right: 5px solid transparent;
+            border-left: 5px solid transparent;
+            color: white;
+        }
+    }
+}

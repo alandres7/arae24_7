@@ -1,0 +1,189 @@
+<ion-header>
+    <ion-navbar [ngStyle]="{'background': color}">
+        <ion-title>Pronóstico precipitación</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+
+    <!-- <ion-segment [(ngModel)]="ventana">
+        <ion-segment-button value="actual">
+            Actual
+        </ion-segment-button>
+        <ion-segment-button value="pronostico">
+            Pronóstico
+        </ion-segment-button>
+    </ion-segment> -->
+
+    <div [ngSwitch]="ventana">
+        <ion-list *ngSwitchCase="'actual'">
+            <ion-grid *ngIf="data" class="center">
+                <ion-row>
+                    <ion-col style="box-shadow: none">                   
+                        <ion-label>
+                            {{ data.municipio | capitalize }}<span class="normal">{{ nombreEstacion }}</span>
+                        </ion-label>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col style="box-shadow: none">
+                        <img src="{{data.tiempoDetails[0].urlIcono}}">
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col style="box-shadow: none">                   
+                        <ion-label>
+                                
+                            <span class="smallGray">{{  monthAndDay }}</span><br/>
+                            {{ data.tiempoDetails[0].descripcion | capitalize }} precipitación
+                        </ion-label>
+                    </ion-col>
+                </ion-row>
+                <!-- <ion-row>
+                    <ion-col style="box-shadow: none">
+                        <ion-label>
+                            <ion-icon name="ios-water" [ngStyle]="{'color': color}" left></ion-icon>  
+                        </ion-label>
+                    </ion-col>
+                </ion-row> -->
+                <ion-row>
+                    <ion-col style="box-shadow: none">
+                        <ion-label class="temperatura">
+                            {{ data.temperaturaMinima }}C<br/>
+                            <p class="smallGray">Temperatura<br/>Minima.</p>
+                        </ion-label>
+                    </ion-col>
+                    <ion-col col-1 style="box-shadow: none">
+                        <ion-label>
+                            <span class="separar">|</span>
+                        </ion-label>
+                    </ion-col>
+                    <ion-col  style="box-shadow: none">
+                        <ion-label class="temperatura">
+                            {{ data.temperaturaMaxima }}C<br/>
+                            <p class="smallGray">Temperatura<br/>Máxima.</p>
+                        </ion-label>
+                    </ion-col>
+                </ion-row>
+                
+            </ion-grid>
+        </ion-list>
+        <ion-list>
+            <ion-grid *ngIf="data" class="center">
+                <ion-row>
+                    <ion-col style="box-shadow: none">                   
+                        <ion-label>
+                            <span class="smallGray">{{ monthAndDay }}</span><br/>
+                        </ion-label>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-1></ion-col>
+                    <ion-col style="background-color: #a0a0a0">
+                        <ion-label class="estados">
+                            <!-- <ion-icon name="sunny"  right></ion-icon> -->
+                            <img src="{{data.tiempoDetails[0].urlIcono}}" class="rIcon">
+                            {{ data.tiempoDetails[0].tiempo }}<br/>
+                            <span class="smallWhite">{{ data.tiempoDetails[0].descripcion | capitalize }}</span>
+                        </ion-label>
+                    </ion-col>
+                    <ion-col col-1></ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-1></ion-col>
+                    <ion-col style="background-color: #a0a0a0">
+                        <ion-label class="estados">
+                            <!-- <ion-icon name="ios-water"  right></ion-icon> -->
+                            <img src="{{data.tiempoDetails[1].urlIcono}}" class="rIcon">
+                            {{ data.tiempoDetails[1].tiempo }}<br/>
+                            <span class="smallWhite">{{ data.tiempoDetails[1].descripcion | capitalize }}</span>
+                        </ion-label>
+                    </ion-col>
+                    <ion-col col-1></ion-col>
+                </ion-row>
+                <ion-row>
+                        <ion-col col-1></ion-col>
+                        <ion-col style="background-color: #a0a0a0">
+                            <ion-label class="estados">
+                                <!-- <ion-icon name="sunny"  right></ion-icon> -->
+                                <img src="{{data.tiempoDetails[2].urlIcono}}" class="rIcon">
+                                {{ data.tiempoDetails[2].tiempo }}<br/>
+                                <span class="smallWhite">{{ data.tiempoDetails[2].descripcion | capitalize }}</span>
+                            </ion-label>
+                        </ion-col>
+                        <ion-col col-1></ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col col-1></ion-col>
+                        <ion-col style="background-color: #a0a0a0">
+                            <ion-label class="estados">
+                                <!-- <ion-icon name="ios-water"  right></ion-icon> -->
+                                <img src="{{data.tiempoDetails[3].urlIcono}}" class="rIcon">
+                                {{ data.tiempoDetails[3].tiempo }}<br/>
+                                <span class="smallWhite">{{ data.tiempoDetails[3].descripcion | capitalize }}</span>
+                            </ion-label>
+                        </ion-col>
+                        <ion-col col-1></ion-col>
+                    </ion-row>
+            </ion-grid>
+        </ion-list>
+        <ion-list>
+            <ion-grid *ngIf="data" class="center">
+                <ion-row>
+                    <ion-col style="box-shadow: none">                   
+                        <ion-label>
+                            <span class="smallGray">{{ afterDay }}</span><br/>
+                        </ion-label>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-1></ion-col>
+                    <ion-col style="background-color: #a0a0a0">
+                        <ion-label class="estados">
+                            <!-- <ion-icon name="sunny"  right></ion-icon> -->
+                            <img src="{{data.tiempoDetails[4].urlIcono}}" class="rIcon">
+                            {{ data.tiempoDetails[4].tiempo }}<br/>
+                            <span class="smallWhite">{{ data.tiempoDetails[4].descripcion | capitalize}}</span>
+                        </ion-label>
+                    </ion-col>
+                    <ion-col col-1></ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-1></ion-col>
+                    <ion-col style="background-color: #a0a0a0">
+                        <ion-label class="estados">
+                            <!-- <ion-icon name="ios-water"  right></ion-icon> -->
+                            <img src="{{data.tiempoDetails[5].urlIcono}}" class="rIcon">
+                            {{ data.tiempoDetails[5].tiempo }}<br/>
+                            <span class="smallWhite">{{ data.tiempoDetails[5].descripcion | capitalize}}</span>
+                        </ion-label>
+                    </ion-col>
+                    <ion-col col-1></ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-1></ion-col>
+                    <ion-col style="background-color: #a0a0a0">
+                        <ion-label class="estados">
+                            <!-- <ion-icon name="sunny"  right></ion-icon> -->
+                            <img src="{{data.tiempoDetails[6].urlIcono}}" class="rIcon">
+                            {{ data.tiempoDetails[6].tiempo }}<br/>
+                            <span class="smallWhite">{{ data.tiempoDetails[6].descripcion | capitalize}}</span>
+                        </ion-label>
+                    </ion-col>
+                    <ion-col col-1></ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-1></ion-col>
+                    <ion-col style="background-color: #a0a0a0">
+                        <ion-label class="estados">
+                            <!-- <ion-icon name="ios-water"  right></ion-icon> -->
+                            <img src="{{data.tiempoDetails[7].urlIcono}}" class="rIcon">
+                            {{ data.tiempoDetails[7].tiempo }}<br/>
+                            <span class="smallWhite">{{ data.tiempoDetails[7].descripcion | capitalize}}</span>
+                        </ion-label>
+                    </ion-col>
+                    <ion-col col-1></ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-list>
+    </div>
+</ion-content>

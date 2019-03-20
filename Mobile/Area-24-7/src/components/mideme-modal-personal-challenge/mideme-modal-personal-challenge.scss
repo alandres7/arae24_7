@@ -1,0 +1,56 @@
+mideme-modal-personal-challenge {
+    left: calc(50% - 150px)!important;
+    top: 30%!important;
+    position: absolute!important;
+    display: block!important;
+    width: 300px!important;
+    border-radius:6px;
+
+    ion-content {
+        text-align: center!important;
+        height: 320px!important;
+        border-radius:5px;
+        top: 0px;
+        div {
+            width:100%;
+            h1 {
+                font-size:2rem;
+                margin:0;
+                margin-top:-2rem!important;
+                width:95%;
+            }
+            ion-textarea {
+                .text-input {
+                    border: 1px solid map-get($colors , light-gray );
+                    min-height: 100px;
+                    margin-top: 1rem;
+                    margin-bottom: 2.5rem;
+                }
+            }
+            .botones {
+                position: absolute;
+                margin-left: -16px;
+                bottom: 20px;
+            }
+        }
+        .button {
+            min-width: 150px;
+            height:40px;
+            border-radius:4px;
+            text-transform:unset;
+            &.close {
+                background: transparent;
+                position:relative;
+                height:20px;
+                width:20px;
+                top:-15px;
+                right:-15px;
+                color:initial;
+            }
+        }
+    }
+
+    ion-icon {
+        font-size: 64px;
+    }
+}

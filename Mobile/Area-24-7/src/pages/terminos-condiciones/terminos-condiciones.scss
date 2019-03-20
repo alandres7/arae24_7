@@ -1,0 +1,8 @@
+page-terminos-condiciones {
+    $primary: map-get($colors, primary);
+    $dark: map-get($colors, dark);
+
+    h3{
+        color: $primary;
+    }
+}

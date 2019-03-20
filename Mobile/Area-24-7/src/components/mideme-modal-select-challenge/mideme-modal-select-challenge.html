@@ -1,0 +1,23 @@
+<ion-content padding>
+  <ion-buttons end>
+      <button class="close" ion-button  icon-only  end (click)="closeModal()">
+          <ion-icon name="close"></ion-icon>
+      </button>
+  </ion-buttons>
+
+  <div>
+    <h1>{{ challengeCategory }}</h1>
+  </div>
+  <br>
+
+  <div class="listRadio">
+    <ion-row radio-group *ngFor="let item of items">
+      <ion-radio value="1" ></ion-radio>
+      <ion-label>{{ item }}</ion-label>
+    </ion-row>
+  </div>
+
+  <div class="botones">
+    <button ion-button (click)="challengeAccepted()">Iniciar reto</button>
+  </div>
+</ion-content>

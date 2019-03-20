@@ -1,0 +1,130 @@
+cuidame-detail {
+  left: 5vw!important;
+  top: 10%!important;
+  position: absolute!important;
+  display: block!important;
+  width: 90vw!important;
+  border-radius:6px;
+  ion-header {
+    height: 7rem!important;
+    max-height: 7rem!important;
+    .icon-header {
+      width: 30px;
+      height: 30px;
+      vertical-align: middle;
+      margin-left: 5px;
+      filter: hue-rotate(0deg) saturate(0%) brightness(100);   
+    }
+  }
+  ion-label {
+    overflow: inherit;
+  }
+  ion-content {
+    height: 80%!important;
+    border-radius:6px;
+    top: 0px;
+  }
+  .scroll-content {
+    border-radius:6px;
+    @media screen and (min-width: 768px) and (orientation: portrait) {
+      max-width: 85%;
+      margin: 0 auto;
+    }
+  }
+  .toolbar {
+    border-radius:6px 6px 0 0;
+    height: 7rem!important;
+    max-height: 7rem!important;
+  }
+  .toolbar-background {
+    background: inherit;
+  }
+  .toolbar-title {
+    color: map-get($colors, light);
+    display:contents;
+    white-space: inherit;
+    text-align: center;
+  }
+  .bar-button {
+    color: map-get($colors, light);
+  }
+  .label.label {
+    .icon.icon {
+      font-size: 2rem;
+      vertical-align: middle;
+    }
+  }
+  .grid {
+    padding:7px 20px!important;
+    text-align:left;
+  }
+  .row:first-child {
+    .label.label {
+      font-size: 1.7rem;
+    }
+  }
+  .row {
+    .label.label, p {
+      font-size: 1.5rem;
+      margin-left: 22px;
+      text-indent: -7px;
+      &.subtitulo {
+        font-size:1.7rem;
+        text-align:center;
+        margin:0;
+        text-indent:0;
+      }
+    }
+    min-height: 5rem;
+    margin-bottom: 0px;
+    border-bottom: 1px solid grey;
+    // padding: 0 10px;
+    span {
+      font-weight:bold;
+    }
+  }
+
+  .row:nth-child(1),
+  .row:nth-child(2) {
+    box-shadow: none;
+    background-color: transparent !important;
+    border:none;
+  }
+ 
+  .grid.segundo .row{
+    border:none;
+  }
+  .imagen {
+    width: auto;
+    min-height: 20rem;
+    max-height: 20rem;
+    background-color: transparent;
+    margin: 0 auto;
+  }
+  .centerText .label{
+    text-align:center!important;
+    text-decoration:underline;
+    margin-left:0!important;
+    text-indent:0;
+    padding-left:0;
+  }
+  .button-md, .button-ios {
+    border-radius: 6px;
+    margin: 0 10%;
+    text-transform:none;
+  }
+  .normal {
+    font-weight:400!important;
+  }
+
+  .toolbar-ios ion-title {
+    padding: 0;
+    p {
+      font-size:1.7rem;
+      text-align:center;
+      margin:0;
+      text-indent:0;
+      padding-right: 30px;
+    }
+  }
+}

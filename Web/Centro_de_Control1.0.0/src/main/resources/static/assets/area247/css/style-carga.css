@@ -1,0 +1,380 @@
+/*------------------------------------------- carga de archivos -----------------------------------*/
+
+.Panelfondo{
+	height: 100%;
+    width: 100%;
+    background-color: rgba(128, 128, 128, 0.64);
+	position: absolute;
+    top: -21px;
+}
+
+.panelIntcarga{
+	background-color: #f1f1f2;
+	margin-left: 15px;
+	margin-right: 15px;
+	margin-top: 20px;
+	margin-bottom: 0px;
+}
+
+
+.hr-carga {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 0;
+    border-top: 1.5px solid #cbcbcb;
+}
+
+
+/*----------------------------- rinbow title -------------------------------*/
+
+.rimbow {
+    position: relative;
+    padding: 23px 10px 22px;
+    margin: 20px;
+    background: rgba(115, 75, 35, 0.87);
+   
+    font-family: Roboto;
+	margin-top: 76px;
+	width: 70%;
+	margin-left: auto;
+	margin-right: auto;
+		
+}
+.rimbow-title {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    padding: 4px 8px;
+    background: #95b634;
+    color: #fff;
+    -webkit-box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    -moz-box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+	height: 40px;
+}
+.rimbow-title:after {
+    content: '';
+    display: block;
+    height: 20px;
+    width: 8px;
+    position: absolute;
+    top: 40px;
+    left: 0px;
+    background: transparent;
+    z-index: -1;
+    border-top: 45px solid #95b634;
+    border-left: 45px solid transparent;
+}
+
+.optionTitle{
+	font-size: 20px;
+	color:#fff;
+	position: relative;
+	top:4px;
+}
+
+/*---------------------------- menu carga ---------------------*/
+
+.btn-carga-menu {
+    color: #c4c4c4;
+    background-color: transparent; 
+    border-color: transparent!important;
+	border-right-color:   #cbcbcb !important;
+	height: 30px;
+}
+
+
+.btn-carga-menu:hover,
+.btn-carga-menu:focus,
+.btn-carga-menu:active,
+.btn-carga-menu.active,
+.open .dropdown-toggle.btn-default {
+  color: #ffffff;
+  background-color: #cbcbcb;
+  
+}
+
+
+.btn-carga {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.428571429;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 0px;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    font-weight: 300;
+    -webkit-transition: all 0.15s;
+    -moz-transition: all 0.15s;
+    transition: all 0.15s;
+}
+
+/*------------------------------ input file ----------------------------*/
+
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin-left: 30px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	left:4px;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.btn-file-carga {
+  color: #ffffff;
+ background-color: #95b634;
+    border-color: #95b634;
+    height: 26px;
+    border-radius: 0px;
+
+}
+.btn-file-carga:hover,
+.btn-file-carga:focus,
+.btn-file-carga:active,
+.btn-file-carga.active,
+.open .dropdown-toggle.btn-file-carga {
+  color: #ffffff;
+  border-color: #6D8526;
+  background: #6D8526;  
+}
+
+/*------------------------- parafos ---------------------------------*/
+
+ 
+
+
+.resCarga{
+	font-size: 12px !important;
+	color: #989898 !important;
+	font-family: Roboto !important;
+	margin-left: 15px;
+	line-height: 7px;
+}
+
+
+.grennLabel{
+	font-size: 14px !important;
+	color: #95b634 !important;
+	font-family: Roboto;
+	font-weight: 600;
+	margin-left: 15px;
+	margin-bottom: 15px;
+}
+
+.grennLabel2{
+	font-size: 14px !important;
+	color: #95b634 !important;
+	font-family: Roboto;
+	font-weight: 600;
+	margin-left: 15px;
+	margin-bottom: 0px;
+	    margin-top: 9px;
+}
+
+
+
+
+
+/*------------- tablas ---------------------------------*/
+
+.titlesTable{
+	font-size: 14px;
+    color:#734b23 !important;
+	font-family: Roboto;
+	text-align: center;
+	width: 50%;
+	
+}
+
+.cargaTableTr:hover{
+	background: rgba(115, 75, 35, 0.59);
+	color:#ffffff;
+	
+}
+
+.filaWhite{
+	background-color: #ffffff;
+}
+
+
+.table thead > tr > th,
+.table tbody > tr > th,
+.table tfoot > tr > th,
+.table thead > tr > td,
+.table tbody > tr > td,
+.table tfoot > tr > td {
+  padding: 4px !important;
+  line-height: 1.428571429;
+  vertical-align: top;
+  border-top: 1px solid #dddddd;
+}
+
+/*-------------------------- barra de ttulos -------------------*/
+.barTitle{
+	border-radius: 0px;
+    margin-left: 15px;
+    margin-right: 15px;
+	background-color: #fff;
+	 color: #734b23;	
+}
+
+.barraBarTitle{
+	margin-left: 15px;
+    margin-right: 15px;
+	background-color: #493016;
+    height: 4px;
+    border-top: 0px;
+    position: relative;
+    top: -6px;
+	margin-top: 0px; 
+    margin-bottom: 0px; 
+}
+
+/* ------------------------------ paginador -------------------*/
+	.pagination-carga li a {
+    color: #734b23;
+	border: 1px solid #734b23;
+}
+
+.pagination-carga > li > a:hover,
+.pagination-carga > li > span:hover,
+.pagination-carga > li > a:focus,
+.pagination-carga > li > span:focus {
+  background-color: #A68F77;
+ color:#fff;
+}
+
+
+/*------------------------------ custom checkbox ----------------------*/
+
+.checkbox {
+  padding-left: 20px; }
+  .checkbox label {
+    display: inline-block;
+    position: relative;
+    padding-left: 5px; }
+    .checkbox label::before {
+      content: "";
+      display: inline-block;
+      position: absolute;
+      width: 17px;
+      height: 17px;
+      left: 0;
+      margin-left: -20px;
+      border: 1px solid #cccccc;
+      border-radius: 3px;
+      background-color: #fff;
+      -webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+      -o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+      transition: border 0.15s ease-in-out, color 0.15s ease-in-out; }
+    .checkbox label::after {
+      display: inline-block;
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      left: 0;
+      top: 0;
+      margin-left: -20px;
+      padding-left: 3px;
+      padding-top: 1px;
+      font-size: 11px;
+      color: #555555; }
+  .checkbox input[type="checkbox"] {
+    opacity: 0; }
+    .checkbox input[type="checkbox"]:focus + label::before {
+      outline: thin dotted;
+      outline: 5px auto -webkit-focus-ring-color;
+      outline-offset: -2px; }
+    .checkbox input[type="checkbox"]:checked + label::after {
+      font-family: 'FontAwesome';
+      content: "\f00c"; }
+    .checkbox input[type="checkbox"]:disabled + label {
+      opacity: 0.65; }
+      .checkbox input[type="checkbox"]:disabled + label::before {
+        background-color: #eeeeee;
+        cursor: not-allowed; }
+  .checkbox.checkbox-circle label::before {
+    border-radius: 50%; }
+  .checkbox.checkbox-inline {
+    margin-top: 0; }
+
+.checkbox-primary input[type="checkbox"]:checked + label::before {
+  background-color: #FFF;
+  border-color: #734b23; }
+.checkbox-primary input[type="checkbox"]:checked + label::after {
+  color: #95b634; }
+
+
+
+
+/* ---------------------------- progress bar ------------*/
+
+
+.progress {
+  overflow: visible;
+  margin-bottom: 26px;
+  height: 12px;
+    width: 91%;
+    margin-left: 32px;
+	background-color: #ebebe4;
+	 border-radius: 0px;
+}
+  .progress-bar {
+      background-color: #e0e0e1;
+	background-image: url(../img/iconos-carga/bar-progress.png) !important;  
+	background-size: cover;
+	background-repeat: no-repeat;  
+    position: relative;
+    border-radius: 0px;
+	  
+}
+    .spanProgress {
+      background-color: #95b634;
+      position: absolute;
+      bottom: -20px;
+      font-size: 10px;
+      line-height: 10px;
+      padding: 2px 3px 2px 4px;
+      right: -1.4em;
+      border-radius: 2px;
+    }
+    .spanProgress:after {
+      bottom: 100%;
+      left: 50%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+      border-color: rgba(255, 255, 255, 0);
+      border-bottom-color: #95b634;
+      border-width: 5px;
+      margin-left: -5px;
+    }
+  /*}*/
+/*}*/
+
+

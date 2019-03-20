@@ -1,0 +1,103 @@
+<ion-header>
+    <barra-navegabilidad [titulo]="titulo"></barra-navegabilidad>
+</ion-header>
+
+<ion-content mapa>
+    <div contenido-mapa>
+        <div class="divMenu2" *ngIf="mostrarRutasLineas" style="width: 100%">
+            <ion-grid style="width: 95vw; margin: 0 auto;">
+                <ion-row>
+                    <ion-col  (click)="onClickRutasLineas(0)" class="typesContainers">
+                        <div class="imgDetailContainer" *ngIf="rutasActive" >
+                            <img src="assets/movilidad/iconos/rutas.svg">
+                        </div>
+                        <div class="labelDetailContainer" *ngIf="rutasActive">
+                            <span class="labelsMenu2" style="color:#006fac;">Rutas</span>
+                        </div>
+
+
+                        <div class="imgDetailContainer" *ngIf="!rutasActive" >
+                                <img src="assets/movilidad/iconos/rutas_disabled.svg">
+                            </div>
+                            <div class="labelDetailContainer" *ngIf="!rutasActive">
+                                <span class="labelsMenu2">Rutas</span>
+                            </div>
+                    </ion-col>
+
+                    <div class="separador"></div>
+                    
+                    <ion-col  (click)="onClickRutasLineas(1)" class="typesContainers">
+                        <div class="imgDetailContainer" *ngIf="lineasActive"  >
+                            <img src="assets/movilidad/iconos/linea.svg" style="height: 3.5rem; width: 3.5rem;">
+                        </div>
+
+                        <div class="labelDetailContainer" *ngIf="lineasActive">
+                            <span class="labelsMenu2" style="color:#006fac;">Lineas</span>
+                        </div>
+
+                        <div class="imgDetailContainer" *ngIf="!lineasActive" >
+                                <img src="assets/movilidad/iconos/linea_disabled.svg" style="height: 3.5rem; width: 3.5rem;">
+                            </div>
+    
+                            <div class="labelDetailContainer" *ngIf="!lineasActive">
+                                <span class="labelsMenu2">Lineas</span>
+                            </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+        <ion-grid id="gridLineasRutas">
+            <ion-row>
+                <ion-col col-12>
+                    <ion-searchbar id="sbLineasRutas" (keydown)="onKeyEnterRutaLinea($event)" (ionInput)="actualizarListado()" [(ngModel)]="criterioBusqueda" (ionFocus)="onFocusSearchBar()" (ionBlur)="onBlurSearchBar()" showCancelButton="false" mode="md" animated="true"
+                        placeholder="Rutas y Líneas">
+                    </ion-searchbar>
+                    <div class="btn-search" (click)="clickObtenerRutasLineas()" ></div>
+                </ion-col>
+            </ion-row>
+
+            <ion-row *ngIf="autocompleteItems.length != 0">
+                <ion-col>
+                    <ion-scroll id="scroll" scrollY="true">
+                        <ion-list *ngIf="criterioBusqueda.trim().length > 0" scroll="true" class="listaDir listAutocompletado">
+                            <div style="padding-top: 5px; padding-bottom: 5px;">
+                                <ion-item *ngFor="let item of autocompleteItems" (click)="seleccionarItem(item,1)" style="border-bottom: 1px solid #ccc;">
+                                    <span class="labelLisDir">
+                    <img src="assets/movilidad/iconos/marcadorMap.png" style="width:10px; float:Left; margin-left: 5px">
+                    {{ item.codigo}} - {{item.descripcion }}</span>
+                                </ion-item>
+                            </div>
+                        </ion-list>
+                    </ion-scroll>
+                </ion-col>
+
+            </ion-row>
+
+        </ion-grid>
+
+        <ion-card *ngIf="showDetalle && autocompleteItems.length == 0 && criterioBusqueda.trim().length > 0" class="cardDetalle2">
+            <ion-card-header class="headerDetalle">
+                <ion-grid>
+                    <ion-row class="rowBorder">
+                        <ion-col col-auto>
+                            <img src="{{imgDetalle}}" style="height: 20px; width: auto;" />
+                        </ion-col>
+                        <ion-col col-6 wider>
+                            <div class="labelHeader">{{txtDetalle}}</div>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-card-header>
+
+            <ion-scroll scrollY="true">
+                <div *ngFor="let item of rutasLineas">
+                    <detalle-ruta (mostrarRuta)="mostrarRuta($event)" [ruta]="item">
+
+                    </detalle-ruta>
+                </div>
+            </ion-scroll>
+
+        </ion-card>
+    </div>
+
+</ion-content>

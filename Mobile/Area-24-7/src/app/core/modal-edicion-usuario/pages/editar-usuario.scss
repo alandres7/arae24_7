@@ -1,0 +1,35 @@
+﻿editar-usuario {
+    .item-md p {
+        color: map-get($colors, dark-red);
+    }
+    ion-select {
+        max-width: 100%;
+        width: 100%;
+    }
+    /// ESTILO ICONOS LISTAS DESPLEGABLES
+    .select .select-icon {
+        background-color: map-get($colors, primary);
+        width: 20px;
+        height: 20px;
+        top: auto;
+        .select-icon-inner {
+            border-top: 5px solid;
+            border-right: 5px solid transparent;
+            border-left: 5px solid transparent;
+            color: white;
+        }
+    }
+    /// ESTILO ICONOS LISTAS DESPLEGABLES
+    ion-title {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 0 90px 1px;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+    }
+    ion-icon {
+        color: map-get($colors, primary);
+    }
+}

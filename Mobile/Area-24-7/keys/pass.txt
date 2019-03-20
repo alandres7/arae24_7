@@ -1,0 +1,3 @@
+keystore password = keystore-password
+alias = area247
+password = alias-password

@@ -1,0 +1,48 @@
+seleccionar-mapa {
+  .btn-buscar {
+    button {
+        background-color: #0060B6 !important;
+    }
+    
+    position: absolute;
+    right:5px;
+    bottom: 5rem;
+    z-index:500
+  }
+
+  .over_map_center {
+    position: absolute;
+    top: 54px;
+    width: 100%;
+    z-index: 5;
+    padding: 5px;
+    text-align: center;
+    line-height: 30px;
+    padding-left: 10px;
+  }
+
+	.btnSelect{
+		height: 25px !important;
+    background: #0060B6 !important;
+    width: 90% !important;
+    color:white;
+    padding-top:2px;
+    box-shadow: 0px 1px 8px 0 #333333;
+
+  }
+
+  .centrarpin {
+    display: block;
+    width: 52px;
+    height: 44px;
+    position: absolute;
+    z-index: 100;
+    top: 50%;
+    margin-top: -44px;
+    left: 50%;
+    margin-left: -24px;
+    background: url("../assets/movilidad/marker.svg") no-repeat
+  }
+
+
+}

@@ -1,0 +1,72 @@
+mideme-modal-select-challenge {
+    left: calc(50% - 150px)!important;
+    top: 30%!important;
+    position: absolute!important;
+    display: block!important;
+    width: 300px!important;
+    border-radius:6px;
+
+    ion-content {
+        text-align: center!important;
+        height: 320px!important;
+        border-radius:5px;
+        top: 0px;
+        div {
+            width:100%;
+            h1 {
+                margin:0;
+            }
+            &.listRadio {
+                margin:0 20px;
+                text-align: left;
+                .row {
+                    margin:13px auto;
+                    .radio {
+                        margin-right:5px;
+                        .item-cover {
+                            border-radius:50%;
+                            border:1px solid map-get($colors , texto );
+                        }
+                        .radio-checked {
+                            border-color:map-get($colors , texto );
+                            border-width:1px;
+                        }
+                        .radio-inner {
+                            left: 3px;
+                            top: 3px;
+                            background-color: map-get($colors , huellas )
+                        }
+                    }
+                    .label-md, .label-ios {
+                        margin:0!important;
+                        max-width: calc(100% - 60px);
+                    }
+                }
+
+            }
+        }
+        .botones {
+            position: absolute;
+            margin-left: -16px;
+            bottom: 20px;
+        }
+        .button {
+            min-width: 150px;
+            height:40px;
+            border-radius:4px;
+            text-transform:unset;
+            &.close {
+                background: transparent;
+                position:relative;
+                height:20px;
+                width:20px;
+                top:-15px;
+                right:-15px;
+                color:initial;
+            }
+        }
+    }
+    ion-icon {
+        font-size: 64px;
+    }
+}

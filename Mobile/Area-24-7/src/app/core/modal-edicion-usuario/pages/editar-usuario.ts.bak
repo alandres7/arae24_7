@@ -1,0 +1,103 @@
+﻿import { CONFIG_ENV } from './../../../shared/config-env-service/const-env';
+import { Common } from './../../../shared/utilidades/common';
+import { WebServiceEditarUsuario } from './../provider/wsEditarUsuario.provider';
+import { UsuarioModel } from './../../../Models/usuario.model';
+import { Component } from '@angular/core';
+import { NavController, NavParams, ViewController } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+
+@Component({
+  selector: 'editar-usuario',
+  templateUrl: 'editar-usuario.html',
+  styles: ['editar-usuario.scss']
+})
+export class EditarUsuario {
+  usuario: any;
+  myForm: FormGroup;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, private wsEditarUsuario: WebServiceEditarUsuario, private utilidad: Common, private view: ViewController) {
+    this.myForm = this.createMyForm();
+
+    /*this.usuario = JSON.parse(localStorage.getItem("usuario"));
+    if (this.usuario) {
+      this.myForm.get('nombre').setValue("su nombre");
+      this.myForm.get('apellido').setValue(this.usuario.apellido);
+      /*this.myForm.get('nivelEducativo').setValue(this.usuario.nivelEducativo) ;
+      this.myForm.get('pais').setValue(this.usuario.pais) ;
+      this.myForm.get('departamento').setValue(this.usuario.departamento) ;
+      this.myForm.get('municipio').setValue(this.usuario.municipio) ;
+      this.myForm.get('correo').setValue(this.usuario.correo) ;
+      this.myForm.get('genero').setValue(this.usuario.genero) ;
+      this.myForm.get('fechaNacimiento').setValue(this.usuario.fechaNacimiento) ;
+    }*/
+
+  }
+
+  ionViewWillEnter() {
+    this.usuario = JSON.parse(localStorage.getItem("usuario"));
+    console.log('usuario ' + JSON.stringify(this.usuario));
+    
+    if (this.usuario) {
+      this.myForm.get('nombre').setValue(this.usuario.nombre);
+      this.myForm.get('apellido').setValue(this.usuario.apellido);
+      this.myForm.get('nivelEducativo').setValue(this.usuario.nivelEducativo);
+      this.myForm.get('pais').setValue(this.usuario.pais);
+      this.myForm.get('departamento').setValue(this.usuario.departamento);
+      this.myForm.get('municipio').setValue(this.usuario.municipio);
+      this.myForm.get('username').setValue(this.usuario.username);
+      this.myForm.get('genero').setValue(this.usuario.genero);
+      this.myForm.get('fechaNacimiento').setValue(this.transform(this.usuario.fechaNacimiento).toISOString());
+      this.myForm.get('activo').setValue(this.usuario.activo);
+    }
+  }
+
+  saveData() {
+    var date = new Date(this.myForm.value.fechaNacimiento)
+    console.log(date.toUTCString());
+    console.log("MYFORM Value" + JSON.stringify(this.myForm.value));
+  }
+
+  actualizar() {
+
+    var date = new Date(this.myForm.value.fechaNacimiento);
+    this.myForm.value.fechaNacimiento = date.toISOString();
+    this.myForm.value.nickname = this.myForm.value.username;
+    this.wsEditarUsuario.actualizar(CONFIG_ENV.REST_BASE_URL + "/api/usuario", <UsuarioModel>this.myForm.value);
+  }
+
+  private createMyForm() {
+    return this.formBuilder.group({
+      nombre: ['',],
+      apellido: ['',],
+      nivelEducativo: ['',],
+      pais: ['',],
+      departamento: ['',],
+      municipio: ['',],
+      username: ['', [, Validators.pattern(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/)]],
+      fechaNacimiento: ['',],
+      contrasena: ['',],
+      tokenDispositivo: 'null',
+      genero: ['',],
+      activo: ['',]
+    });
+
+  }
+
+  closeModal() {
+    this.view.dismiss();
+  }
+
+  secondsInAday = 86400;
+  transform(dateStamp: number, relativeMax: number = 10): Date {
+
+    let timeAgoInSeconds = Math.floor((Date.now() - new Date(dateStamp).getTime()) / 1000);
+
+    if (timeAgoInSeconds < relativeMax * this.secondsInAday) {
+      return this.transform(dateStamp);
+    } else {
+      return new Date(dateStamp);
+    }
+
+  }
+
+}

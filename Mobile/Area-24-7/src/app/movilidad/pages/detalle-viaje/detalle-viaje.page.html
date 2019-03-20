@@ -1,0 +1,200 @@
+<ion-header>
+    <barra-navegabilidad [titulo]="titulo"></barra-navegabilidad>
+</ion-header>
+
+<ion-content mapa style="height: 100%">
+    <div contenido-mapa style="background: rgba(255, 255, 255, 0.77); " class="card-md">
+        <ion-item>
+            <div class="labelTitle">
+                Detalle de viaje
+            </div>
+
+            <ion-list>
+                <ion-item (click)="clickMostrarDetalle()">
+                    <ion-thumbnail item-start>
+                        <div class="divFondo">
+                            <ion-grid>
+                                <ion-row>
+                                    <img class="iconsInc" src="assets/movilidad/iconos/tiempo.png">
+                                </ion-row>
+                                <ion-row style="margin-top: 7px;">
+                                    <label class="labelInfoCu">{{ viaje.duracion }}</label>
+                                </ion-row>
+                            </ion-grid>
+                        </div>
+                    </ion-thumbnail>
+                    <ion-grid class="gridViaje">
+                        <ion-row class="rowViaje">
+
+                            <ion-col col-10>
+                                <ion-slides [slidesPerView]="4" class="slidesViaje">
+                                    <ion-slide *ngFor="let item of viaje.pasos">
+                                        <img class="iconsViajes" src="{{gmapsMovildiad.obtenerTransporte(item.mode).imagen}}">
+                                    </ion-slide>
+                                </ion-slides>
+                            </ion-col>
+
+                            <ion-col col-2 *ngIf="!showDetalle" >
+                                <img class="iconDbFlecha" src="assets/movilidad/iconos/flechaDoble.svg" item-right>
+                            </ion-col>
+
+                            <ion-col col-2 *ngIf="showDetalle">
+                                <img class="iconDbFlecha" src="assets/movilidad/iconos/flechaDobleBottom.svg" item-right>
+                            </ion-col>
+
+                        </ion-row>
+                        <ion-row class="rowTexdown">
+                            <ion-col col-auto>
+                                <p class="labelParr">
+                                    Sale desde {{ origen.descripcion }} , {{ destino.descripcion }}
+                                </p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+            </ion-list>
+
+            <div *ngIf="showDetalle">
+                <div>
+                    <ion-row class="wrapper">
+
+                        <div col-auto class="one itemContent">
+                            <div class="divFoBlue">
+                                <img class="iconsInfo" src="assets/movilidad/iconos/pesos.png">
+
+                                <label class="labelNumRL">&nbsp;$ {{ tarifaTotalViaje }}</label>
+                            </div>
+                        </div>
+
+                        <div col-auto class="two itemContent">
+                            <div class="divFoBlue">
+                                <img class="iconsInfo" src="assets/movilidad/iconos/distancia.png">
+
+                                <label class="labelNumRL">{{ viaje.distancia }} km</label>
+                            </div>
+                        </div>
+
+                        <div col-auto class="three itemContent">
+                            <div class="divFoLightG">
+                                <img class="iconsInfo" src="assets/movilidad/iconos/CO2blue.png">
+
+                                <p class="labelNumBlu">&nbsp;Viaje
+                                    <br>{{emisionCO2}} Kg</p>
+                            </div>
+                        </div>
+
+                        <div col-auto class="four itemContent">
+                            <div class="divFoG">
+                                <img class="iconsInfo" src="assets/movilidad/iconos/CO2blanco.png">
+
+                                <p class="labelNumBla">&nbsp;Automóvil
+                                    <br>{{emisionCO2Autos}} Kg</p>
+                            </div>
+                        </div>
+
+                        <div col-auto class="five itemContent">
+                            <div class="divFoLightG">
+                                <img style="width: 3em;
+								vertical-align: middle;
+								position: relative;
+								top: 0px;
+								left: 8px;" src="assets/movilidad/iconos/pm2_5.svg">
+                                <p style="color: #3f6faa;
+									font-size: 11px;
+								  	margin-top: -5px;
+								  	text-align: center;
+									line-height: 11px;"><br>{{ emisionPM2_5 }} Kg</p>
+                            </div>
+                        </div>
+
+                    </ion-row>
+                </div>
+
+                <hr class="separador">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col col-1>
+                            <img class="iconsSaFi" src="assets/movilidad/iconos/salida.png">
+                        </ion-col>
+                        <ion-col col-8 class="colTextSalida">
+                            <p class="pInforSalida">
+                                <span class="labelSalida">{{ adressorigin1 }}</span>
+                                <br> {{ adressorigin2 }}
+                            </p>
+                        </ion-col>
+                        <ion-col col-3 class="colClima">
+                            <!--<img class="iconClima" src="assets/movilidad/iconos/lluvia.png">
+							<img class="iconClima" [src]="pronostico.urlIconoProbabilidadOrigen">
+							<p class="textoClima">Probabilidad de lluvia entre 12:00 p.m -6:00 p.m </p>-->
+                            <div *ngIf="pronostico.codigo != 1">
+                                <img class="iconClima" [src]="pronostico.urlIconoProbabilidadOrigen">
+                                <p class="textoClima textWrap"> {{ pronostico.descProbabilidadOrigen }} </p>
+                            </div>
+                            <div *ngIf="pronostico.codigo == 1">
+                                <img class="iconClima" style="margin-top: 5px; margin-bottom: 5px;" src="assets/movilidad/iconos/undefined.png">
+                                <p class="textoClima textWrap"> {{ pronostico.descripcion }} </p>
+                            </div>
+                        </ion-col>
+                        <hr class="separador">
+                    </ion-row>
+
+                    <ion-row style="margin-top: 5px" *ngFor="let item of viaje.pasos; let idx = index">
+                        <ion-col [style.borderRightStyle]="item.mode=='WALK'?'dotted':'solid'" [style.borderRightColor]="gmapsMovildiad.obtenerTransporte(item.mode).color" col-auto class="colModoTransporte">
+                            <img style="margin-top: 45%;" class="iconsViajes" src="{{gmapsMovildiad.obtenerTransporte(item.mode).imagen}}">
+                        </ion-col>
+
+                        <ion-col col-8 class="colBorBottom ">
+                            <p class="mensajeInfo textWrap">
+                                {{ item.mensaje }}
+                            </p>
+
+                            <div *ngIf="item.mode=='BICYCLE'">
+                                <ion-grid>
+                                    <ion-row>
+                                        <ion-col col-auto>
+                                            <p class="mensajeInfo textWrap">
+                                                {{ item.to.cantidadBicicletasDisponibles }} Bicicletas disponibles
+                                            </p>
+                                        </ion-col>
+                                    </ion-row>
+                                    <ion-row>
+                                        <ion-col col-auto>
+                                            <p class="mensajeInfo textWrap">
+                                                {{ item.to.cantidadPuestosDisponibles }} Puestos disponibles
+                                            </p>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-grid>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+
+                    <ion-row>
+                        <ion-col col-1>
+                            <img class="iconsSaFi" src="assets/movilidad/iconos/llegada.png">
+                        </ion-col>
+                        <ion-col col-8 class="colTextLlegada">
+                            <p class="pInforLlegada">
+                                <!--<span class="labelLlegada">Centro comercial Santa Fé</span><br> Av. El poblado # 7<br> Medellin Antioquia.-->
+                                <span class="labelSalida">{{ adressdestino1 }}</span>
+                                <br> {{ adressdestino2 }}
+                            </p>
+                        </ion-col>
+                        <ion-col col-3 class="colClimaLlegar">
+                            <!--<img class="iconClimaLlegar" src="assets/movilidad/iconos/lluvia.png">-->
+                            <div *ngIf="pronostico.codigo != 1">
+                                <img class="iconClimaLlegar" [src]="pronostico.urlIconoProbabilidadDestino">
+                                <p class="textoClimaLlegar textWrap"> {{ pronostico.descProbabilidadDestino }} </p>
+                            </div>
+                            <div *ngIf="pronostico.codigo == 1">
+                                <img class="iconClimaLlegar" style="margin-top: 5px; margin-bottom: 5px;" src="assets/movilidad/iconos/undefined.png">
+                                <p class="textoClimaLlegar textWrap"> {{ pronostico.descripcion }} </p>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
+        </ion-item>
+    </div>
+
+</ion-content>

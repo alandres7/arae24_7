@@ -1,0 +1,35 @@
+<ion-header>
+        <menu-modal [titulo]="titulo" [viewCtrl]="viewCtrl"></menu-modal>
+</ion-header>
+
+<ion-content mapa>
+    <div contenido-mapa style="background: rgba(255, 255, 255, 0.77);">
+
+        <ion-item class="itemBorder">
+            <div style="text-align: center;">
+                <span class="compTitle">Agregar Ubicación</span>
+            </div>
+        </ion-item>
+
+        <ion-item>
+                <ion-input [(ngModel)]="item.nombre" placeholder="Nombre" class="selecMapa" style="width:100%;"></ion-input>
+                <ion-select class="selecMapa" [(ngModel)]="idCategoriaSelected" #selCategoria (ionChange)="onChange(selCategoria.value)" placeholder="Categoria" okText="Aceptar" cancelText="Cancelar">
+                    <ion-option *ngFor="let categoria of categorias let i=index" [selected]="idCategoriaSelected==categoria.id" [value]="categoria.id">{{categoria.nombre}}</ion-option>
+                </ion-select>
+        </ion-item>
+        
+        <ion-item class="itemBorder" style="margin-top:0px">
+            <div class="divButton">
+                <buscar-ubicacion [ubicacion]="item.ubicacion" [showSeleccionarEnMapa]="false"></buscar-ubicacion>
+                <button ion-button class="ion-button"  (click)="seleccionarMapa($event)" >Seleccionar en el mapa</button>
+            </div>
+            
+        </ion-item>
+        <ion-item>
+            <div class="divButton">
+                <button ion-button class="ion-button saveBtn" (click)="guardar()">Guardar</button>
+            </div>
+        </ion-item>
+
+    </div>
+</ion-content>

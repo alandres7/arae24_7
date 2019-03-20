@@ -1,0 +1,40 @@
+<div class="contenedor">
+    <ion-grid>
+        <ion-row>
+            <ion-col col-1>
+                <img class="iconsearch" src="assets/movilidad/iconos/salida.png">
+            </ion-col>
+            <ion-col col-10>
+                <ion-searchbar (click)="mostrarModal(origen)" [(ngModel)]="origen.descripcion" mode="md" animated="true" placeholder="{{origen.txtPlaceholder}}"></ion-searchbar>
+            </ion-col>
+        </ion-row>
+
+        <ion-row>
+            <ion-col col-1>
+            </ion-col>
+            <ion-col col-10>
+            </ion-col>
+            <ion-col (click)="cambiarOrigenDestino()" col-2>
+                <img class="iconsearch3" src="{{origenDestinoIcono}}">
+            </ion-col>
+        </ion-row>
+
+        <ion-row>
+            <ion-col col-1>
+                <img class="iconsearch" src="assets/movilidad/iconos/llegada.png">
+            </ion-col>
+
+            <ion-col col-9>
+                <ion-searchbar (click)="mostrarModal(destino)" [(ngModel)]="destino.descripcion" mode="md" animated="true" placeholder="{{destino.txtPlaceholder}}"></ion-searchbar>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <div *ngIf="cardMinViajesSugeridos">
+        <ion-card (click)="toogleViajesSugeridos()">
+            <ion-card-header class="headerViaSug" style="padding: 0; font-weight:bold;">
+                <div style="margin-top: -4px;">Viajes sugeridos</div>
+            </ion-card-header>
+        </ion-card>
+    </div>
+</div>

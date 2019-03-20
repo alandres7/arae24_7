@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head lang="en">	
+	    <title th:text="'' + ${title}"></title>
+	    <meta charset="utf-8"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        
+		<div th:replace="fragments/frameMaps :: header-contend" ></div>      
+	</head>
+	
+	<body class=".login-img3-body"  th:style="'background:url(' + @{/assets/images/medellinNoche.jpg} + ');'">
+	
+	    <div style="text-align:center; max-width: 350px; margin: 200px auto 0;">
+   		    <img th:src="@{/assets/images/descarga.jpg}"/>   			   	    	
+   	    </div>
+   	    
+   	    <br/><br/>
+   	    <h1 style="background-color: #9FC418; color: #FFFFFF; text-align:center;" th:text="${mensaje}"></h1>	    	    
+      	    
+	</body>
+	
+</html>

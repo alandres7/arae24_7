@@ -1,0 +1,583 @@
+﻿import { Response } from '@angular/http';
+
+import { Observable } from 'rxjs/Rx';
+import { WebServiceRegistro } from './../../../registro/provider/wsRegistro.provider';
+import { UsuarioModel } from './../../../Models/usuario.model';
+import { CONFIG_ENV } from './../../../shared/config-env-service/const-env';
+import { Component, Inject, OnInit } from '@angular/core';
+import { NavController, NavParams, Alert, AlertController, ModalController, MenuController, ToastController, LoadingController, Platform, Loading} from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { WebServiceLogin } from './../../provider/wsLogin';
+import { InicioPage } from '../../../inicio/pages/inicio-page/inicio-page';
+import { FormRegister } from '../../../registro/pages/form-register';
+import { Common } from "../../../shared/utilidades/common";
+import { WebService } from "../../../provider/webService/ws";
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
+import { NativeStorage } from '@ionic-native/native-storage';
+import { GooglePlus } from '@ionic-native/google-plus';
+import { OneSignal } from '@ionic-native/onesignal';
+import { Device } from '@ionic-native/device';
+import { AppDiagnostic } from "../../../shared/utilidades/diagnostic";
+import { GoogleMaps } from "../../../shared/utilidades/googleMaps";
+
+import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
+
+import { User, PASSWORD_WILDCARD } from '../../../../entities/user';
+import { Enrollment } from '../../../../entities/enrollment';
+
+import { FUENTES_REGISTRO } from '../../../shared/fuentes-registro';
+
+@Component({
+    selector: 'login-page',
+    templateUrl: 'login-page.html',
+    styles: ['login-page.scss']
+})
+
+export class LoginPage {
+
+    private FACEBOOK_PERMISSIONS: string[] = [ 'public_profile', 'email' ];
+    private formGroup: FormGroup;
+	private loading: Loading;
+	
+	static readonly MSG_FACEBOOK_NOT_AVAILABLE: string = 'El Servicio de Facebook no se encuentra disponible.';
+	static readonly MSG_GOOGLE_NOT_AVAILABLE: string = 'El servicio de Google no se encuentra disponible';
+	static readonly MSG_NETWORK_ERROR: string = 'No se logró la conexión. Intente más tarde.';
+
+    ionViewDidLoad(): void {
+        console.log("ionViewDidLoad");
+        this.tryAutoLogin();
+       //this.autoLogin();
+    }
+
+    /*
+    ngOnInit(): void {
+        this.autoLogin();
+    }*/
+
+    objeto = {};
+    data: any = [];
+
+    constructor(
+        private readonly loadingCtrl: LoadingController,
+        public navCtrl: NavController,
+        public navParams: NavParams,
+        public menu: MenuController,
+        @Inject(FormBuilder) formBuilder: FormBuilder,
+        private toastCtrl: ToastController,
+        public modalRegistroCtr: ModalController,
+        private utilidades: Common,
+        private ws: WebService,
+        private facebook: Facebook,
+        public nativeStorage: NativeStorage,
+        public googlePlus: GooglePlus,
+        private oneSignal: OneSignal,
+        private wsLogin: WebServiceLogin,
+        public utilidad: Common,
+        private gps: AppDiagnostic,
+        private device: Device,
+        private wsRegistro: WebServiceRegistro,
+        private platform: Platform,
+        public googleMaps: GoogleMaps,
+        public alertCtrl: AlertController
+        , private authProvider: AuthenticationProvider) 
+    {
+        this.menu.enable(false);
+        this.formGroup = formBuilder.group({
+            username: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(255)])],
+            contrasena: ['', Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(255)])]
+        });
+       /* this.loading = this.loadingCtrl.create({
+            content: 'Un momento por favor...'
+        });*/
+    }
+
+    presentLoading(): Loading {
+        let loading: Loading = this.loadingCtrl.create({
+            content: 'Un momento por favor...'
+        });
+        loading.present();
+        return loading;
+    }
+
+    loginWithFacebook(): void {
+        this.loading = this.presentLoading();
+        this.facebook.getLoginStatus()
+            .then(response => {
+                console.log("facebook status" + JSON.stringify(response));
+                switch (response.status) {
+                    case 'connected':
+                        this.registerWithFacebook();
+                        break;
+
+                    default:
+                        this.facebook.login(this.FACEBOOK_PERMISSIONS)
+                            .then((res: FacebookLoginResponse) => {
+                                console.log("logged" + JSON.stringify(res));
+                                this.registerWithFacebook();
+                            })
+                            .catch(error => {
+                                console.log("error" + JSON.stringify(error));
+								this.loading.dismiss();
+								this.utilidad.generalAlert('Ups!', LoginPage.MSG_FACEBOOK_NOT_AVAILABLE);								
+                            });                       
+                        break;
+                }
+        })
+        .catch(error => {
+            console.log("error getLoginStatus" + JSON.stringify(error));
+			this.loading.dismiss();
+			this.utilidad.generalAlert('Ups!', LoginPage.MSG_FACEBOOK_NOT_AVAILABLE);			
+        });
+    }
+
+    registerWithFacebook(): void {
+        let url: string = '/me?fields=email, first_name, last_name, gender, locale, age_range';
+        this.facebook.api(url, this.FACEBOOK_PERMISSIONS)
+            .then(response => {
+                console.log("getDataFromFb" + JSON.stringify(response));
+                let user: User = User.parseFromFacebook(response);
+                user.password = PASSWORD_WILDCARD;
+                let enrollment = new Enrollment(user, FUENTES_REGISTRO.FACEBOOK);
+                this.enrollWithApi(enrollment);
+            })
+            .catch(e => {
+                console.log("getDataFromFb error" + JSON.stringify(e));
+				this.loading.dismiss();
+				this.utilidad.generalAlert('Ups!', LoginPage.MSG_FACEBOOK_NOT_AVAILABLE);							
+            });
+    }
+
+    logoutFromFacebook(): void {
+        this.facebook.logout()
+            .then(res => console.log("logoutFromFacebook " + JSON.stringify(res)))
+            .catch(e => console.log("logoutFromFacebook error" + JSON.stringify(e)));
+    }
+
+    loginWithGoogle(): void {
+        this.loading = this.presentLoading();        
+        this.googlePlus.login({})
+            .then(response => {
+                console.log("loginWithgoogle" + JSON.stringify(response));
+                let user: User = User.parseFromGoogle(response);
+                user.password = PASSWORD_WILDCARD;
+                let enrollment: Enrollment = new Enrollment(user, FUENTES_REGISTRO.GOOGLE_PLUS);
+                this.enrollWithApi(enrollment);
+            })
+            .catch(error => {
+                console.log("loginWithgoogle error" + JSON.stringify(error));
+				this.loading.dismiss();
+				this.utilidad.generalAlert('Ups!', LoginPage.MSG_GOOGLE_NOT_AVAILABLE);			
+            });
+    }
+
+    logoutFromGoogle(): void {
+        this.googlePlus.logout()
+            .then(response => console.log('logoutFromgoogle' + JSON.stringify(response)))
+            .catch(error => console.log('logoutFromgoogle error' + JSON.stringify(error)));
+    }
+
+    enrollWithApi(enrollment: Enrollment): void {
+        this.authProvider.enroll(enrollment).subscribe(
+            (response: Response) => {
+				console.log('enrollWithApi' + JSON.stringify(response));
+				this.utilidad.generalAlert('Ups!', 'Su registro fue exitoso.');							
+                this.loginWithApi(enrollment);    
+            },
+            (error) => {
+                console.log('enrollWithApi error' + JSON.stringify(error));
+                if (error.status == 409) this.loginWithApi(enrollment);
+                else {
+					this.loading.dismiss();
+					this.utilidad.generalAlert('Ups!', LoginPage.MSG_NETWORK_ERROR);												
+				}
+            });
+    }
+
+    loginWithForm(): void {
+        this.loading = this.presentLoading();
+        let user: User = new User();
+        user.email = this.formGroup.value.username;
+        user.password = this.formGroup.value.contrasena;
+        let enrollment: Enrollment = new Enrollment(user, FUENTES_REGISTRO.MOBILE_APP);
+        this.formGroup.reset();
+        this.loginWithApi(enrollment);
+    }
+
+    loginWithApi(enrollment: Enrollment): void {
+        this.authProvider.login(enrollment).subscribe(
+            (response: Response) => {
+                console.log("loginWithApi " + JSON.stringify(response));
+                this.persistLogin(JSON.stringify(response.json()), enrollment.user.password);
+                this.loading.dismiss();
+                this.navCtrl.setRoot(InicioPage);                
+            },
+            (error) => {
+                console.log("loginWithApi error" + JSON.stringify(error));
+				let msg: string;
+				msg = (error.status == 404)
+					? 'Su nombre de usuario o contraseña son incorrectos.'
+					: LoginPage.MSG_NETWORK_ERROR;
+                this.loading.dismiss();
+                this.utilidad.generalAlert('Ups!', msg);
+            });
+    }
+
+    persistLogin(json: string, password: string): void {
+        console.log("response persist login" + JSON.stringify(json));
+        if (json.indexOf("Bearer") > -1 && json.indexOf("usuario") > -1) 
+        {
+            let data = JSON.parse(json);
+            localStorage.setItem('usuarioWeb', JSON.stringify(data.usuario));
+            data.usuario.contrasena = password;
+            this.nativeStorage.setItem("bearer", data.token);
+            localStorage.setItem("bearer", data.token);
+            this.nativeStorage.setItem('usuario', data.usuario);
+            localStorage.setItem('usuario', JSON.stringify(data.usuario));
+        }
+    }
+
+    tryAutoLogin(): void {
+		let pusuario: any = JSON.parse(localStorage.getItem('usuario'));
+		if (pusuario !== null && pusuario !== undefined) {
+			this.loading = this.presentLoading();			
+			  console.log("usuario: ", pusuario);
+		  	let preferenciasR: any = JSON.parse(pusuario.preferencias);
+			this.googleMaps.pRadioAccion = preferenciasR.preferencias[6].radioAccion;
+			let user: User = new User();
+			user.email = pusuario.username;
+			user.password = pusuario.contrasena;
+			let enrollment: Enrollment = new Enrollment(user, FUENTES_REGISTRO.MOBILE_APP);
+			this.loginWithApi(enrollment);
+		}
+    }
+
+  ngAfterViewInit() {
+    this.gps.checkLocation();
+    this.utilidad.checKNetwork();
+  }
+
+  login() {
+
+    if (this.formGroup.value.username && this.formGroup.value.contrasena) {
+
+      var usuario = {
+        'username': this.formGroup.value.username,
+        'contrasena': this.formGroup.value.contrasena,
+        'fuenteRegistro': FUENTES_REGISTRO.MOBILE_APP
+      };
+
+      this.enviarLogin(usuario);
+    }
+    else {
+      this.mostrarToast('Datos imcompletos para el login, intente nuevamente', 4000, 'middle');
+
+    }
+
+  }
+
+  doFbLogin() {
+    let permissions = new Array<string>();
+    let env = this;
+    let googleFB: any;
+    //the permissions your facebook app needs from the user
+    permissions = ['public_profile"', 'email' ];
+    this.facebook.login(permissions)
+      .then(function (response) {
+        console.log('face register', response);
+        alert("fc login " + JSON.stringify(response));
+        //let userId = response.authResponse.userID;
+        let params = new Array<string>();
+
+        env.facebook.api("/me?fields=name,gender, first_name, last_name, email", params)
+          .then(function (user) {
+            console.log('datos facebook', user);
+            //user.picture = "https://graph.facebook.com/" + userId + "/picture?type=large";
+            /*var date = new Date(this.myForm.value.fechaNacimiento)
+            googleFB.fechaNacimiento = date.toISOString();*/
+
+            googleFB = {
+              nombre: user.firts_name,
+              apellido: user.laslast_name,
+              username: user.email,
+              genero: user.gender,
+              nickname: null,
+              fuenteRegistro: "FB",
+              contrasena: "temporal01"
+            };
+            /*var date = new Date(user.birthday);
+              if (date) {
+                googleFB.fechaNacimiento = date.toISOString();
+              }*/
+            if (googleFB.genero.indexOf('male') > -1) {
+              googleFB.genero = 'M';
+            }
+            else if (googleFB.genero.indexOf('female') > -1) {
+              googleFB.genero = 'F';
+            }
+
+            env.wsRegistro.registrarRedes(CONFIG_ENV.REST_BASE_URL + "/api/registro", googleFB)
+              .then((dato: any) => {
+                if (dato.status == 200 || dato._body.indexOf("Conflicto. El usuario ya existe") > -1 || dato.status == 409) {
+                  console.log('enviado a login', googleFB);
+                  env.enviarLogin(googleFB);
+                }
+              },
+              (error) => {
+                console.log('excepcion iniciando face', error);
+                env.enviarLogin(googleFB);
+              });
+
+            /*env.nativeStorage.setItem('user',
+              {
+                name: user.name,
+                gender: user.gender,
+                picture: user.picture,
+                loggedfacebook: true
+              })
+              .then(function () {
+                nav.push(InicioPage);
+              }, function (error) {
+                console.log(error);
+              })*/
+          })
+      }, function (error) {
+        alert("fc login error " + JSON.stringify(error));
+      });
+  }
+
+  doFbLogout() {
+    var nav = this.navCtrl;
+    let env = this;
+    this.facebook.logout()
+      .then(function (response) {
+        alert("logout " + JSON.stringify(response));
+        //user logged out so we will remove him from the NativeStorage
+        env.nativeStorage.remove('user');
+        nav.push(LoginPage);
+      }, function (error) {
+        alert("logout error" + JSON.stringify(error));
+        console.log(error);
+      });
+  }
+
+
+
+  doGoogleLogin() {
+    let nav = this.navCtrl;
+    let env = this;
+    var googleForm: any;
+    let loading = this.loadingCtrl.create({
+      content: 'Un momento por favor...'
+    });
+    loading.present();
+    this.googlePlus.login({
+      'scopes': '', // optional, space-separated list of scopes, If not included or empty, defaults to `profile` and `email`.
+      'webClientId': '971078439783-e144p85st4lh88nvd56qlqi9subk0rsv.apps.googleusercontent.com', // optional clientId of your Web application from Credentials settings of your project - On Android, this MUST be included to get an idToken. On iOS, it is not required.
+      'offline': true
+    })
+      .then(function (user) {
+        loading.dismiss();
+        console.log('google register', user);
+        googleForm = {
+          'nombre': user.givenName,
+          'apellido': user.familyName,
+          'username': user.email,
+          'fuenteRegistro': "GP",
+          'contrasena': "temporal01"
+        };
+
+
+        env.wsRegistro.registrarRedes(CONFIG_ENV.REST_BASE_URL + "/api/registro", googleForm)
+          .then((dato: any) => {
+            if (dato.status == 200 || dato._body.indexOf("Conflicto. El usuario ya existe") > -1) {
+              env.enviarLogin(googleForm);
+            }
+
+          },
+          (error) => {
+
+          });
+
+        /*env.nativeStorage.setItem('usuario', googleForm)
+          .then(function () {
+            nav.push(InicioPage);
+          }, function (error) {
+            console.log(error);
+          })*/
+      }, function (error) {
+        alert('error  ' + error);
+        loading.dismiss();
+      });
+  }
+
+  mostrarToast(mensaje, duracion, posicion) {
+    let toast = this.toastCtrl.create({
+      message: mensaje,
+      duration: duracion,
+      position: posicion
+    });
+
+    toast.present();
+
+  }
+
+  modalServicio() {
+    let modalR = this.modalRegistroCtr.create(FormRegister);
+    modalR.present();
+  }
+
+  notification(data) {
+    if (this.platform.is('ios') || this.platform.is('android')) {
+      this.oneSignal.startInit(CONFIG_ENV.ONESIGNAL_APPLICATION_ID, CONFIG_ENV.ONESIGNAL_SENDER_ID);
+      this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+      this.oneSignal.setSubscription(true);
+      this.oneSignal.getIds().then((ids: any) => {
+        let objUsuarioW = JSON.parse(localStorage.getItem('usuarioWeb'));
+        let objUsuario = JSON.parse(localStorage.getItem('usuario'));
+        objUsuario.tokenDispositivo = JSON.stringify(ids);
+        objUsuarioW.tokenDispositivo = JSON.stringify(ids);
+        //this.nativeStorage.setItem('usuario', JSON.stringify(objUsuario));
+        localStorage.setItem('usuario', JSON.stringify(objUsuario));
+        localStorage.setItem('usuarioWeb', JSON.stringify(objUsuarioW));
+      });
+
+      try {
+        this.oneSignal.handleNotificationReceived().subscribe((item: any) => {
+          alert('recibi mensaje!!');
+          console.log('llego mensaje', item.data.prueba1);
+        });
+
+        this.oneSignal.handleNotificationOpened().subscribe(() => {
+          // do something when a notification is opened
+        });
+      } catch (error) {
+
+      }
+
+      this.oneSignal.endInit();
+    }
+
+  }
+
+  autoLogin() {
+    var pusuario: any = JSON.parse(localStorage.getItem("usuario"));
+    if (pusuario !== null && pusuario !== undefined) {
+      console.log("usuario: ", pusuario);
+      let preferenciasR: any;
+      preferenciasR = JSON.parse(pusuario.preferencias);
+      this.googleMaps.pRadioAccion = preferenciasR.preferencias[6].radioAccion;
+      var pArreglo: Array<any> = <Array<any>>pusuario.preferencias;
+      this.enviarLogin(pusuario);
+    }
+
+    try {
+
+      /*this.nativeStorage.getItem("usuario").then(usuario => {
+
+        if (usuario.username.length > 0 && usuario.username.length > 0 && usuario.fuenteRegistro.length > 0) {
+          this.enviarLogin(usuario);
+        }
+      })*/
+    } catch (error) {
+      console.log('catch | ' + error);
+    }
+
+  }
+
+  enviarLogin(usuario) {
+      console.log("enviar login usuario" + JSON.stringify(usuario));
+
+    /*let loading = this.loadingCtrl.create({
+      content: 'Un momento por favor...'
+    });
+    loading.present() */
+    if (usuario.username && usuario.username && usuario.fuenteRegistro) {
+      //console.log('auto login datos enviados --> ', usuario);
+      this.wsLogin.wsLogin(CONFIG_ENV.REST_BASE_URL + "/api/login", usuario)
+        .then(data => {
+          if (data.indexOf("Bearer") > -1 && data.indexOf("usuario") > -1) {
+            //loading.dismiss();
+            data = JSON.parse(data);
+            console.log('datos devueltos login', data);
+            localStorage.setItem('usuarioWeb', JSON.stringify(data.usuario));
+            data.usuario.contrasena = usuario.contrasena;
+            this.nativeStorage.setItem("bearer", data.token);
+            localStorage.setItem("bearer", data.token);
+            this.nativeStorage.setItem('usuario', data.usuario);
+            localStorage.setItem('usuario', JSON.stringify(data.usuario));
+            this.notification(data.usuario);
+            console.log("llamo Componente incio");
+            this.navCtrl.setRoot(InicioPage);
+            //window.location.reload()
+          }
+        },
+        error => {
+          var pError = {
+            'message': error,
+            'duration': 400,
+            'position': 'middle'
+          };
+
+          //loading.dismiss();
+          if (error.status === 401) {
+            pError.message = 'El usuario no tiene permisos para realizar acción. ';
+            this.utilidades.appToast(pError);
+          }
+
+          if (error.status === 404) {
+            pError.message = 'El usuario no tiene permisos para realizar acción. ';
+            this.utilidades.appToast(pError);
+          }
+          else if (error.status === 400 || error.status === 403 || error.status === 404 || error.status === 500) {
+            pError.message = 'Problema inesperado, por favor intente más tarde.';
+            this.utilidades.appToast(pError);
+          }
+          else if (error.status === 409) {
+            pError.message = 'Conflicto ' + error._body;
+            this.utilidades.appToast(pError);
+          }
+
+        });
+    }
+
+  }
+
+  restablecer() {
+    let prompt = this.alertCtrl.create({
+      title: 'Recuperación de contraseña',
+      message: "Ingrese su correo electrónico para proceder a recuperar la contraseña",
+      inputs: [
+        {
+          name: 'username',
+          placeholder: 'Correo'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+          }
+        },
+        {
+          text: 'Enviar',
+          handler: data => {
+            this.RecuperarPass(data);
+
+          }
+        }
+      ]
+    });
+    prompt.setCssClass('alert-danger'),
+    prompt.present();
+
+  }
+
+  RecuperarPass(data){
+    this.data.push(data);                                                    
+    this.wsLogin.wsRecuperarContrasena("/api/usuario-restablecer-pass",this.data)
+    .then(respuesta => {
+       console.log("respuesta cambio pass",respuesta);
+    })
+  }
+
+}

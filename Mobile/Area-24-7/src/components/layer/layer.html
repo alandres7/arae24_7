@@ -1,0 +1,6 @@
+<button class="vertical-divider" style="border-radius:0; padding: 0; display: inline" ion-fab
+    (click)="onTapLayer()" [ngStyle]="{'background': layerActive()}" [ngClass]="isLayerActive()">
+    <img style="height: auto; width: 3rem;" [src]="layer.urlIcon" *ngIf="!isLoading">
+    <ion-spinner *ngIf="isLoading"></ion-spinner>
+    <label class="fab-label">{{layer.name}}</label>
+</button>

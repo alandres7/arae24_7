@@ -1,0 +1,36 @@
+<ion-fab *ngIf="currentLayerLevel=='CAPA'" left bottom>
+    <button ion-fab><img src=""/>button</button>
+    
+    <ion-fab-list side="top" id="submenu-amva">
+
+        <layer *ngFor="let layer of layers"
+            [layer]="layer"
+            (tapLayer)="onTapLayer($event)">
+        </layer>
+    </ion-fab-list>
+</ion-fab>
+
+<ion-fab *ngIf="currentLayerLevel=='CATEGORIA'" top width="100vw" style="overflow-x: scroll;overflow-y: hidden;width:100%;white-space: nowrap;top: 0px;">        
+    <div class="item-ordenamiento" style="background-color: #F5F5F5;">
+        <div>
+            <layer *ngFor="let layer of layers"
+                [layer]="layer"
+                (tapLayer)="onTapLayer($event)">
+            </layer>
+        </div>
+    </div>
+</ion-fab>
+
+<!--
+       <ng-template ngFor let-option [ngForOf]="pmenuService.listaMenu" let-i="index">
+        <ion-fab left bottom *ngIf="option.id == 4 && utilidad.submenu['sOrdenamiento']">
+          <button ion-fab color="{{option.codigoToggle | lowercase}}"><img src="{{option.rutaIcono}}"/></button>
+          <ion-fab-list side="top" id="submenu-amva">
+            <button style="border-radius:0;" ion-fab color="{{option.codigoToggle | lowercase}}" (click)="menuAnterior()"><ion-icon name="arrow-back"></ion-icon></button>
+            <ng-template ngFor let-item [ngForOf]="option.capas">
+              <button style="border-radius:0;" ion-fab color="{{option.codigoToggle | lowercase}}" *ngIf="option.capas && option.capas.length > 0 && utilidad.menuPreferencias[option.id]['capas'][item.id]"
+                (click)="swtAplicacion(item)"><img src="{{item.icono}}" > </button>
+            </ng-template>
+          </ion-fab-list>
+        </ion-fab>
+      </ng-template>-->

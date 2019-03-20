@@ -1,0 +1,70 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<parent>
+        <artifactId>area24-7-movilidad</artifactId>
+        <groupId>co.gov.metropol.area247</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    
+	<modelVersion>4.0.0</modelVersion>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+	<artifactId>area24-7-movilidad-database</artifactId>
+	<name>area24-7-movilidad-database</name>
+	
+	<properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Database settings -->
+        <db.servername>area247dev</db.servername>
+        <db.serveraddress>201.184.243.194</db.serveraddress>
+        <db.port>31521</db.port>
+        <db.name>area247dev</db.name>
+        <db.schema>${db.name}</db.schema>
+        <db.scriptlocation>db/gov/metropol/area247/oracle</db.scriptlocation>
+        <jdbc.driverClassName>oracle.jdbc.OracleDriver</jdbc.driverClassName>
+        <jdbc.username>movilidad</jdbc.username>
+        <jdbc.password>MOVILIDAD</jdbc.password>
+        <jdbc.url>jdbc:oracle:thin:@//${db.serveraddress}:${db.port}/${db.servername}</jdbc.url>
+
+    </properties>
+    
+    <dependencies>
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc7</artifactId>
+            <version>12.1.0.1</version>
+        </dependency>
+    </dependencies>
+	
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>4.1.1</version>
+                <configuration>
+                    <driver>${jdbc.driverClassName}</driver>
+                    <url>${jdbc.url}</url>
+                    <user>${jdbc.username}</user>
+                    <password>${jdbc.password}</password>
+                    <schemas>
+                        <schema>${db.schema}</schema>
+                    </schemas>
+                    <locations>
+                        <location>${db.scriptlocation}</location>
+                    </locations>
+                    <outOfOrder>true</outOfOrder>
+                </configuration>
+            </plugin>
+		</plugins>
+	</build>
+</project>

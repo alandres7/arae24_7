@@ -1,0 +1,24 @@
+<ion-content padding>
+        <ion-buttons end>
+            <button ion-button  icon-only  end (click)="closeModal()">
+                <ion-icon name="close"></ion-icon>
+            </button>
+        </ion-buttons>
+    <div>
+            <div class="warn"></div>
+    </div>
+    <br>
+
+    <div>
+      <h1>¡Vas a cambiar tu reto actual!</h1>
+    </div>
+
+    <div>
+      <p>Estas seguro? una vez lo cambies se reiniciara el ciclo de 21 días</p>
+    </div>
+
+    <div class="botones">
+        <button ion-button (click)="closeModal()">Sí</button>
+        <button ion-button [ngStyle]="{'background': color}" (click)="closeModal()">No</button>
+    </div>
+</ion-content>

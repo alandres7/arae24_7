@@ -1,0 +1,25 @@
+<layer-manager [app]="app"></layer-manager>
+
+<button ion-fab mini bottom right style="pointer-events: all;"
+        (click)="onShowSearchView()" [ngStyle]="{'background': app.color}">
+    <ion-icon name="search"></ion-icon>    
+</button>
+
+<fusion-layer style="visibility: hidden; width: 0; height: 0;"
+              [layer]="layerSearch"
+              [layerLevel]="'CAPA'"
+              [color]="app.color"
+              [fixedActionRadius]="getNumberMaxValue()"></fusion-layer>    
+
+<!--
+<busqueda-avistamientos *ngIf="showingSearchView"
+                        [location]="this.myLocationComponent.getPedestrianLocation()"
+                        (hideSearchView)="onHideSearchView()"
+                        style="pointer-events: all;">
+</busqueda-avistamientos>
+-->
+<my-location [color]="app.color" 
+             [actionRadius]="app.radius" 
+             (clickPedestrian)="onClickPedestrian($event)" 
+             (clickMyLocationButton)="onClickMyLocationButton($event)" 
+             (dragendPedestrian)="onDragendPedestrian($event)"></my-location>

@@ -1,0 +1,13 @@
+<ion-menu side="right" 
+          persistent="true" 
+          [content]="content"
+          swipeEnabled="true" 
+          (ionClose)="onCloseMenu()">
+
+    <ion-content style="background-color:  #F5F5F5">
+        <side-menu ></side-menu>
+    </ion-content>
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
